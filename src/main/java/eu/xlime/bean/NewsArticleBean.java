@@ -4,12 +4,14 @@ import java.util.Date;
 
 //import org.eclipse.persistence.oxm.annotations.XmlDiscriminatorValue;
 
-//@XmlDiscriminatorValue("http://rdfs.org/sioc/ns#MicroPost")
-public class MicroPostBean extends MediaItem {
+//@XmlDiscriminatorValue("http://kdo.render-project.eu/kdo#NewsArticle")
+public class NewsArticleBean extends MediaItem {
 
 	private String url;
 	
 	private Content content;
+	
+	private String title;
 	
 	private UIDate created;
 	
@@ -19,12 +21,10 @@ public class MicroPostBean extends MediaItem {
 	
 	private String source;
 	
-	private String sourceType;
+	private GeoLocation location;
 	
-	private UrlLabel creator;
-	
-	public final String type = "http://rdfs.org/sioc/ns#MicroPost";
-	
+	public final String type = "http://kdo.render-project.eu/kdo#NewsArticle";
+
 	public String getUrl() {
 		return url;
 	}
@@ -39,6 +39,14 @@ public class MicroPostBean extends MediaItem {
 
 	public void setContent(Content content) {
 		this.content = content;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public UIDate getCreated() {
@@ -73,29 +81,20 @@ public class MicroPostBean extends MediaItem {
 		this.source = source;
 	}
 
-	public String getSourceType() {
-		return sourceType;
+	public GeoLocation getLocation() {
+		return location;
 	}
 
-	public void setSourceType(String sourceType) {
-		this.sourceType = sourceType;
-	}
-
-	public UrlLabel getCreator() {
-		return creator;
-	}
-
-	public void setCreator(UrlLabel creator) {
-		this.creator = creator;
+	public void setLocation(GeoLocation location) {
+		this.location = location;
 	}
 
 	@Override
 	public String toString() {
-		return "MicroPostBean [url=" + url + ", content=" + content
-				+ ", created=" + created + ", lang=" + lang + ", publisher="
-				+ publisher + ", source=" + source + ", sourceType="
-				+ sourceType + ", creator=" + creator + "]";
-	}	
-
+		return "NewsArticleBean [url=" + url + ", content=" + content
+				+ ", title=" + title + ", created=" + created + ", lang="
+				+ lang + ", publisher=" + publisher + ", source=" + source
+				+ ", location=" + location + "]";
+	}
 	
 }

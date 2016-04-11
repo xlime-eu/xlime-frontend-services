@@ -1,6 +1,14 @@
 package eu.xlime.bean;
 
-public class Content {
+import java.io.Serializable;
+
+public class Content implements Serializable {
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3836137457813363360L;
 
 	/**
 	 * The full content (may not be null)
@@ -13,6 +21,10 @@ public class Content {
 	 * is already smaller than this limit, {@link #preview} may be <code>null</code>.  
 	 */
 	private String preview;
+	
+	public Content() {
+		
+	}
 
 	public String getFull() {
 		return full;

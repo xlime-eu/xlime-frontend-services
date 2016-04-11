@@ -3,18 +3,19 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
           http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<display-name>xLiMe Public Web-services</display-name>
+	<display-name>xLiMe Public Front-end Web-services</display-name>
 	<servlet>
-		<servlet-name>xLiMe-servlet</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>eu.xlime</param-value>
+		<servlet-name>eu.xlime.ServicesApp</servlet-name>
+        <init-param>
+    		<param-name>jersey.config.server.provider.packages</param-name>
+    		<param-value>
+        		eu.xlime
+    		</param-value>
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>xLiMe-servlet</servlet-name>
+		<servlet-name>eu.xlime.ServicesApp</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 	<filter>

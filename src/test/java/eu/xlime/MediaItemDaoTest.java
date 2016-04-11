@@ -13,6 +13,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import eu.xlime.bean.NewsArticleBean;
+
 public class MediaItemDaoTest {
 
 	private static final Logger log = LoggerFactory.getLogger(MediaItemDaoTest.class);
@@ -47,4 +49,5 @@ public class MediaItemDaoTest {
 		assertEquals("jjjameson65", testObj.creatorUrlToLabel("http://jjjameson65.wordpress.com#jjjameson65")); 
 		assertEquals("Daniel Cosenza", testObj.creatorUrlToLabel("https://www.facebook.com#Daniel%20Cosenza")); 
 	}
+	
 }

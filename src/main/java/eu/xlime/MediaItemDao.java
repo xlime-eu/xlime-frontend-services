@@ -1,24 +1,42 @@
 package eu.xlime;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
+import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
+import com.google.common.base.Optional;
+import com.google.common.cache.Cache;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.isoco.kontology.access.OntologyManager;
 import com.isoco.kontology.ontologies.dao.OntologyManagerImpl.UserPassword;
 import com.isoco.kontology.ontologies.dao.SesameDAOFactory;
 
 import eu.xlime.bean.Content;
+import eu.xlime.bean.Duration;
+import eu.xlime.bean.GeoLocation;
 import eu.xlime.bean.MicroPostBean;
+import eu.xlime.bean.NewsArticleBean;
+import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.UIDate;
 import eu.xlime.bean.UrlLabel;
 
 public class MediaItemDao {
@@ -39,49 +57,312 @@ public class MediaItemDao {
 	 */
 	private static double PreviewMaxLengthAllowance = 0.1;
 	
-	public MicroPostBean findMicroPost(String url) {
-		final OntologyManager ontoMan = getOntoMan(); //KPlatformInitializer.footballKT;
-		final String encUrl = "<" + url + ">";
-		String query = "PREFIX xlime: <http://xlime-project.org/vocab/> " + 
-				"PREFIX dcterms: <http://purl.org/dc/terms/> " + 
-				"PREFIX sioc: <http://rdfs.org/sioc/ns#> " + 
+	private static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
+	
+	private Cache<String, NewsArticleBean> newsCache = FileSystemCacheBuilder.newBuilder()
+			.maximumSize(5L) // In-memory, rest goes to disk
+			.persistenceDirectory(new File("target/newsCache/"))
+			.softValues()
+			.build();
 
-				"SELECT ?created ?lang ?publisher ?source ?sourceType ?content ?creator { " +  
-				encUrl + " a <http://rdfs.org/sioc/ns#MicroPost>." + 
-				encUrl + " dcterms:created ?created. " +
-				encUrl + " dcterms:language ?lang. " + 
-				encUrl + " dcterms:publisher ?publisher. " +
-				encUrl + " dcterms:source ?source. " + 
-				encUrl + " xlime:hasSourceType ?sourceType. " + 
-				" OPTIONAL { " + 
-				encUrl + " sioc:content ?content. " + 
-				"} " + 
-				encUrl + " sioc:has_creator ?creator. " + 
-				"} LIMIT 30";
-		Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+	private Cache<String, MicroPostBean> microPostCache = FileSystemCacheBuilder.newBuilder()
+			.maximumSize(5L) // In-memory, rest goes to disk
+			.persistenceDirectory(new File("target/microPostCache/"))
+			.softValues()
+			.build();
+
+	private Cache<String, TVProgramBean> tvCache = FileSystemCacheBuilder.newBuilder()
+			.maximumSize(5L) // In-memory, rest goes to disk
+			.persistenceDirectory(new File("target/tvCache/"))
+			.softValues()
+			.build();
+	
+	public Optional<NewsArticleBean> findNewsArticle(final String url) {
+		Callable<? extends NewsArticleBean> valueLoader = new Callable<NewsArticleBean>() {
+
+			@Override
+			public NewsArticleBean call() throws Exception {
+				final OntologyManager ontoMan = getOntoMan();
+				String query = qFactory.newsArticleDetails(url);
+				Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+				
+				return toNewsArticle(result, url).get();
+			}
+			
+		};
+		try {
+			return Optional.of(newsCache.get(url, valueLoader));
+		} catch (ExecutionException e) {
+			log.warn("Error loading value for " + url, e);
+			return Optional.absent();
+		}
+	}
+	
+	public Optional<MicroPostBean> findMicroPost(final String url) {
+		Callable<? extends MicroPostBean> valueLoader = new Callable<MicroPostBean>() {
+
+			@Override
+			public MicroPostBean call() throws Exception {
+				final OntologyManager ontoMan = getOntoMan();
+				String query = qFactory.microPostDetails(url);
+				Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+
+				return toMicroPost(result, url).get();
+			}
+		};
 		
-		return toMicroPost(result, url);
+		try {
+			return Optional.of(microPostCache.get(url, valueLoader));
+		} catch (ExecutionException e) {
+			log.warn("Error loading value for " + url, e);
+			return Optional.absent();
+		}
+	}
+
+	public Optional<TVProgramBean> findTVProgram(final String url) {
+		Callable<? extends TVProgramBean> valueLoader = new Callable<TVProgramBean>() {
+
+			@Override
+			public TVProgramBean call() throws Exception {
+				final OntologyManager ontoMan = getOntoMan();
+				String query = qFactory.mediaResource(url);
+				log.debug("Retrieving tv program with: " + query);
+				Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+//						mockMediaResourceResult(url);
+
+				return toTVProgramBean(result, url).get();
+			}
+		};		
+		
+		try {
+			return Optional.of(tvCache.get(url, valueLoader));
+		} catch (ExecutionException e) {
+			log.warn("Error loading value for " + url, e);
+			return Optional.absent();
+		}		
+	}
+
+	/**
+	 * Returns a list of recent media item urls, where recent means in the last <code>nMinutes</code>.
+	 *  
+	 * @param nMinutes a positive number of minutes. Used to retrieve the list of 'recent' mediaItems.
+	 * @param limit a positive number which imposes a hard-coded limit on the number of results to return.
+	 *  
+	 * @return
+	 */
+	public List<String> findLatestMediaItemUrls(int nMinutes, int limit) {
+		final OntologyManager ontoMan = getOntoMan();
+		Date now = new Date();
+		DateTimeFormatter formatter1 = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC();
+		DateTimeFormatter formatter2 = DateTimeFormat.forPattern("YYYY-MM-dd'T'HH:mm:ss");
+		long dateFrom = now.getTime() - (nMinutes * 60 * 1000);
+		long dateTo = now.getTime();
+		String query = qFactory.mediaItemUrlsByDate(dateFrom, dateTo, limit, formatter1, formatter2);
+		log.trace("Retrieving latest media items using: " + query);
+		Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+		log.debug(String.format("Found %s media items between %s and %s", result.size(), now, "" + nMinutes + " ago"));
+		return toUrlList(result);
+	}
+	
+	private List<String> toUrlList(Map<String, Map<String, String>> resultSet) {
+		if (resultSet == null || resultSet.keySet().isEmpty()) {
+			log.debug("Empty resultset ");
+			return ImmutableList.of();
+		}
+		List<String> result = new ArrayList<>();
+		for (String id: resultSet.keySet()) {
+			Map<String, String> tuple = resultSet.get(id);
+			result.add(tuple.get("s"));
+		}
+		return result;
+	}
+
+	private Map<String, Map<String, String>> mockMediaResourceResult(String url) {
+		ImmutableMap.Builder<String, String> builder = ImmutableMap.builder(); 
+		Map<String, String> result = builder
+				.put("broadcastDate", "2016-03-16T21:30:00Z")
+				.put("title", "BBC World News America")
+				.put("description", "In-depth reports on the major international and US news of the day with Katty Kay.")
+				.put("duration", "1800.0")
+				.put("publisher", "BBC World News")
+				.put("relImage", "http://images.zattic.com/system/images/fba8/c599/ebad/6852/c496/format_480x360.jpg")
+				.put("source", "http://zattoo.com/program/bbc-world-service/111277860")
+				.put("geoname", "GB")
+				.build();
+		return ImmutableMap.of("0", result);
+	}
+
+	private Optional<TVProgramBean> toTVProgramBean(
+			Map<String, Map<String, String>> resultSet, String url) {
+		if (resultSet == null || resultSet.keySet().isEmpty()) {
+			log.debug("No tv programme with " + url);
+			return Optional.absent();
+		}
+		TVProgramBean result = new TVProgramBean();
+		result.setUrl(url);
+		for (String id: resultSet.keySet()) {
+			Map<String, String> tuple = resultSet.get(id);
+			if (tuple.containsKey("broadcastDate")) {
+				String created = tuple.get("broadcastDate");
+				result.setBroadcastDate(asUIDate(extractISODate(created)));
+			}
+			if (tuple.containsKey("title")) {
+				result.setTitle(tuple.get("title"));
+			}
+			if (tuple.containsKey("description")) {
+				String content = tuple.get("description");
+				if (content != null) result.setDescription(readContent(content));
+				else result.setDescription(noDescriptionContent());
+			} else result.setDescription(noDescriptionContent());
+			if (tuple.containsKey("duration")) {
+				result.setDuration(readDuration(tuple.get("duration")));
+			}
+			if (tuple.containsKey("publisher")) {
+				result.setPublisher(readTVPublisher(tuple.get("publisher")));
+			}
+			if (tuple.containsKey("relImage")) {
+				result.setRelatedImage(tuple.get("relImage"));
+			}
+			if (tuple.containsKey("source")) {
+				result.setSource(readTVSource(tuple));
+			}
+			Optional<GeoLocation> optGeoLoc = toTVGeoLocation(tuple);
+			if (optGeoLoc.isPresent()) {
+				result.setRelatedLocation(optGeoLoc.get());
+			}
+		}
+		
+		return Optional.of(result);
+	}
+
+	private Content noDescriptionContent() {
+		Content result = new Content();
+		result.setFull("No description available");
+		return result;
+	}
+
+	private Duration readDuration(String string) {
+		Double d = Double.valueOf(string);
+		return new Duration(d);
+	}
+
+	private Optional<GeoLocation> toTVGeoLocation(Map<String, String> tuple) {
+		if (!tuple.containsKey("geoname")) return Optional.absent();
+		GeoLocation result = new GeoLocation();
+		result.setLabel(tuple.get("geoname"));
+		//TODO: can we expand zattoo's location label into a proper geoname?
+		return Optional.of(result);
+	}
+
+	private UrlLabel readTVSource(Map<String, String> tuple) {
+		UrlLabel result = new UrlLabel();
+		result.setLabel(tuple.get("publisher"));
+		result.setUrl(tuple.get("source"));
+		return result;
 	}
 
 	private OntologyManager getOntoMan() {
 		if (ontoManager != null) return ontoManager;
+		Config cfg = new Config();
 		ontoManager =
-				new SesameDAOFactory().createRemoteDAO("http://km.aifb.kit.edu/services/xlime-sparql",
-						//TODO: retrieve credentials from config file
-						new UserPassword("xlime", "Iph&aen9tahsh6aej}ah9ie"), 2.0);
+				new SesameDAOFactory().createRemoteDAO(cfg.get(Config.Opt.SparqlEndpoint),
+						new UserPassword(cfg.get(Config.Opt.SparqlUname), cfg.get(Config.Opt.SparqlPassw)), 
+						cfg.getDouble(Config.Opt.SparqlRate));
 		return ontoManager;
 	}
 	
-	private MicroPostBean toMicroPost(Map<String, Map<String, String>> resultSet,
+	private Optional<NewsArticleBean> toNewsArticle(Map<String, Map<String, String>> resultSet,
 			String url) {
-		if (resultSet == null || resultSet.keySet().isEmpty()) throw new RuntimeException("No microPost with " + url);
+		if (resultSet == null || resultSet.keySet().isEmpty()) {
+			log.debug("No newsArticle with " + url);
+			return Optional.absent();
+		}
+		NewsArticleBean result = new NewsArticleBean();
+		result.setUrl(url);
+		for (String id: resultSet.keySet()) {
+			Map<String, String> tuple = resultSet.get(id);
+			if (tuple.containsKey("created")) {
+				String created = tuple.get("created");
+				result.setCreated(asUIDate(extractISODate(created)));
+			}
+			if (tuple.containsKey("lang")) {
+				result.setLang(tuple.get("lang"));
+			}
+			if (tuple.containsKey("publisher")) {
+				result.setPublisher(readPublisher(tuple.get("publisher")));
+			} else if (tuple.containsKey("source")) {
+				result.setPublisher(readPublisherFromSource(tuple.get("source")));
+			}
+			if (tuple.containsKey("source")) {
+				result.setSource(tuple.get("source"));
+			}
+			if (tuple.containsKey("title")) {
+				result.setTitle(tuple.get("title"));
+			}
+			if (tuple.containsKey("content")) {
+				String content = tuple.get("content");
+				if (content != null) result.setContent(readContent(content));
+			}
+			Optional<GeoLocation> optGeoLoc = toGeoLocation(tuple);
+			if (optGeoLoc.isPresent()) {
+				result.setLocation(optGeoLoc.get());
+			}
+		}
+		
+		return Optional.of(result);
+	}
+	
+	private UrlLabel readPublisherFromSource(String sourceUrl) {
+		try {
+			URI uri = URI.create(sourceUrl);
+			UrlLabel result = new UrlLabel();
+			String host = uri.getHost();
+			if (host == null) return null;
+			result.setLabel(host);
+			result.setUrl(host);
+			return result;
+		} catch (Exception e) {
+			log.warn("Failed to extract publisher from sourceUrl" + sourceUrl);
+			return null;
+		}
+	}
+
+	private Optional<GeoLocation> toGeoLocation(Map<String, String> tuple) {
+		if (tuple == null || tuple.keySet().isEmpty()) return Optional.absent();
+		if (!tuple.keySet().containsAll(ImmutableSet.of("geolat", "geolong"))) {
+			log.warn("Cannot extract geolocation from tuple due to mising 'geolat' or 'geolong' properties. Available properties: " + tuple.keySet());
+			if (log.isTraceEnabled()) {
+				log.trace("Original tuple " + tuple);
+			}
+			return Optional.absent();
+		}
+		GeoLocation result = new GeoLocation();
+		if (tuple.containsKey("geolat")) {
+			String geolat = tuple.get("geolat");
+			result.setLat(asFloat(geolat));
+		}
+		if (tuple.containsKey("geolon")) {
+			result.setLon(asFloat(tuple.get("geolon")));
+		}
+		if (tuple.containsKey("geoname")) {
+			result.setLabel(tuple.get("geoname"));
+		}
+		return Optional.of(result);
+	}
+	
+	private Optional<MicroPostBean> toMicroPost(Map<String, Map<String, String>> resultSet,
+			String url) {
+		if (resultSet == null || resultSet.keySet().isEmpty()) {
+			log.debug("No microPost with " + url);
+			return Optional.absent();
+		}
 		MicroPostBean result = new MicroPostBean();
 		result.setUrl(url);
 		for (String id: resultSet.keySet()) {
 			Map<String, String> tuple = resultSet.get(id);
 			if (tuple.containsKey("created")) {
 				String created = tuple.get("created");
-				result.setCreated(extractISODate(created));
+				result.setCreated(asUIDate(extractISODate(created)));
 			}
 			if (tuple.containsKey("lang")) {
 				result.setLang(tuple.get("lang"));
@@ -104,7 +385,15 @@ public class MediaItemDao {
 			}
 		}
 		
-		return result;
+		return Optional.of(result);
+	}
+	
+	private UIDate asUIDate(Date aDate) {
+		return new UIDate(aDate);
+	}
+
+	private float asFloat(String val) {
+		return Float.valueOf(val);
 	}
 	
 	private UrlLabel readCreator(String creatorUrl) {
@@ -175,6 +464,13 @@ public class MediaItemDao {
 		return result;
 	}
 
+	private UrlLabel readTVPublisher(String pubLabel) {
+		UrlLabel result = new UrlLabel();
+//		result.setUrl(); //unknown? can we map to a page on zattoo for the channel?
+		result.setLabel(pubLabel);
+		return result;
+	}
+	
 	private String pubUrlToLabel(String pubUrl) {
 		if (pubUrl.contains("/www.twitter.com")) return "Twitter";
 		if (pubUrl.contains("/plus.google.com")) return "Google+";
@@ -223,7 +519,7 @@ public class MediaItemDao {
 		try {
 			return parser.parseDateTime(dateTime).toDate();
 		} catch (IllegalArgumentException e) {
-			log.warn("Found invalid ISODate " + dateTime, e);
+			log.trace("Found invalid ISODate " + dateTime + " Attempting failback format..");
 			return failbackDateNoTimezone(dateTime);
 		}
 	}
