@@ -4,8 +4,6 @@
   <artifactId>frontend-services</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <description>Web-service layer for the xLiMe project providing services that facilitate building user interfaces  
-  </description>
   <name>xLiMe Public Front-end Services webapp</name>
   <url>http://xlime-project.eu/PubServices/</url>
   <prerequisites>
@@ -242,4 +240,5 @@
     </issueManagement>
         -->
 
+  <description>Web-service layer for the xLiMe project providing services that facilitate building user interfaces</description>
 </project>
