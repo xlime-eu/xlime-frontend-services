@@ -3,13 +3,15 @@ package eu.xlime.summa.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import eu.xlime.bean.XLiMeResource;
+
 /**
  * A basic representation of an Entity.
  * 
  * @author RDENAUX
  *
  */
-public class UIEntity implements Serializable {
+public class UIEntity implements XLiMeResource {
 
 	private static final long serialVersionUID = 3490645737153292348L;
 

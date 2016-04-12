@@ -67,12 +67,9 @@ public class ServicesResourceJerseyTest extends JerseyTest {
 		
 		Response response = res.request().get();
 		System.out.println("Response: " + response);
-		assertEquals(200, response.getStatus());
+		assertEquals(500, response.getStatus());
 		assertEquals(MediaType.APPLICATION_JSON_TYPE, response.getMediaType());
 		System.out.println(response.getLength());
-		String resp = res.request().get(String.class);
-		System.out.println(resp);
-		assertNotNull(resp);
 	}
 	
 	@Test

@@ -5,7 +5,7 @@ import java.util.Date;
 //import org.eclipse.persistence.oxm.annotations.XmlDiscriminatorValue;
 
 //@XmlDiscriminatorValue("http://kdo.render-project.eu/kdo#NewsArticle")
-public class NewsArticleBean extends MediaItem {
+public class NewsArticleBean implements MediaItem {
 
 	private String url;
 	

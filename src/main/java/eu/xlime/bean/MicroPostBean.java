@@ -5,7 +5,7 @@ import java.util.Date;
 //import org.eclipse.persistence.oxm.annotations.XmlDiscriminatorValue;
 
 //@XmlDiscriminatorValue("http://rdfs.org/sioc/ns#MicroPost")
-public class MicroPostBean extends MediaItem {
+public class MicroPostBean implements MediaItem {
 
 	private String url;
 	

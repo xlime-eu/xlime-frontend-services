@@ -5,16 +5,33 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import eu.xlime.summa.bean.UIEntity;
-import eu.xlime.summa.bean.UIEntityFactory;
 
 public class UIEntityFactoryITCase {
 
 	@Test
-	public void testFindNewsArticle() {
+	public void testRetrieveFromUri() {
 		UIEntityFactory factory = UIEntityFactory.instance;
 		UIEntity entity = factory.retrieveFromUri("http://dbpedia.org/resource/Berlin");
 		System.out.println("Found entity " + entity);
 		assertNotNull(entity);
+	}
+
+	@Test
+	public void testRetrieveFromUri2() {
+		UIEntityFactory factory = UIEntityFactory.instance;
+		UIEntity entity = factory.retrieveFromUri("http://dbpedia.org/resource/S&P_500_Index");
+		System.out.println("Found entity " + entity);
+		assertNotNull(entity);
+	}
+
+	@Test
+	public void testRetrieveFromUri3() {
+		UIEntityFactory factory = UIEntityFactory.instance;
+		UIEntity entity = factory.retrieveFromUri("http://dbpedia.org/resource/Sneakers_%28footwear%29");
+		System.out.println("Found entity " + entity);
+		assertNotNull(entity);
+		entity = factory.retrieveFromUri("http://dbpedia.org/resource/Sneakers_(footwear)");
+		System.out.println("Found entity " + entity);
 	}
 	
 	@Test

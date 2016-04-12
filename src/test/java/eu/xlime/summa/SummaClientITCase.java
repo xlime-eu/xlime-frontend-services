@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import com.google.common.base.Optional;
 
-import eu.xlime.SummaClient;
 import eu.xlime.summa.bean.EntitySummary;
 
 /**

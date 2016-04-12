@@ -1,6 +1,6 @@
 package eu.xlime.bean;
 
-public class TVProgramBean extends MediaItem {
+public class TVProgramBean implements MediaItem {
 
 	private static final long serialVersionUID = -6229457491463595552L;
 

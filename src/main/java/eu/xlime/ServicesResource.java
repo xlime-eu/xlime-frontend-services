@@ -18,7 +18,13 @@ import com.google.common.base.Optional;
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MediaItemListBean;
+import eu.xlime.dao.MediaItemAnnotationDao;
+import eu.xlime.dao.MediaItemDao;
+import eu.xlime.sphere.SpheresFactory;
+import eu.xlime.sphere.bean.Spheres;
+import eu.xlime.summa.SummaClient;
 import eu.xlime.summa.bean.EntitySummary;
+import eu.xlime.util.ResourceTypeResolver;
 
 @Path("/services")
 public class ServicesResource {
@@ -28,6 +34,7 @@ public class ServicesResource {
 	private static final MediaItemDao mediaItemDao = new MediaItemDao();
 	private static final MediaItemAnnotationDao mediaItemAnnotationDao = new MediaItemAnnotationDao();
 	private static final SummaClient summaClient = new SummaClient();
+	private static final SpheresFactory spheresFactory = new SpheresFactory();	
 	
 	public ServicesResource() {
 		log.info("Created " + this.getClass().getSimpleName());
@@ -58,6 +65,14 @@ public class ServicesResource {
 		log.info(msg);
 //		System.out.println(msg);
 		return Response.ok(milb).build();
+	}
+	
+	@GET
+	@Path("/spheres")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response spheres(@QueryParam("context") List<String> context) {
+		Spheres spheres = spheresFactory.buildSpheres(context);
+		return Response.ok(spheres).build();
 	}
 	
 	@GET
@@ -126,24 +141,11 @@ public class ServicesResource {
 	}
 
 	final Optional<? extends MediaItem> findMediaItem(String url) {
-		if (url.startsWith("http://ijs.si/article/"))
-			return mediaItemDao.findNewsArticle(url);
-		else if (url.startsWith("http://vico-research.com/social/"))
-			return mediaItemDao.findMicroPost(url);
-		else if (url.startsWith("http://zattoo.com/program/"))
-			return mediaItemDao.findTVProgram(url);
-		else throw new RuntimeException("Cannot map url to a known xLiMe media-item type " + url);
+		return mediaItemDao.findMediaItem(url);
 	}
 	
 	final List<EntityAnnotation> findAnnotations(String url) {
-		if (url.startsWith("http://ijs.si/article/"))
-			return mediaItemAnnotationDao.findNewsArticleEntityAnnotations(url);
-		else if (url.startsWith("http://vico-research.com/social/"))
-			return mediaItemAnnotationDao.findMicroPostEntityAnnotations(url);
-		else if (url.startsWith("http://zattoo.com/program/"))
-//			return mediaItemAnnotationDao.findTVProgram(url);
-			throw new RuntimeException("tv programmes not supported yet");
-		else throw new RuntimeException("Cannot map url to a known xLiMe media-item type " + url);
+		return mediaItemAnnotationDao.findMediaItemEntityAnnotations(url);
 	}
 	
 }
