@@ -1,4 +1,4 @@
-package eu.xlime.util;
+package eu.xlime.sparql;
 
 import static org.junit.Assert.*;
 
@@ -8,8 +8,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Test;
-
-import eu.xlime.util.SparqlQueryFactory;
 
 public class SparqlQueryFactoryTest {
 

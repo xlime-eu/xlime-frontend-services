@@ -35,6 +35,14 @@ Web-service layer for the [xLiMe project](http://xlime.eu) that facilitates buil
  * input parameters:
  ** **url**: one or more URLs of xLiMe media-items for which you want to get annotations.
  * output: json object describing the xLiMe annotations of the media-items.
+ 
+## `spheres`
+
+ Returns a set of recommendations given a context of xLiMe resources.
+ 
+ * input parameters:
+ ** **context**: one or more URLs of xLiMe resources for which you want to get annotations.
+ * output: json object describing the recommendation spheres. Each recommendation contains an xLiMe resource (media item, KB entity, etc.)
 
 # Running
 
@@ -45,9 +53,9 @@ Until we provide releases, you can run a local instance of this project by execu
 ##Notes
 Currently this project requires:
 * access to credentials to non-public back-end xLiMe services such as the `xLiMe` Sparql endpoint
-* `KOntology`, a proprietary library for executing Sparql queries
 
-Furthermore, to work correctly, a custom version of `guava-cache-overflow-extension`
+Furthermore, to work correctly, a custom version of [`guava-cache-overflow-extension`](http://github.com/rdenaux/guava-cache-overflow-extension) 
+needs to be used (it fixes caching of values based on URL keys, which fail on windows due to invalid characters in filenames). 
 
 
 Licensed under the Apache Software License, Version 2.0

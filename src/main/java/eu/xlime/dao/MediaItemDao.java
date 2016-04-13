@@ -26,12 +26,7 @@ import com.google.common.cache.Cache;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.isoco.kontology.access.OntologyManager;
-import com.isoco.kontology.ontologies.dao.OntologyManagerImpl.UserPassword;
-import com.isoco.kontology.ontologies.dao.SesameDAOFactory;
 
-import eu.xlime.Config;
-import eu.xlime.Config.Opt;
 import eu.xlime.bean.Content;
 import eu.xlime.bean.Duration;
 import eu.xlime.bean.GeoLocation;
@@ -42,15 +37,21 @@ import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.UIDate;
 import eu.xlime.bean.UrlLabel;
 import eu.xlime.bean.VideoSegment;
+import eu.xlime.sparql.SparqlClient;
+import eu.xlime.sparql.SparqlClientFactory;
+import eu.xlime.sparql.SparqlQueryFactory;
 import eu.xlime.util.ResourceTypeResolver;
-import eu.xlime.util.SparqlQueryFactory;
 
+/**
+ * Provides methods for retrieving {@link MediaItem} beans.
+ * 
+ * @author RDENAUX
+ *
+ */
 public class MediaItemDao {
 
 	private static final Logger log = LoggerFactory.getLogger(MediaItemDao.class);
 	
-	private static OntologyManager ontoManager;
-
 	/**
 	 * The 'ideal' maximum number of characters to allow in a Content preview.
 	 * This limit is 'soft' in the sense that  
@@ -99,9 +100,9 @@ public class MediaItemDao {
 
 			@Override
 			public NewsArticleBean call() throws Exception {
-				final OntologyManager ontoMan = getOntoMan();
+				final SparqlClient sparqler = getXLiMeSparqlClient();
 				String query = qFactory.newsArticleDetails(url);
-				Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+				Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
 				
 				return toNewsArticle(result, url).get();
 			}
@@ -120,9 +121,9 @@ public class MediaItemDao {
 
 			@Override
 			public MicroPostBean call() throws Exception {
-				final OntologyManager ontoMan = getOntoMan();
+				final SparqlClient sparqler = getXLiMeSparqlClient();
 				String query = qFactory.microPostDetails(url);
-				Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+				Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
 
 				return toMicroPost(result, url).get();
 			}
@@ -141,10 +142,10 @@ public class MediaItemDao {
 
 			@Override
 			public TVProgramBean call() throws Exception {
-				final OntologyManager ontoMan = getOntoMan();
+				final SparqlClient sparqler = getXLiMeSparqlClient();
 				String query = qFactory.mediaResource(url);
 				log.debug("Retrieving tv program with: " + query);
-				Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+				Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
 //						mockMediaResourceResult(url);
 
 				return toTVProgramBean(result, url).get();
@@ -173,7 +174,7 @@ public class MediaItemDao {
 	 * @return
 	 */
 	public List<String> findLatestMediaItemUrls(int nMinutes, int limit) {
-		final OntologyManager ontoMan = getOntoMan();
+		final SparqlClient sparqler = getXLiMeSparqlClient();
 		Date now = new Date();
 		DateTimeFormatter formatter1 = ISODateTimeFormat.dateTimeNoMillis().withZoneUTC();
 		DateTimeFormatter formatter2 = DateTimeFormat.forPattern("YYYY-MM-dd'T'HH:mm:ss");
@@ -181,7 +182,7 @@ public class MediaItemDao {
 		long dateTo = now.getTime();
 		String query = qFactory.mediaItemUrlsByDate(dateFrom, dateTo, limit, formatter1, formatter2);
 		log.trace("Retrieving latest media items using: " + query);
-		Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
 		log.debug(String.format("Found %s media items between %s and %s", result.size(), now, "" + nMinutes + " ago"));
 		return toUrlList(result);
 	}
@@ -199,6 +200,7 @@ public class MediaItemDao {
 		return result;
 	}
 
+	@Deprecated 
 	private Map<String, Map<String, String>> mockMediaResourceResult(String url) {
 		ImmutableMap.Builder<String, String> builder = ImmutableMap.builder(); 
 		Map<String, String> result = builder
@@ -283,14 +285,8 @@ public class MediaItemDao {
 		return result;
 	}
 
-	private OntologyManager getOntoMan() {
-		if (ontoManager != null) return ontoManager;
-		Config cfg = new Config();
-		ontoManager =
-				new SesameDAOFactory().createRemoteDAO(cfg.get(Config.Opt.SparqlEndpoint),
-						new UserPassword(cfg.get(Config.Opt.SparqlUname), cfg.get(Config.Opt.SparqlPassw)), 
-						cfg.getDouble(Config.Opt.SparqlRate));
-		return ontoManager;
+	private SparqlClient getXLiMeSparqlClient() {
+		return new SparqlClientFactory().getXliMeSparqlClient();
 	}
 	
 	private Optional<NewsArticleBean> toNewsArticle(Map<String, Map<String, String>> resultSet,

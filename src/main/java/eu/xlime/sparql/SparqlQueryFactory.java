@@ -1,4 +1,4 @@
-package eu.xlime.util;
+package eu.xlime.sparql;
 
 import java.util.ArrayList;
 import java.util.List;

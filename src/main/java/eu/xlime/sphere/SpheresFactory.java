@@ -3,9 +3,14 @@ package eu.xlime.sphere;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 
 import eu.xlime.bean.XLiMeResource;
+import eu.xlime.dao.xLiMeResourceDao;
 import eu.xlime.sphere.bean.Recommendation;
 import eu.xlime.sphere.bean.Spheres;
 import eu.xlime.util.ResourceTypeResolver;
@@ -18,7 +23,9 @@ import eu.xlime.util.ResourceTypeResolver;
  */
 public class SpheresFactory {
 
+	private static final Logger log = LoggerFactory.getLogger(SpheresFactory.class);
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
+	private static final xLiMeResourceDao resourceDao = new xLiMeResourceDao();
 		
 	public Spheres buildSpheres(List<String> contextUrls) {
 		Spheres result = new Spheres();
@@ -36,7 +43,13 @@ public class SpheresFactory {
 
 	private List<Recommendation> calcInterSphere(List<XLiMeResource> context) {
 		// TODO implement
-		return ImmutableList.of();
+		return mockInterSphere();
+	}
+
+	private List<Recommendation> mockInterSphere() {
+		List<Recommendation> result = new ArrayList<>();
+		//TODO implement
+		return result;
 	}
 
 	private List<Recommendation> asTopRecommendations(
@@ -62,7 +75,16 @@ public class SpheresFactory {
 	 * @return
 	 */
 	private List<XLiMeResource> resolveContextUrls(List<String> contextUrls) {
-		//TODO: implement this method using typeResolver and the various daos 
-		return ImmutableList.of();
+		List<XLiMeResource> result = new ArrayList<>();
+		for (String uri: contextUrls) {
+			try {
+				Optional<? extends XLiMeResource> optRes = resourceDao.retrieve(uri);
+				if (optRes.isPresent()) result.add(optRes.get());
+			} catch (Exception e) {
+				if (log.isDebugEnabled()) 
+					log.error("Error retrieving xLiMeResource from " + uri, e);
+			}
+		}
+		return result;
 	}
 }

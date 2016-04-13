@@ -1,7 +1,6 @@
 package eu.xlime.summa;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -15,19 +14,16 @@ import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.collect.ImmutableList;
-import com.isoco.kontology.access.OntologyManager;
-import com.isoco.kontology.ontologies.dao.SesameDAOFactory;
 
-import eu.xlime.Config;
+import eu.xlime.sparql.SparqlClient;
+import eu.xlime.sparql.SparqlClientFactory;
+import eu.xlime.sparql.SparqlQueryFactory;
 import eu.xlime.summa.bean.UIEntity;
-import eu.xlime.util.SparqlQueryFactory;
 
 public class UIEntityFactory {
 
 	public static final Logger log = LoggerFactory.getLogger(UIEntityFactory.class.getName());
 	
-	private OntologyManager dbpOntoManager;
-
 	public static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
 	public static final UIEntityFactory instance = new UIEntityFactory();
 	
@@ -85,10 +81,10 @@ public class UIEntityFactory {
 				String msg = "Retrieve " + entUri + " from dbpedia"; 
 				log.info(msg);
 				System.out.println(msg);
-				OntologyManager om = getDBpediaOntoMan();
+				SparqlClient sparqler = getDBpediaSparqlClient();
 				String query = qFactory.dbpediaUIEntity(entUri, "en");
 				log.debug("Retrieving entity info using: " + query);
-				Map<String, Map<String, String>> result = om.executeAdHocSPARQLQuery(query);
+				Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
 
 				return toUIEntity(result, entUri).get();
 			}
@@ -131,14 +127,8 @@ public class UIEntityFactory {
 		return Optional.of(result);
 	}
 
-	private OntologyManager getDBpediaOntoMan() {
-		if (dbpOntoManager != null) return dbpOntoManager;
-		Config cfg = new Config();
-		dbpOntoManager =
-				new SesameDAOFactory().createRemoteDAO(
-						cfg.get(Config.Opt.DBpediaSparqlEndpoint),
-						cfg.getDouble(Config.Opt.DBpediaSparqlRate));
-		return dbpOntoManager;
+	private SparqlClient getDBpediaSparqlClient() {
+		return new SparqlClientFactory().getDBpediaSparqlClient();
 	}
 	
 }

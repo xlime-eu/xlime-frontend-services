@@ -3,7 +3,7 @@
   <groupId>eu.xlime</groupId>
   <artifactId>frontend-services</artifactId>
   <packaging>war</packaging>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
   <name>xLiMe Public Front-end Services webapp</name>
   <url>http://xlime-eu.github.io/</url>
   <prerequisites>
@@ -16,8 +16,34 @@
 		see http://maven.apache.org/plugins/maven-project-info-reports-plugin/dependencies-mojo.html -->
 	<dependency.locations.enabled>false</dependency.locations.enabled>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<sesame-version>2.7.16</sesame-version>
   </properties>
   <dependencies>
+  	<dependency>
+  		<groupId>org.openrdf.sesame</groupId>
+  		<artifactId>sesame-repository-api</artifactId>
+  		<version>${sesame-version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.openrdf.sesame</groupId>
+  		<artifactId>sesame-repository-http</artifactId>
+  		<version>${sesame-version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.openrdf.sesame</groupId>
+  		<artifactId>sesame-query</artifactId>
+  		<version>${sesame-version}</version>
+  	</dependency>
+	<dependency>
+		<groupId>org.openrdf.sesame</groupId>
+		<artifactId>sesame-repository-sail</artifactId>
+		<version>${sesame-version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.openrdf.sesame</groupId>
+		<artifactId>sesame-repository-sparql</artifactId>
+		<version>${sesame-version}</version>
+	</dependency>
   	<dependency>
   		<groupId>org.glassfish.jersey.containers</groupId>
   		<artifactId>jersey-container-servlet</artifactId>
@@ -34,44 +60,12 @@
     	<artifactId>jersey-media-json-jackson</artifactId>
     	<version>2.22.2</version>
 	</dependency>	
-  <!-- 
-    <dependency>
-    	<groupId>com.sun.jersey</groupId>
-    	<artifactId>jersey-json</artifactId>
-    	<version>1.19.1</version>
-    </dependency>
-    <dependency>
-    	<groupId>com.sun.jersey</groupId>
-    	<artifactId>jersey-server</artifactId>
-    	<version>1.19.1</version>
-    </dependency>
-    <dependency>
-    	<groupId>com.sun.jersey</groupId>
-    	<artifactId>jersey-client</artifactId>
-    	<version>1.19.1</version>
-    </dependency>
-    <dependency>
-    	<groupId>com.sun.jersey.contribs</groupId>
-    	<artifactId>jersey-multipart</artifactId>
-    	<version>1.19.1</version>
-    </dependency>
-    <dependency>
-    	<groupId>com.sun.jersey</groupId>
-    	<artifactId>jersey-servlet</artifactId>
-    	<version>1.19.1</version>
-    </dependency>
-     -->
     <dependency>
     	<groupId>javax.servlet</groupId>
     	<artifactId>javax.servlet-api</artifactId>
     	<version>3.1.0</version>
     	<scope>provided</scope>
     </dependency>
-	<dependency>
-		<groupId>com.isoco.lab</groupId>
-		<artifactId>KOntology</artifactId>
-		<version>0.1.4</version>
-	</dependency>
 	<dependency>
 		<groupId>org.eclipse.jetty</groupId>
 		<artifactId>jetty-servlets</artifactId>
@@ -92,6 +86,11 @@
     	<groupId>org.slf4j</groupId>
     	<artifactId>slf4j-log4j12</artifactId>
     	<version>1.7.10</version>
+    </dependency>
+    <dependency>
+    	<groupId>commons-logging</groupId>
+    	<artifactId>commons-logging-api</artifactId>
+    	<version>1.1</version>
     </dependency>
 	<dependency>
     	<groupId>org.glassfish.jersey.test-framework.providers</groupId>

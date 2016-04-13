@@ -18,10 +18,11 @@ import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.collect.ImmutableSet;
-import com.isoco.kontology.access.OntologyManager;
-import com.isoco.kontology.ontologies.dao.SesameDAOFactory;
 
 import eu.xlime.Config;
+import eu.xlime.sparql.SparqlClient;
+import eu.xlime.sparql.SparqlClientFactory;
+import eu.xlime.sparql.SparqlQueryFactory;
 
 /**
  * Provides services for mapping entity URIs from different KBs or different languages to
@@ -32,7 +33,7 @@ import eu.xlime.Config;
  */
 public class KBEntityMapper {
 	
-	private OntologyManager dbpOntoManager;
+	private SparqlClient dbpSparqlClient;
 
 	private static final Logger log = LoggerFactory.getLogger(KBEntityMapper.class);
 	
@@ -81,10 +82,10 @@ public class KBEntityMapper {
 			public Set<?> call() throws Exception {
 				String msg = "Retrieve sameAs " + langDBpediaRes + " from dbpedia"; 
 				log.info(msg);
-				OntologyManager om = getDBpediaOntoMan();
+				SparqlClient om = getDBpediaSparqlClient();
 				String query = qFactory.sameAs(langDBpediaRes);
 				log.trace("query: " + query);
-				Map<String, Map<String, String>> result = om.executeAdHocSPARQLQuery(query);
+				Map<String, Map<String, String>> result = om.executeSPARQLQuery(query);
 
 				return extractSet(result, "sameAs");
 			}
@@ -184,14 +185,8 @@ public class KBEntityMapper {
 		return !langWhitelist.contains(lang);
 	}
 
-	private OntologyManager getDBpediaOntoMan() {
-		if (dbpOntoManager != null) return dbpOntoManager;
-		Config cfg = new Config();
-		dbpOntoManager =
-				new SesameDAOFactory().createRemoteDAO(
-						cfg.get(Config.Opt.DBpediaSparqlEndpoint),
-						cfg.getDouble(Config.Opt.DBpediaSparqlRate));
-		return dbpOntoManager;
+	private SparqlClient getDBpediaSparqlClient() {
+		return new SparqlClientFactory().getDBpediaSparqlClient();
 	}
 
 	final String decodedUrl(String url) {

@@ -10,26 +10,22 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
-import com.isoco.kontology.access.OntologyManager;
-import com.isoco.kontology.ontologies.dao.OntologyManagerImpl.UserPassword;
-import com.isoco.kontology.ontologies.dao.SesameDAOFactory;
 
-import eu.xlime.Config;
 import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.AnnotationPosition;
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.OCRAnnotation;
+import eu.xlime.sparql.SparqlClient;
+import eu.xlime.sparql.SparqlClientFactory;
+import eu.xlime.sparql.SparqlQueryFactory;
 import eu.xlime.summa.UIEntityFactory;
 import eu.xlime.util.KBEntityMapper;
 import eu.xlime.util.ResourceTypeResolver;
-import eu.xlime.util.SparqlQueryFactory;
 
 public class MediaItemAnnotationDao {
 
 	private static final Logger log = LoggerFactory.getLogger(MediaItemAnnotationDao.class);
 	
-	private static OntologyManager ontoManager;
-
 	private static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
 	private static final KBEntityMapper kbEntityMapper = new KBEntityMapper();	
@@ -47,18 +43,22 @@ public class MediaItemAnnotationDao {
 	
 	public List<EntityAnnotation> findMicroPostEntityAnnotations(final String url) {
 		log.trace("Finding entity annotations for micropost " + url);
-		final OntologyManager ontoMan = getOntoMan();
+		final SparqlClient sparqler = getXliMeSparqlClient();
 		String query = qFactory.microPostEntityAnnotations(url);
-		Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
 		
 		return toEntityAnnotations(result, url);
 	}
 	
+	private SparqlClient getXliMeSparqlClient() {
+		return new SparqlClientFactory().getXliMeSparqlClient();
+	}
+
 	public List<EntityAnnotation> findNewsArticleEntityAnnotations(final String url) {
 		log.trace("Finding entity annotations for newsarticle " + url);
-		final OntologyManager ontoMan = getOntoMan();
+		final SparqlClient sparqler = getXliMeSparqlClient();
 		String query = qFactory.newsArticleEntityAnnotations(url);
-		Map<String, Map<String, String>> result = ontoMan.executeAdHocSPARQLQuery(query);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
 		
 		return toEntityAnnotations(result, url);
 	}
@@ -159,16 +159,6 @@ public class MediaItemAnnotationDao {
 			return Optional.absent();
 		}
 		return Optional.of(pos);
-	}
-
-	private OntologyManager getOntoMan() {
-		if (ontoManager != null) return ontoManager;
-		Config cfg = new Config();
-		ontoManager =
-				new SesameDAOFactory().createRemoteDAO(cfg.get(Config.Opt.SparqlEndpoint),
-						new UserPassword(cfg.get(Config.Opt.SparqlUname), cfg.get(Config.Opt.SparqlPassw)), 
-						cfg.getDouble(Config.Opt.SparqlRate));
-		return ontoManager;
 	}
 
 
