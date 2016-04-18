@@ -3,7 +3,7 @@
   <groupId>eu.xlime</groupId>
   <artifactId>frontend-services</artifactId>
   <packaging>war</packaging>
-  <version>0.0.3</version>
+  <version>0.0.4-SNAPSHOT</version>
   <name>xLiMe Public Front-end Services webapp</name>
   <url>http://xlime-eu.github.io/</url>
   <prerequisites>
@@ -224,6 +224,10 @@
   	<developer>
   		<name>Ronald Denaux</name>
   		<email>rdenaux@expertsystem.com</email>
+  	</developer>
+  	<developer>
+  		<name>Nuria García</name>
+  		<email>ngarcia@expertsystem.com</email>
   	</developer>
   </developers>
   <scm>
