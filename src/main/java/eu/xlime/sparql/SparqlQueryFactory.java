@@ -87,23 +87,31 @@ public class SparqlQueryFactory {
 		"}";
 	}
 	
+	
 	public String microPostDetails(String url) {
+		//TODO: I think VICO is now uploading more info about creator... test
 		final String encUrl = "<" + url + ">";
 		return "PREFIX xlime: <http://xlime-project.org/vocab/> " + 
 				"PREFIX dcterms: <http://purl.org/dc/terms/> " + 
 				"PREFIX sioc: <http://rdfs.org/sioc/ns#> " + 
 
-				"SELECT ?created ?lang ?publisher ?source ?sourceType ?content ?creator { " +  
+				"SELECT ?created ?lang ?publisher ?pubName ?source ?sourceType ?content ?creator ?creatorLabel { " +  
 				encUrl + " a <http://rdfs.org/sioc/ns#MicroPost>." + 
 				encUrl + " dcterms:created ?created. " +
 				encUrl + " dcterms:language ?lang. " + 
 				encUrl + " dcterms:publisher ?publisher. " +
+				" OPTIONAL { " +
+				  "?publisher rdfs:label ?pubName. " + 
+				" } " + 
 				encUrl + " dcterms:source ?source. " + 
 				encUrl + " xlime:hasSourceType ?sourceType. " + 
 				" OPTIONAL { " + 
 				encUrl + " sioc:content ?content. " + 
 				"} " + 
 				encUrl + " sioc:has_creator ?creator. " + 
+				" OPTIONAL { " +
+				  " ?creator sioc:name ?creatorLabel . " + 
+				"} " +
 				"} LIMIT 30";		
 	}
 	
@@ -193,6 +201,18 @@ public class SparqlQueryFactory {
 				String.format("} LIMIT %s", limit);
 	}
 
+	public String mediaResourceOCRAnnotations(String mediaResUrl) {
+		final String encUrl = "<" + mediaResUrl + ">";
+		return "PREFIX sioc: <http://rdfs.org/sioc/ns#> " + 
+			"PREFIX ma: <http://www.w3.org/ns/ma-ont#> " + 
+
+			"SELECT ?vidTrack ?ocr { " +  
+			encUrl + " ma:hasTrack ?vidTrack. " +
+			" ?vidTrack a ma:VideoTrack. " +
+			" ?vidTrack sioc:content ?ocr. " +
+			"} LIMIT 30 ";
+	}
+	
 	private Object dateFilter(String var, long dateFrom, long dateTo,
 			DateTimeFormatter[] dateFormats) {
 		List<String> subFilters = new ArrayList<>();

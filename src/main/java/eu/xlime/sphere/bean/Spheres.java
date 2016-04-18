@@ -18,6 +18,8 @@ import eu.xlime.bean.XLiMeResource;
  */
 public class Spheres implements Serializable {
 
+	private static final long serialVersionUID = 4151133154497014201L;
+	
 	private String name;
 	private String type;
 	private String uri;
@@ -61,7 +63,5 @@ public class Spheres implements Serializable {
 	public void setOuter(List<Recommendation> outer) {
 		this.outer = outer;
 	}
-	
-	
 	
 }

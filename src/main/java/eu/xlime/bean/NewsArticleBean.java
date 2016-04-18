@@ -1,11 +1,12 @@
 package eu.xlime.bean;
 
-import java.util.Date;
 
 //import org.eclipse.persistence.oxm.annotations.XmlDiscriminatorValue;
 
 //@XmlDiscriminatorValue("http://kdo.render-project.eu/kdo#NewsArticle")
 public class NewsArticleBean implements MediaItem {
+
+	private static final long serialVersionUID = -6418249353449068589L;
 
 	private String url;
 	

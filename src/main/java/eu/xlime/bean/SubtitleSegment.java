@@ -8,6 +8,8 @@ package eu.xlime.bean;
  */
 public class SubtitleSegment implements XLiMeResource {
 
+	private static final long serialVersionUID = -7386984941969124365L;
+
 	private VideoSegment partOf;
 	
 	private String text;

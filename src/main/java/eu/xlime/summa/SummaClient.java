@@ -1,6 +1,5 @@
 package eu.xlime.summa;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.concurrent.Callable;
@@ -24,11 +23,12 @@ import org.openrdf.rio.helpers.StatementCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 
+import eu.xlime.Config;
 import eu.xlime.summa.bean.EntitySummary;
+import eu.xlime.util.CacheFactory;
 
 /**
  * Java client implementation for the <a href="https://github.com/athalhammer/summaServer">Summa server</code>.
@@ -46,12 +46,8 @@ public class SummaClient {
 	 * Cache for recently retrieved summa{@link Model}s. Avoids having to call 
 	 * the summa server too often when requesting known entityUrls.
 	 */
-	private static Cache<String, Model> summaModelCache = FileSystemCacheBuilder.newBuilder()
-			.maximumSize(1L) // In-memory, rest goes to disk
-			.persistenceDirectory(new File("target/summaModelCache/"))
-			.softValues()
-			.build();
-
+	private static Cache<String, Model> summaModelCache = CacheFactory.instance.buildCache("summaModelCache");
+	
 	public Optional<Model> retrieveSummaryModel(final String entityUrl) {
 		Callable<? extends Model> valueLoader = new Callable<Model>() {
 			@Override
@@ -71,13 +67,18 @@ public class SummaClient {
 
 	private Optional<Model> retrieveSummaModelFromServer(String entityUrl) {
 		log.debug("Retrieving Summary Model for " + entityUrl);
+		Config cfg = new Config();
+		String summaServerUrl = cfg.get(Config.Opt.SummaServerUrl);
+		String summaServerPath = cfg.get(Config.Opt.SummaServerPath);
+		int summaTopK = cfg.getInt(Config.Opt.SummaTopK);
+		
 		Client client = ClientBuilder.newClient();
-		WebTarget summa = client.target("http://km.aifb.kit.edu/services/summa/");
-		WebTarget summarum = summa.path("summarum");
+		WebTarget summa = client.target(summaServerUrl);
+		WebTarget summarum = summa.path(summaServerPath);
 		
 		WebTarget target = summarum			
 				.queryParam("entity", entityUrl)
-				.queryParam("topK", 5);
+				.queryParam("topK", summaTopK);
 
 		Invocation.Builder invocationBuilder = target.request(textTurtle);
 		
@@ -110,7 +111,6 @@ public class SummaClient {
 		try {
 			model = parseTurtle(turtle, baseUrl);
 		} catch (RDFParseException | RDFHandlerException | IOException e) {
-			// TODO Auto-generated catch block
 			log.error("Error parsing turtle for entity summary", e);
 			if (log.isTraceEnabled()) {
 				log.trace("Parsed input " + turtle);

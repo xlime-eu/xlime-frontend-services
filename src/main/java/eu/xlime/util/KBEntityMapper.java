@@ -1,6 +1,5 @@
 package eu.xlime.util;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -14,12 +13,10 @@ import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.collect.ImmutableSet;
 
-import eu.xlime.Config;
 import eu.xlime.sparql.SparqlClient;
 import eu.xlime.sparql.SparqlClientFactory;
 import eu.xlime.sparql.SparqlQueryFactory;
@@ -33,18 +30,12 @@ import eu.xlime.sparql.SparqlQueryFactory;
  */
 public class KBEntityMapper {
 	
-	private SparqlClient dbpSparqlClient;
-
 	private static final Logger log = LoggerFactory.getLogger(KBEntityMapper.class);
 	
 	public static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
 
-	private static Cache<String, Set<?>> sameAsCache = FileSystemCacheBuilder.newBuilder()
-			.maximumSize(1L) // In-memory, rest goes to disk
-			.persistenceDirectory(new File("target/sameAsCache/"))
-			.softValues()
-			.build();
-
+	private static Cache<String, Set<?>> sameAsCache = CacheFactory.instance.buildCache("sameAsCache");
+	
 	private static final int maxRecentSameAsSize = 10;
 
 	private static List<Set<String>> recentSameAsSets = new ArrayList<Set<String>>();
@@ -124,6 +115,7 @@ public class KBEntityMapper {
 		Optional<Set<String>> optResult = findRecentSameAsSet(langDBpediaRes);
 		if (optResult.isPresent()) return optResult.get();
 		
+		@SuppressWarnings("unchecked")
 		Set<String> result = (Set<String>) sameAsCache.get(langDBpediaRes, valueLoader);
 
 		pushRecentSameAsSet(result, langDBpediaRes);
@@ -186,7 +178,8 @@ public class KBEntityMapper {
 	}
 
 	private SparqlClient getDBpediaSparqlClient() {
-		return new SparqlClientFactory().getDBpediaSparqlClient();
+//		return new SparqlClientFactory().getDBpediaSparqlClient();
+		return new SparqlClientFactory().getXliMeSparqlClient(); // relevant sameAs triples already in xLiMe endpoint
 	}
 
 	final String decodedUrl(String url) {

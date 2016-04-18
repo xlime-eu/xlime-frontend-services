@@ -11,6 +11,8 @@ import java.io.Serializable;
  */
 public class UrlLabel implements Serializable {
 
+	private static final long serialVersionUID = 2301049873444597292L;
+
 	/**
 	 * The URL value
 	 */

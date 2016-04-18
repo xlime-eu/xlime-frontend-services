@@ -23,6 +23,7 @@ public class UIDate implements Serializable {
 	
 	public static final String defaultDatePattern = "dd/MM/yyyy hh:mm:ss";
 
+	@SuppressWarnings("unused") //used by (de)serializer
 	private UIDate() {
 	}
 	
@@ -64,6 +65,10 @@ public class UIDate implements Serializable {
 		timestamp = aDate;
 		formatted = safeFormat(aDate, dateFormat); 
 		timeAgo = calcTimeAgo(aDate);
+	}
+	
+	public void resetTimeAgo() {
+		timeAgo = calcTimeAgo(timestamp);
 	}
 
 	private String safeFormat(Date aDate, String datePattern) {

@@ -1,11 +1,12 @@
 package eu.xlime.bean;
 
-import java.util.Date;
 
 //import org.eclipse.persistence.oxm.annotations.XmlDiscriminatorValue;
 
 //@XmlDiscriminatorValue("http://rdfs.org/sioc/ns#MicroPost")
 public class MicroPostBean implements MediaItem {
+
+	private static final long serialVersionUID = -2888963022728761498L;
 
 	private String url;
 	

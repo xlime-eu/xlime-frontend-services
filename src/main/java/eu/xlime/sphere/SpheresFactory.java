@@ -48,7 +48,12 @@ public class SpheresFactory {
 
 	private List<Recommendation> mockInterSphere() {
 		List<Recommendation> result = new ArrayList<>();
-		//TODO implement
+		ImmutableList<String> uris = ImmutableList.of(
+				"http://dbpedia.org/resource/Berlin", //KBEntity 
+				"http://"); //TVProg, Soc-Med, News art...
+		Recommendation r1 = new Recommendation();
+		r1.setConfidence(0.9);
+//		r1.setRecommended(resourceDao.retrieve("")); //TODO: implement
 		return result;
 	}
 

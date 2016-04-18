@@ -6,6 +6,8 @@ package eu.xlime.bean;
  *
  */
 public class OCRAnnotation implements XLiMeResource {
+
+	private static final long serialVersionUID = 4212794730125578348L;
 	private VideoSegment inSegment;
 	private String recognizedText;
 	

@@ -24,8 +24,13 @@ import eu.xlime.sphere.SpheresFactory;
 import eu.xlime.sphere.bean.Spheres;
 import eu.xlime.summa.SummaClient;
 import eu.xlime.summa.bean.EntitySummary;
-import eu.xlime.util.ResourceTypeResolver;
 
+/**
+ * Provides the REST services for this web application.
+ * 
+ * @author RDENAUX
+ *
+ */
 @Path("/services")
 public class ServicesResource {
 

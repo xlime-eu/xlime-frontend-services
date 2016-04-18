@@ -1,6 +1,5 @@
 package eu.xlime.dao;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
@@ -20,7 +19,6 @@ import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.collect.ImmutableList;
@@ -40,6 +38,7 @@ import eu.xlime.bean.VideoSegment;
 import eu.xlime.sparql.SparqlClient;
 import eu.xlime.sparql.SparqlClientFactory;
 import eu.xlime.sparql.SparqlQueryFactory;
+import eu.xlime.util.CacheFactory;
 import eu.xlime.util.ResourceTypeResolver;
 
 /**
@@ -67,23 +66,9 @@ public class MediaItemDao {
 	private static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
 	
-	private Cache<String, NewsArticleBean> newsCache = FileSystemCacheBuilder.newBuilder()
-			.maximumSize(5L) // In-memory, rest goes to disk
-			.persistenceDirectory(new File("target/newsCache/"))
-			.softValues()
-			.build();
-
-	private Cache<String, MicroPostBean> microPostCache = FileSystemCacheBuilder.newBuilder()
-			.maximumSize(5L) // In-memory, rest goes to disk
-			.persistenceDirectory(new File("target/microPostCache/"))
-			.softValues()
-			.build();
-
-	private Cache<String, TVProgramBean> tvCache = FileSystemCacheBuilder.newBuilder()
-			.maximumSize(5L) // In-memory, rest goes to disk
-			.persistenceDirectory(new File("target/tvCache/"))
-			.softValues()
-			.build();
+	private static Cache<String, NewsArticleBean> newsCache = CacheFactory.instance.buildCache("newsCache");
+	private static Cache<String, MicroPostBean> microPostCache = CacheFactory.instance.buildCache("microPostCache");
+	private static Cache<String, TVProgramBean> tvCache = CacheFactory.instance.buildCache("tvCache");
 	
 	public Optional<? extends MediaItem> findMediaItem(final String url) {
 		if (typeResolver.isNewsArticle(url))
@@ -109,13 +94,23 @@ public class MediaItemDao {
 			
 		};
 		try {
-			return Optional.of(newsCache.get(url, valueLoader));
+			return Optional.of(clean(newsCache.get(url, valueLoader)));
 		} catch (ExecutionException e) {
 			log.warn("Error loading value for " + url, e);
 			return Optional.absent();
 		}
 	}
 	
+	private NewsArticleBean clean(NewsArticleBean newsArticleBean) {
+		newsArticleBean.getCreated().resetTimeAgo();
+		return newsArticleBean;
+	}
+
+	private MicroPostBean clean(MicroPostBean microPostBean) {
+		microPostBean.getCreated().resetTimeAgo();
+		return microPostBean;
+	}
+
 	public Optional<MicroPostBean> findMicroPost(final String url) {
 		Callable<? extends MicroPostBean> valueLoader = new Callable<MicroPostBean>() {
 
@@ -130,7 +125,7 @@ public class MediaItemDao {
 		};
 		
 		try {
-			return Optional.of(microPostCache.get(url, valueLoader));
+			return Optional.of(clean(microPostCache.get(url, valueLoader)));
 		} catch (ExecutionException e) {
 			log.warn("Error loading value for " + url, e);
 			return Optional.absent();
@@ -153,11 +148,21 @@ public class MediaItemDao {
 		};		
 		
 		try {
-			return Optional.of(tvCache.get(url, valueLoader));
+			return Optional.of(clean(tvCache.get(url, valueLoader)));
 		} catch (ExecutionException e) {
 			log.warn("Error loading value for " + url, e);
 			return Optional.absent();
 		}		
+	}
+
+	private TVProgramBean clean(TVProgramBean tvProgramBean) {
+		tvProgramBean.getBroadcastDate().resetTimeAgo();
+		if (tvProgramBean.getRelatedImage() != null &&
+				tvProgramBean.getRelatedImage().startsWith("http://cms-staging.zattoo.com")) {
+			log.debug("Filter out sandbox zattoo related images as these are forbidden by the server.");
+			tvProgramBean.setRelatedImage(null);
+		}
+		return tvProgramBean;
 	}
 
 	public Optional<VideoSegment> findVideoSegment(String uri) {
@@ -386,7 +391,7 @@ public class MediaItemDao {
 				result.setLang(tuple.get("lang"));
 			}
 			if (tuple.containsKey("publisher")) {
-				result.setPublisher(readPublisher(tuple.get("publisher")));
+				result.setPublisher(readPublisher(tuple.get("publisher"), getOpt(tuple, "pubName")));
 			}
 			if (tuple.containsKey("source")) {
 				result.setSource(tuple.get("source"));
@@ -399,13 +404,19 @@ public class MediaItemDao {
 				if (content != null) result.setContent(readContent(content));
 			}
 			if (tuple.containsKey("creator")) {
-				result.setCreator(readCreator(tuple.get("creator")));
+				result.setCreator(readCreator(tuple.get("creator"), getOpt(tuple, "creatorLabel")));
 			}
 		}
 		
 		return Optional.of(result);
 	}
 	
+	private Optional<String> getOpt(Map<String, String> tuple, String key) {
+		if (tuple.containsKey(key)) {
+			return Optional.fromNullable(tuple.get(key));
+		} else return Optional.absent();
+	}
+
 	private UIDate asUIDate(Date aDate) {
 		return new UIDate(aDate);
 	}
@@ -414,10 +425,11 @@ public class MediaItemDao {
 		return Float.valueOf(val);
 	}
 	
-	private UrlLabel readCreator(String creatorUrl) {
+	private UrlLabel readCreator(String creatorUrl, Optional<String> optLabel) {
 		UrlLabel result = new UrlLabel();
 		result.setUrl(creatorUrl);
-		result.setLabel(creatorUrlToLabel(creatorUrl));
+		String label = optLabel.isPresent() ? optLabel.get() : creatorUrlToLabel(creatorUrl); 
+		result.setLabel(label);
 		return result;
 	}
 
@@ -476,9 +488,15 @@ public class MediaItemDao {
 	}
 
 	private UrlLabel readPublisher(String pubUrl) {
+		return readPublisher(pubUrl, Optional.<String>absent());
+	}
+	
+	private UrlLabel readPublisher(String pubUrl, Optional<String> optLabel) {
 		UrlLabel result = new UrlLabel();
 		result.setUrl(pubUrl);
-		result.setLabel(pubUrlToLabel(pubUrl));
+		if (optLabel.isPresent())
+			result.setLabel(optLabel.get());
+		else result.setLabel(pubUrlToLabel(pubUrl));
 		return result;
 	}
 

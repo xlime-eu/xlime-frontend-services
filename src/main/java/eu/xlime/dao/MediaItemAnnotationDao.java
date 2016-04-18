@@ -1,6 +1,7 @@
 package eu.xlime.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,13 +9,17 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Ordering;
 
 import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.AnnotationPosition;
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.OCRAnnotation;
+import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.VideoSegment;
 import eu.xlime.sparql.SparqlClient;
 import eu.xlime.sparql.SparqlClientFactory;
 import eu.xlime.sparql.SparqlQueryFactory;
@@ -69,12 +74,87 @@ public class MediaItemAnnotationDao {
 		return Optional.absent();
 	}
 
-	public Optional<OCRAnnotation> findOCRAnnotation(String uri) {
-		log.trace("Finding the OCRAnnotation " + uri);
-		// TODO Auto-generated method stub
+	public List<OCRAnnotation> findOCRAnnotationsFor(final TVProgramBean mediaResource) {
+		log.trace("Finding the OCRAnnotations for " + mediaResource);
+		final SparqlClient sparqler = getXliMeSparqlClient();
+		String query = qFactory.mediaResourceOCRAnnotations(mediaResource.getUrl());
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
+		
+		return toMediaResourceOCRAnnotations(result, mediaResource);
+	}
+	
+	public Optional<OCRAnnotation> findOCRAnnotation(String ocrAnnotUri) {
+		log.trace("Finding the OCRAnnotation " + ocrAnnotUri);
+		/* TODO: since OCR annotations do not have uris in sparql enpoint:
+		 * 1. map to mediaResource uri via naming convention, 
+		 * 2. find mediaResource via uri (needs MediaItemDao), 
+		 * 3. find all OCR annotations via #findOCRAnnotationsFor and 
+		 * 4. return one that matches, if any... 
+		 */
 		return Optional.absent();
 	}
 	
+	private List<OCRAnnotation> toMediaResourceOCRAnnotations(
+			Map<String, Map<String, String>> resultSet, TVProgramBean tvProg) {
+		if (resultSet == null || resultSet.keySet().isEmpty()) {
+			log.debug("No ocr annotations for " + tvProg.getUrl());
+			return ImmutableList.of();
+		}		
+		log.debug("Creating OCRAnnotation from resultset with " + resultSet.size() + " tuples.");
+		List<OCRAnnotation> result = new ArrayList<>();
+		for (String id: resultSet.keySet()) {
+			Map<String, String> tuple = resultSet.get(id);
+			Optional<OCRAnnotation> optAnn = toOCRAnnotation(tuple, tvProg);
+			if (optAnn.isPresent()) result.add(optAnn.get());
+		}		
+		return result;
+	}
+
+	final Optional<OCRAnnotation> toOCRAnnotation(Map<String, String> tuple,
+			TVProgramBean tvProg) {
+		OCRAnnotation result = new OCRAnnotation();
+		if (tuple.containsKey("ocr") && tuple.containsKey("vidTrack")) {
+			OCRContent ocrContent = new OCRContent(tuple.get("ocr"));
+			result.setInSegment(toVideoSegment(tvProg, ocrContent.timestamp));
+			result.setRecognizedText(ocrContent.recognizedText);
+		} else {
+			log.warn("No OCR content found for " + tvProg.getUrl());
+			return Optional.absent();
+		}
+		return Optional.of(result);
+	}
+	
+	private VideoSegment toVideoSegment(TVProgramBean tvProg, double timestamp) {
+		VideoSegment result = new VideoSegment();
+		result.setPartOf(tvProg);
+		return result;
+	}
+
+	public static class OCRContent {
+		final String literal;
+		final double timestamp;
+		final String recognizedText;
+		
+		public OCRContent(String literalOCRContent) {
+			literal = literalOCRContent;
+			timestamp = extractTimeStamp(literalOCRContent);
+			recognizedText = extractRecognizedText(literalOCRContent);
+		}
+		
+		private String extractRecognizedText(String literalOCRContent) {
+			int splitIndex = literalOCRContent.indexOf(',');
+			return literalOCRContent.substring(splitIndex + 1);
+		}
+
+		private double extractTimeStamp(String literalOCRContent) {
+			int splitIndex = literalOCRContent.indexOf(',');
+			if (splitIndex <= 0) throw new RuntimeException("Illegal format of OCR content. "
+					+ "Expecting :\n\t<timestamp> ', ' <recognizedText>\n\t but found: \n\t " + literalOCRContent);
+			return Double.parseDouble(literalOCRContent.substring(0, splitIndex));
+		}
+
+	}
+
 	private List<EntityAnnotation> toEntityAnnotations(Map<String, Map<String, String>> resultSet,
 			String url) {
 		if (resultSet == null || resultSet.keySet().isEmpty()) {
@@ -101,7 +181,7 @@ public class MediaItemAnnotationDao {
 	 * @return
 	 */
 	private List<EntityAnnotation> cleanEntAnns(List<EntityAnnotation> list) {
-		Map<String, EntityAnnotation> merged = new HashMap<>();
+		final Map<String, EntityAnnotation> merged = new HashMap<>();
 		for (EntityAnnotation unmerged : list) {
 			String entUrl = unmerged.getEntity().getUrl();
 			EntityAnnotation mergedEA = unmerged;
@@ -112,10 +192,19 @@ public class MediaItemAnnotationDao {
 				merged.put(entUrl, unmerged);
 			}
 		}
-		//TODO: sort by confidence value
+		
+		Ordering<EntityAnnotation> byConfidence = Ordering.natural().reverse().onResultOf(new Function<EntityAnnotation, Double>() {
+			@Override
+			public Double apply(EntityAnnotation input) {
+				return input.getConfidence();
+			}
+		});
+		
+		List<EntityAnnotation> result = new ArrayList<>(merged.values());
+		Collections.sort(result, byConfidence);
+		
 		//TODO: cut-off at threshold?
-		//TODO: also merge entities by owl:sameas?
-		return ImmutableList.copyOf(merged.values());
+		return ImmutableList.copyOf(result);
 	}
 
 	private double best(double a, double b) {

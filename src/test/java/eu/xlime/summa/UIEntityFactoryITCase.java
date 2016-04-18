@@ -14,6 +14,9 @@ public class UIEntityFactoryITCase {
 		UIEntity entity = factory.retrieveFromUri("http://dbpedia.org/resource/Berlin");
 		System.out.println("Found entity " + entity);
 		assertNotNull(entity);
+		assertEquals("Berlin", entity.getLabel());
+		assertEquals(2, entity.getDepictions().size());
+		assertTrue(entity.getTypes().contains("http://schema.org/Place"));
 	}
 
 	@Test
@@ -22,6 +25,9 @@ public class UIEntityFactoryITCase {
 		UIEntity entity = factory.retrieveFromUri("http://dbpedia.org/resource/S&P_500_Index");
 		System.out.println("Found entity " + entity);
 		assertNotNull(entity);
+		assertEquals("S&P 500 Index", entity.getLabel());
+//		assertEquals(2, entity.getDepictions().size()); // 0 from xLiMe, 2 from dbpedia
+		assertTrue(entity.getTypes().isEmpty());
 	}
 
 	@Test
@@ -30,8 +36,12 @@ public class UIEntityFactoryITCase {
 		UIEntity entity = factory.retrieveFromUri("http://dbpedia.org/resource/Sneakers_%28footwear%29");
 		System.out.println("Found entity " + entity);
 		assertNotNull(entity);
+		assertNull(entity.getLabel());
+		assertTrue(entity.getDepictions().isEmpty());
 		entity = factory.retrieveFromUri("http://dbpedia.org/resource/Sneakers_(footwear)");
 		System.out.println("Found entity " + entity);
+		assertEquals("Sneakers (footwear)", entity.getLabel());
+		assertEquals(2, entity.getDepictions().size());
 	}
 	
 	@Test

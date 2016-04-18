@@ -1,12 +1,11 @@
 package eu.xlime.sparql;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Test;
 
 public class SparqlQueryFactoryTest {
@@ -35,5 +34,6 @@ public class SparqlQueryFactoryTest {
 		System.out.println(q);
 		assertNotNull(q);
 	}
+	
 	
 }

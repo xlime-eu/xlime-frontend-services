@@ -8,6 +8,8 @@ package eu.xlime.bean;
  */
 public class ASRAnnotation implements XLiMeResource {
 
+	private static final long serialVersionUID = -492673668791572135L;
+
 	private VideoSegment inSegment;
 	
 	private String recognizedText;

@@ -1,6 +1,5 @@
 package eu.xlime.summa;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -10,7 +9,6 @@ import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.collect.ImmutableList;
@@ -19,6 +17,7 @@ import eu.xlime.sparql.SparqlClient;
 import eu.xlime.sparql.SparqlClientFactory;
 import eu.xlime.sparql.SparqlQueryFactory;
 import eu.xlime.summa.bean.UIEntity;
+import eu.xlime.util.CacheFactory;
 
 public class UIEntityFactory {
 
@@ -27,12 +26,7 @@ public class UIEntityFactory {
 	public static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
 	public static final UIEntityFactory instance = new UIEntityFactory();
 	
-	private static Cache<String, UIEntity> uiEntityCache = FileSystemCacheBuilder.newBuilder()
-			.maximumSize(1L) // In-memory, rest goes to disk
-			.persistenceDirectory(new File("target/uiEntityCache/"))
-			.softValues()
-			.build();
-	
+	private static Cache<String, UIEntity> uiEntityCache = CacheFactory.instance.buildCache("uiEntityCache");
 	
 	private UIEntityFactory() {
 	}
@@ -128,7 +122,8 @@ public class UIEntityFactory {
 	}
 
 	private SparqlClient getDBpediaSparqlClient() {
-		return new SparqlClientFactory().getDBpediaSparqlClient();
+//		return new SparqlClientFactory().getDBpediaSparqlClient(); 
+		return new SparqlClientFactory().getXliMeSparqlClient(); //relevant triples for entities already imported from DBpedia
 	}
 	
 }

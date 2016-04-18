@@ -43,7 +43,12 @@ public class Config {
 		SparqlPassw("xlime.sparql.endpoint.password"),
 		SparqlRate("xlime.sparql.endpoint.max-queries-per-second", "2.0"),
 		DBpediaSparqlEndpoint("xlime.sparql.dbpedia.endpoint.url", "http://dbpedia.org/sparql"),
-		DBpediaSparqlRate("xlime.sparql.dbpedia.endpoint.max-queries-per-second", "1.0"),;
+		DBpediaSparqlRate("xlime.sparql.dbpedia.endpoint.max-queries-per-second", "1.0"),
+		CacheMaxSize("xlime.cache.max-size", "500"),
+		CacheDir("xlime.cache.dir", "xlime-front-end-cache/"), 
+		SummaServerUrl("xlime.summa.server-url", "http://km.aifb.kit.edu/services/summa/"), 
+		SummaServerPath("xlime.summa.server-path", "summarum"), 
+		SummaTopK("xlime.summa.topk", "5");
 		
 		final String propKey;
 		final Optional<String> defaultValue;
@@ -83,6 +88,20 @@ public class Config {
 			return Integer.valueOf(configOption.defaultValue.get());
 		else throw new IllegalArgumentException("No valid configuration for " + configOption + " available.");
 	}
+	
+	public long getLong(Opt configOption) {
+		Properties props = getCfgProps();
+		String strVal = props.getProperty(configOption.propKey);
+		if (strVal != null) try {
+			return Long.valueOf(strVal);
+		} catch (NumberFormatException e) {
+			LOG.error("Value for " + configOption + " should be a Long. Using default value instead.", e);
+		}
+		if (configOption.defaultValue.isPresent())
+			return Long.valueOf(configOption.defaultValue.get());
+		else throw new IllegalArgumentException("No valid configuration for " + configOption + " available.");
+	}
+	
 	
 	public double getDouble(Opt configOption) {
 		Properties props = getCfgProps();

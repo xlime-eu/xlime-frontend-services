@@ -1,6 +1,5 @@
 package eu.xlime.summa.bean;
 
-import java.io.Serializable;
 import java.util.List;
 
 import eu.xlime.bean.XLiMeResource;

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class GeoLocation implements Serializable {
 
+	private static final long serialVersionUID = -3165518208380387069L;
+	
 	private float lon;
 	private float lat;
 	private String label;
