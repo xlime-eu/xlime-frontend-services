@@ -213,6 +213,25 @@ public class SparqlQueryFactory {
 			"} LIMIT 30 ";
 	}
 	
+	public String entityAnnotationInMediaItem(String entity_url){
+		final String encEntity_url = "<" + entity_url + ">";
+		return "PREFIX xlime: <http://xlime-project.org/vocab/> " + 
+				
+				"SELECT distinct ?s { " +
+				"?s xlime:hasAnnotation ?annot. " +
+				"?annot xlime:hasEntity " + encEntity_url +
+				"} LIMIT 30";
+	}
+	
+	public String mediaItemUrisBySource(String source){
+		final String encSource = "<" + source + ">";
+		return "PREFIX dcterms: <http://purl.org/dc/terms/> " +
+				
+				"SELECT ?s { " +
+				"?s dcterms:source " + encSource +
+				" }";
+	}
+
 	private Object dateFilter(String var, long dateFrom, long dateTo,
 			DateTimeFormatter[] dateFormats) {
 		List<String> subFilters = new ArrayList<>();

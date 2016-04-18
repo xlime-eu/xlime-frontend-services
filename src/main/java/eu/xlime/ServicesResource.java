@@ -20,6 +20,7 @@ import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MediaItemListBean;
 import eu.xlime.dao.MediaItemAnnotationDao;
 import eu.xlime.dao.MediaItemDao;
+import eu.xlime.search.SearchItemDao;
 import eu.xlime.sphere.SpheresFactory;
 import eu.xlime.sphere.bean.Spheres;
 import eu.xlime.summa.SummaClient;
@@ -40,7 +41,8 @@ public class ServicesResource {
 	private static final MediaItemAnnotationDao mediaItemAnnotationDao = new MediaItemAnnotationDao();
 	private static final SummaClient summaClient = new SummaClient();
 	private static final SpheresFactory spheresFactory = new SpheresFactory();	
-	
+	private static final SearchItemDao searchItemDao = new SearchItemDao();	
+
 	public ServicesResource() {
 		log.info("Created " + this.getClass().getSimpleName());
 	}
@@ -140,6 +142,46 @@ public class ServicesResource {
 		}
 		return Response.ok(list).build();
 	}	
+
+	/**
+	 * Returns a list of media items from a query (input: text or KB entity)
+	 * 
+	 * @param query
+	 * @return
+	 */
+	@GET
+	@Path("/search")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response searchMediaItems(@QueryParam("q") String query) {
+		log.info("Received " + query);
+		if (query == null || query.isEmpty()) 
+			return Response.serverError().entity("No requested query").build();
+		Optional<? extends List<String>> optSearchMedItem;
+		if(query.startsWith("http://"))			
+			optSearchMedItem = searchItemDao.findMediaItemUrlsByKBEntity(query);
+		else
+			optSearchMedItem = searchItemDao.findMediaItemUrlsByText(query);		
+		if (!optSearchMedItem.isPresent()) throw new RuntimeException("Failed to find media items for " + query);
+		return mediaItem(optSearchMedItem.get());
+	}
+	
+	/**
+	 * Returns a list of media items from a query (input: free text)
+	 * 
+	 * @param query
+	 * @return
+	 */
+	@GET
+	@Path("/freesearch")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response freeSearchMediaItems(@QueryParam("q") String query) {
+		log.info("Received " + query);
+		if (query == null || query.isEmpty()) 
+			return Response.serverError().entity("No requested query").build();
+		Optional<? extends List<String>> optSearchMedItem = searchItemDao.findMediaItemUrlsByFreeText(query);
+		if (!optSearchMedItem.isPresent()) throw new RuntimeException("Failed to find media items for " + query);
+		return mediaItem(optSearchMedItem.get());
+	}
 
 	private Optional<? extends EntitySummary> findUIEntitySummary(String url) {
 		return summaClient.retrieveSummary(url);
