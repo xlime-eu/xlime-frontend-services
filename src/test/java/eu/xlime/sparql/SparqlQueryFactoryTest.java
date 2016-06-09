@@ -1,6 +1,6 @@
 package eu.xlime.sparql;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.util.Date;
 
@@ -8,9 +8,18 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
+import com.google.common.collect.ImmutableList;
+
 public class SparqlQueryFactoryTest {
 
 	SparqlQueryFactory qFactory = new SparqlQueryFactory();
+	
+	@Test
+	public void testMicroPostsByKeywordFilter() throws Exception {
+		String query = qFactory.microPostsByKeywordFilter(ImmutableList.of("keyword 1", "keyword 2"));
+		System.out.println("query:\n" + query);
+		assertTrue(query.contains("?keywordFilter = \"keyword 1\""));
+	}
 	
 	@Test
 	public void testMicroPostDetails() throws Exception {

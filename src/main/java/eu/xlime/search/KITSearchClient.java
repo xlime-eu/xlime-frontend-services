@@ -1,6 +1,5 @@
 package eu.xlime.search;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,12 +18,17 @@ import org.openrdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
+import com.google.common.collect.ImmutableList;
+
+import eu.xlime.Config;
+import eu.xlime.util.CacheFactory;
+import eu.xlime.util.score.ScoreFactory;
+import eu.xlime.util.score.ScoredSet;
+import eu.xlime.util.score.ScoredSetImpl;
 
 /**
  * Java client implementation for the <a href="http://km.aifb.kit.edu/services/xlimesearch/kitsearch">KIT Search Service</a>.
@@ -39,37 +43,35 @@ public class KITSearchClient {
 	private static Logger log = LoggerFactory.getLogger(KITSearchClient.class);
 
 	private static MediaType textJson = new MediaType("text", "json");
+	private static final ScoreFactory scoref = ScoreFactory.instance;
 
 	/**
 	 * Cache for recently retrieved kitsearch{@link Model}. Avoids having to call 
 	 * the kitsearch server too often when requesting known keywords.
 	 */
-	private static Cache<String, List<String>> kitsearchModelCache = FileSystemCacheBuilder.newBuilder()
-			.maximumSize(1L) // In-memory, rest goes to disk
-			.persistenceDirectory(new File("target/kitsearchModelCache/"))
-			.softValues()
-			.build();
+	private static Cache<String, ScoredSet<String>> kitsearchModelCache = CacheFactory.instance.buildCache("kitSearchModelCache");
 
-	public Optional<List<String>> retrieveKitsearchModel(final String keywords) {
-		Callable<? extends List<String>> valueLoader = new Callable<List<String>>() {
+	public ScoredSet<String> retrieveKitsearchModel(final String keywords) {
+		Callable<? extends ScoredSet<String>> valueLoader = new Callable<ScoredSet<String>>() {
 			@Override
-			public List<String> call() throws Exception {
-				return retrieveKitsearchModelFromServer(keywords).get();
+			public ScoredSet<String> call() throws Exception {
+				return retrieveKitsearchModelFromServer(keywords);
 			}
 		};
 
 		try {
-			return Optional.of(kitsearchModelCache.get(keywords, valueLoader));
+			return kitsearchModelCache.get(keywords, valueLoader);
 		} catch (ExecutionException e) {
 			log.warn("Error loading  kitsearchModel for " + keywords, e);
-			return Optional.absent();
+			return ScoredSetImpl.empty();
 		}
 	}
 
-	public  Optional<List<String>> retrieveKitsearchModelFromServer(String keywords){
+	public  ScoredSet<String> retrieveKitsearchModelFromServer(String keywords){
 		log.debug("Retrieving KITSearch Model for " + keywords);
+		Config cfg = new Config();
 		Client client = ClientBuilder.newClient();
-		WebTarget kitsearch = client.target("http://km.aifb.kit.edu/services/xlimesearch");
+		WebTarget kitsearch = client.target(cfg.get(Config.Opt.XLiMeSearch)); 
 		WebTarget qsearch = kitsearch.path("kitsearch");
 
 		WebTarget target = qsearch.queryParam("q", keywords);
@@ -81,7 +83,7 @@ public class KITSearchClient {
 		log.debug("Response status: " + status);
 		if (status != 200) {
 			log.debug("Error retrieving KITSearch " + resp.getStatusInfo());
-			return Optional.absent();
+			return ScoredSetImpl.empty();
 		}
 		log.trace("response has entity: " + resp.hasEntity());
 		if (resp.hasEntity()) {
@@ -89,16 +91,16 @@ public class KITSearchClient {
 			log.trace("Resp entity: " + json);
 			return toAutocomplete(json);
 		} else {
-			return Optional.absent();
+			return ScoredSetImpl.empty();
 		}		
 	}
 
-	public Optional<List<String>> retrieveKitsearch(String keywords) {
+	public ScoredSet<String> retrieveKitsearch(String keywords) {
 		return retrieveKitsearchModel(keywords);		
 	}
 
-	private Optional<List<String>> toAutocomplete(String json) {
-		List<String> result = new ArrayList<String>();
+	private ScoredSet<String> toAutocomplete(String json) {
+		ScoredSet.Builder<String> builder = ScoredSetImpl.builder();
 		try {
 			log.trace("Mapping KITSearch JSON Object");
 			JsonNode obj = new ObjectMapper().readTree(json);
@@ -109,7 +111,7 @@ public class KITSearchClient {
 				List<JsonNode> fieldValues = kitsearch.findValues(fieldName);
 				JsonNode values = fieldValues.get(0);
 				for (JsonNode value : values) {
-					result.add(value.asText());
+					builder.add(value.asText(), scoref.newScore(1.0)); //TODO: request KITSearch to include confidence value
 				}
 			}
 		} catch (JsonParseException e) {
@@ -117,7 +119,7 @@ public class KITSearchClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		log.trace("List of media items URLs resources obtained: " + result.toString());
-		return Optional.of(result);
+		log.trace("List of media items URLs resources obtained: " + builder.toString());
+		return builder.build();
 	}
 }

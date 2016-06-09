@@ -1,0 +1,17 @@
+PREFIX xlime: <http://xlime-project.org/vocab/> 
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX sioc: <http://rdfs.org/sioc/ns#> 
+PREFIX kdo: <http://kdo.render-project.eu/kdo#>
+PREFIX ma: <http://www.w3.org/ns/ma-ont#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+				
+SELECT distinct ?g ?s ?date ?type ?keywordFilter { 
+GRAPH ?g {  
+	?s a ?type. 
+	?s a sioc:MicroPost.  
+	?s dcterms:created ?date.
+	?s xlime:keywordFilterName ?keywordFilter.
+	#ReplaceByFilter
+} # end GRAPH ?g
+} #ReplaceLimit
+

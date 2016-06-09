@@ -14,6 +14,8 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 
+import eu.xlime.Config;
+import eu.xlime.Config.Opt;
 import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.AnnotationPosition;
 import eu.xlime.bean.EntityAnnotation;
@@ -41,16 +43,16 @@ public class MediaItemAnnotationDao {
 		else if (typeResolver.isMicroPost(url))
 			return findMicroPostEntityAnnotations(url);
 		else if (typeResolver.isTVProgram(url))
-//			return mediaItemAnnotationDao.findTVProgram(url);
-			throw new RuntimeException("tv programmes not supported yet");
+			return ImmutableList.of();// TODO: implement via subtitles, ASR, OCR, annotation of EPG data.
 		else throw new RuntimeException("Cannot map url to a known xLiMe media-item type " + url);
 	}
 	
 	public List<EntityAnnotation> findMicroPostEntityAnnotations(final String url) {
 		log.trace("Finding entity annotations for micropost " + url);
+		Config cfg = new Config();
 		final SparqlClient sparqler = getXliMeSparqlClient();
 		String query = qFactory.microPostEntityAnnotations(url);
-		Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
 		
 		return toEntityAnnotations(result, url);
 	}
@@ -61,9 +63,10 @@ public class MediaItemAnnotationDao {
 
 	public List<EntityAnnotation> findNewsArticleEntityAnnotations(final String url) {
 		log.trace("Finding entity annotations for newsarticle " + url);
+		Config cfg = new Config();
 		final SparqlClient sparqler = getXliMeSparqlClient();
 		String query = qFactory.newsArticleEntityAnnotations(url);
-		Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
 		
 		return toEntityAnnotations(result, url);
 	}
@@ -76,9 +79,10 @@ public class MediaItemAnnotationDao {
 
 	public List<OCRAnnotation> findOCRAnnotationsFor(final TVProgramBean mediaResource) {
 		log.trace("Finding the OCRAnnotations for " + mediaResource);
+		Config cfg = new Config();
 		final SparqlClient sparqler = getXliMeSparqlClient();
 		String query = qFactory.mediaResourceOCRAnnotations(mediaResource.getUrl());
-		Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
 		
 		return toMediaResourceOCRAnnotations(result, mediaResource);
 	}

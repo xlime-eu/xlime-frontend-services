@@ -1,6 +1,7 @@
 package eu.xlime.sparql;
 
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 public interface SparqlClient {
 
@@ -19,6 +20,24 @@ public interface SparqlClient {
 	 * @return a {@link java.util.Map} object.
 	 */
 	Map<String, Map<String, String>> executeSPARQLQuery(String query);
+
+	/**
+	 * Same as {@link #executeSPARQLQuery(String)}, but uses a timeout
+	 * @param query
+	 * @param timeout number of milliseconds before a {@link TimeoutException} is thrown. If value is less than 0, no timeout is applied. 
+	 * @return
+	 */
+	Map<String, Map<String, String>> executeSPARQLQuery(String query, long timeout) throws TimeoutException;
+
+	/**
+	 * Same as {@link #executeSPARQLOrEmpty(String, long)}, but catches the {@link TimeoutException} 
+	 * and returns an empty resultset.
+	 * 
+	 * @param query
+	 * @param timeout
+	 * @return
+	 */
+	Map<String, Map<String, String>> executeSPARQLOrEmpty(String query, long timeout);
 	
 	/**
 	 * Executes the input sparql query and attempts to return the resultset

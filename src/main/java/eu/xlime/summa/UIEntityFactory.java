@@ -1,6 +1,8 @@
 package eu.xlime.summa;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 import eu.xlime.sparql.SparqlClient;
 import eu.xlime.sparql.SparqlClientFactory;
@@ -40,6 +43,22 @@ public class UIEntityFactory {
 		UIEntity result = doRetrieveFromUri(entUri);
 		return cleanEntity(result);
 	}
+	
+	public List<UIEntity> retrieveFromUris(List<String> uris) {
+		Map<String, UIEntity> cached = uiEntityCache.getAllPresent(uris);
+		List<String> toFind = new ArrayList(uris);
+		toFind.removeAll(cached.keySet());
+		
+		Map<String, UIEntity> nonCached = doRetrieveFromUris(toFind);
+		uiEntityCache.putAll(nonCached);
+		
+		log.debug(String.format("Found %s cached and %s uncached UIEntitys", cached.size(), nonCached.size()));
+		
+		return ImmutableList.<UIEntity>builder()
+				.addAll(cleanEntities(ImmutableList.copyOf(cached.values())))
+				.addAll(nonCached.values())
+				.build();
+	}
 
 	/**
 	 * <i>Cleans</i> an input entity and returns an entity which is better suitable to 
@@ -58,6 +77,14 @@ public class UIEntityFactory {
 		entity.setTypes(ImmutableList.copyOf(cleanTypes));
 		return entity;
 	}
+	
+	private List<UIEntity> cleanEntities(List<UIEntity> ents) {
+		List<UIEntity> result = new ArrayList<>();
+		for (UIEntity toClean: ents) {
+			result.add(cleanEntity(toClean));
+		}
+		return ImmutableList.copyOf(result);
+	}
 
 	private UIEntity doRetrieveFromUri(String entUri) {
 		if (entUri.startsWith("http://dbpedia.org/")) {
@@ -67,6 +94,17 @@ public class UIEntityFactory {
 		}
 	}
 
+	private Map<String, UIEntity> doRetrieveFromUris(List<String> entUris) {
+		if (entUris.isEmpty()) return ImmutableMap.of();
+		return retrieveUIEntitisFromDBpedia(entUris);
+	}
+	
+	private Map<String, UIEntity> retrieveUIEntitisFromDBpedia(
+			List<String> entUris) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private Optional<UIEntity> retrieveUIEntityFromDBpedia(final String entUri) {
 		Callable<? extends UIEntity> valueLoader = new Callable<UIEntity>() {
 
@@ -74,10 +112,11 @@ public class UIEntityFactory {
 			public UIEntity call() throws Exception {
 				String msg = "Retrieve " + entUri + " from dbpedia"; 
 				log.info(msg);
-				System.out.println(msg);
 				SparqlClient sparqler = getDBpediaSparqlClient();
 				String query = qFactory.dbpediaUIEntity(entUri, "en");
-				log.debug("Retrieving entity info using: " + query);
+				if (log.isTraceEnabled()) {
+					log.trace("Retrieving entity info using: " + query);
+				}
 				Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
 
 				return toUIEntity(result, entUri).get();

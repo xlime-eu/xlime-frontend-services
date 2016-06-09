@@ -3,6 +3,8 @@ package eu.xlime.sparql;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.hp.hpl.jena.query.Dataset;
+
 import eu.xlime.Config;
 
 /**
@@ -81,6 +83,10 @@ public class SparqlClientFactory {
 			this.username = username;
 			this.password = password;
 		}
+	}
+
+	public SparqlClient fromDataset(Dataset dataset) {
+		return new JenaSparqlClientImpl(dataset);
 	}
 	
 	

@@ -30,7 +30,7 @@
   </logger>
 
   <logger name="eu.xlime">
-  	<level value="trace"/> 
+  	<level value="debug"/> 
   </logger>
 
   <root> 

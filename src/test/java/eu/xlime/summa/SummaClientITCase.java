@@ -2,6 +2,7 @@ package eu.xlime.summa;
 
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.base.Optional;
@@ -16,7 +17,7 @@ import eu.xlime.summa.bean.EntitySummary;
  */
 public class SummaClientITCase {
 
-	@Test
+	@Test @Ignore("very slow?")
 	public void testRetrieveSummary() throws Exception {
 		SummaClient client = new SummaClient();
 		Optional<EntitySummary> summary = client.retrieveSummary("http://dbpedia.org/resource/Berlin");

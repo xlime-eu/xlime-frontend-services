@@ -15,7 +15,7 @@ import com.google.common.base.Optional;
  *
  */
 
-public class AutocompleteClientCase {
+public class AutocompleteClientITCase {
 	
 	@Test
 	public void testRetrieveSummary() throws Exception {		

@@ -1,8 +1,11 @@
 package eu.xlime.search;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
@@ -17,13 +20,16 @@ import org.openrdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
+
+import eu.xlime.Config;
+import eu.xlime.bean.UrlLabel;
+import eu.xlime.util.CacheFactory;
 
 /**
  * Java client implementation for the <a href="http://km.aifb.kit.edu/services/xlime-autocomplete">Autocomplete Service</a>.
@@ -43,11 +49,7 @@ public class AutocompleteClient {
 	 * Cache for recently retrieved autocomplete{@link Model}. Avoids having to call 
 	 * the autocomplete server too often when requesting known keywords.
 	 */
-	private static Cache<String, AutocompleteBean> autocompleteModelCache = FileSystemCacheBuilder.newBuilder()
-			.maximumSize(1L) // In-memory, rest goes to disk
-			.persistenceDirectory(new File("target/autocompleteModelCache/"))
-			.softValues()
-			.build();
+	private static Cache<String, AutocompleteBean> autocompleteModelCache = CacheFactory.instance.buildCache("autocompleteModelCache");
 
 	public Optional<AutocompleteBean> retrieveAutocompleteModel(final String keywords) {
 		Callable<? extends AutocompleteBean> valueLoader = new Callable<AutocompleteBean>() {
@@ -67,8 +69,9 @@ public class AutocompleteClient {
 
 	public Optional<AutocompleteBean> retrieveAutocompleteModelFromServer(String keywords) {
 		log.debug("Retrieving Autocomplete Model for " + keywords);
+		Config cfg = new Config();
 		Client client = ClientBuilder.newClient();
-		WebTarget autocomplete = client.target("http://km.aifb.kit.edu/services/xlime-autocomplete");
+		WebTarget autocomplete = client.target(cfg.get(Config.Opt.AutocompleteUrl));
 		WebTarget auto = autocomplete.path("auto");
 
 		WebTarget target = auto.queryParam("term", keywords);
@@ -99,7 +102,7 @@ public class AutocompleteClient {
 	private Optional<AutocompleteBean> toAutocomplete(String json) {
 		JsonFactory jfactory = new JsonFactory();
 		AutocompleteBean autocomplete = new AutocompleteBean();
-		LinkedHashMap<String, String> entities = new LinkedHashMap<String, String>();
+		List<UrlLabel> entities = new ArrayList<>();
 		try {
 			JsonParser jParser = jfactory.createParser(json);
 			JsonToken token = jParser.nextToken();
@@ -113,20 +116,40 @@ public class AutocompleteClient {
 				jParser.nextToken();
 				String label = jParser.nextTextValue();
 				if(label != null){
-					String[] entity = label.split("#");
-					entities.put(entity[0], entity[1]);					
+					entities.add(decodeUrlLabel(label));
 				}
 				jParser.nextToken();
 			}			
 			autocomplete.setEntities(entities);
-			autocomplete.setFirst_entity(entities.entrySet().iterator().next().getValue());
-			log.trace("AutoComplete Object created:" + autocomplete.toString());
+			if (log.isTraceEnabled()) {
+				log.trace("AutoComplete Object created:" + autocomplete.toString());
+			}
 		} catch (JsonParseException e) {
-			e.printStackTrace();
+			log.error("Error parsing autocomplete result", e);
+			return Optional.absent();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("Error getting autocomplete result", e);
+			return Optional.absent();
 		}		
 		return Optional.of(autocomplete);
+	}
+
+	/**
+	 * Converts a line output by the <code>autocomplete</code> service to a {@link UrlLabel}.
+	 * The input <code>line</code> must have the format 
+	 * <pre>
+	 *   LABEL '#' URL
+	 * </pre>
+	 * 
+	 * @param line
+	 * @return
+	 */
+	private UrlLabel decodeUrlLabel(String line) {
+		String[] entity = line.split("#");
+		UrlLabel urlLabel = new UrlLabel();
+		urlLabel.setLabel(entity[0]);
+		urlLabel.setUrl(entity[1]);
+		return urlLabel;
 	}
 
 	/*public static void main(String[] args){

@@ -42,13 +42,16 @@ public class Config {
 		SparqlUname("xlime.sparql.endpoint.username"),
 		SparqlPassw("xlime.sparql.endpoint.password"),
 		SparqlRate("xlime.sparql.endpoint.max-queries-per-second", "2.0"),
+		SparqlTimeout("xlime.sparql.timeout", "5000"), 
 		DBpediaSparqlEndpoint("xlime.sparql.dbpedia.endpoint.url", "http://dbpedia.org/sparql"),
 		DBpediaSparqlRate("xlime.sparql.dbpedia.endpoint.max-queries-per-second", "1.0"),
 		CacheMaxSize("xlime.cache.max-size", "500"),
-		CacheDir("xlime.cache.dir", "xlime-front-end-cache/"), 
+		CacheDir("xlime.cache.dir", "xlime-front-end-cache/"),
+		AutocompleteUrl("xlime.autocomplete.url", "http://km.aifb.kit.edu/services/xlime-autocomplete"), 
 		SummaServerUrl("xlime.summa.server-url", "http://km.aifb.kit.edu/services/summa/"), 
-		SummaServerPath("xlime.summa.server-path", "summarum"), 
-		SummaTopK("xlime.summa.topk", "5");
+		SummaServerPath("xlime.summa.server-path", "summarum"),
+		SummaTopK("xlime.summa.topk", "5"), 
+		XLiMeSearch("xlime.search.url", "http://km.aifb.kit.edu/services/xlimesearch");
 		
 		final String propKey;
 		final Optional<String> defaultValue;

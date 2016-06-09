@@ -59,6 +59,47 @@ public class KBEntityMapper {
 		return Optional.absent();
 	}
 
+	public Set<String> expandSameAs(String entUrl) {
+		if (isMainDBpediaEntity(entUrl)) {
+			log.trace("Entity " + entUrl + " is already canonical");
+			return expandSameAsSetFromDBpedia(entUrl);
+		}
+		if (isLangDependentDBpediaEntity(entUrl)) {
+			log.trace("Entity " + entUrl + " is from language-dependent dbpedia");			
+			return expandSameAsSetFromDBpedia(entUrl);
+		}
+		if (isWikiEnt(entUrl)) {
+			log.trace("Entity " + entUrl + " is from wikipedia");
+			return expandSameAsSetFromDBpedia(rewriteWikiToDBpedia(entUrl));
+		}
+		log.trace("Entity is from unknown KB " + entUrl);
+		return ImmutableSet.of(entUrl);
+	}
+	
+	private Set<String> expandSameAsSetFromDBpedia(
+			Optional<String> langDBpediaRes) {
+		if (langDBpediaRes.isPresent()) return expandSameAsSetFromDBpedia(langDBpediaRes.get());
+		else return ImmutableSet.of();
+	}
+
+	private Set<String> expandSameAsSetFromDBpedia(String entUrl) {
+		Set<String> dbpediaResSet = ImmutableSet.of(entUrl);
+		try {
+			dbpediaResSet = getDBpediaSameAsSet(entUrl);
+		} catch (ExecutionException e) {
+			log.warn("Error expanding sameAs set for " + entUrl, e);
+		}
+		Set<String> wikiEnts = new HashSet<String>();
+		for (String dbpres: dbpediaResSet) {
+			if (isLangDependentDBpediaEntity(dbpres)) {
+				Optional<String> optWikiUrl = rewriteDBpediaToWiki(dbpres);
+				if (optWikiUrl.isPresent())
+					wikiEnts.add(optWikiUrl.get());
+			}
+		}
+		return ImmutableSet.<String>builder().addAll(dbpediaResSet).addAll(wikiEnts).build();
+	}
+
 	private Optional<String> toMainDBpedia(Optional<String> langDBpediaRes) {
 		if (langDBpediaRes.isPresent()) return toMainDBpedia(langDBpediaRes.get());
 		else return langDBpediaRes;
@@ -67,6 +108,26 @@ public class KBEntityMapper {
 	private Optional<String> toMainDBpedia(final String langDBpediaRes) {
 		if (isMainDBpediaEntity(langDBpediaRes)) return Optional.of(langDBpediaRes);
 				
+		try {
+			log.trace("Retrieving main DBpedia resource for " + langDBpediaRes);
+			Set<String> sameAsSet = getDBpediaSameAsSet(langDBpediaRes);
+			Optional<String> result = findMainDBpedia(sameAsSet, langDBpediaRes);
+			log.trace("Retrieved main DBpedia resource " + result);			
+			return result; 
+		} catch (ExecutionException e) {
+			log.warn("Error loading sameAs values for " + langDBpediaRes, e);
+			return Optional.absent();
+		}
+	}
+
+	/**
+	 * Returns a set of urls which are known to be the same as the <code>langDBpediaRes</code> url.
+	 * 
+	 * @param langDBpediaRes
+	 * @return
+	 * @throws ExecutionException
+	 */
+	Set<String> getDBpediaSameAsSet(final String langDBpediaRes) throws ExecutionException {
 		Callable<? extends Set<?>> valueLoader = new Callable<Set<?>>() {
 
 			@Override
@@ -78,7 +139,7 @@ public class KBEntityMapper {
 				log.trace("query: " + query);
 				Map<String, Map<String, String>> result = om.executeSPARQLQuery(query);
 
-				return extractSet(result, "sameAs");
+				return ImmutableSet.builder().addAll(extractSet(result, "sameAs")).add(langDBpediaRes).build();
 			}
 
 			private Set<String> extractSet(
@@ -98,18 +159,10 @@ public class KBEntityMapper {
 			}
 		};
 		
-		try {
-			log.trace("Retrieving main DBpedia resource for " + langDBpediaRes);
-			Set<String> sameAsSet = getSameAsSet(langDBpediaRes, valueLoader);
-			Optional<String> result = findMainDBpedia(sameAsSet);
-			log.trace("Retrieved main DBpedia resource " + result);			
-			return result; 
-		} catch (ExecutionException e) {
-			log.warn("Error loading sameAs values for " + langDBpediaRes, e);
-			return Optional.absent();
-		}
+		log.trace("Retrieving main DBpedia resource for " + langDBpediaRes);
+		return getSameAsSet(langDBpediaRes, valueLoader);
 	}
-
+	
 	private Set<String> getSameAsSet(String langDBpediaRes,
 			Callable<? extends Set<?>> valueLoader) throws ExecutionException {
 		Optional<Set<String>> optResult = findRecentSameAsSet(langDBpediaRes);
@@ -118,13 +171,13 @@ public class KBEntityMapper {
 		@SuppressWarnings("unchecked")
 		Set<String> result = (Set<String>) sameAsCache.get(langDBpediaRes, valueLoader);
 
-		pushRecentSameAsSet(result, langDBpediaRes);
+		pushRecentSameAsSet(result);
 		
 		return result;
 	}
 
-	private void pushRecentSameAsSet(Set<String> result, String langDBpediaRes) {
-		recentSameAsSets.add(0, ImmutableSet.<String>builder().addAll(result).add(langDBpediaRes).build());
+	private void pushRecentSameAsSet(Set<String> sameAsSet) {
+		recentSameAsSets.add(0, sameAsSet);
 		if (recentSameAsSets.size() > maxRecentSameAsSize) {
 			recentSameAsSets.remove(maxRecentSameAsSize);
 		}
@@ -141,15 +194,22 @@ public class KBEntityMapper {
 		return langDBpediaRes.contains("http://dbpedia.org/");
 	}
 
-	private Optional<String> findMainDBpedia(Set<?> set) {
+	private Optional<String> findMainDBpedia(Set<?> set, String langDepUrl) {
+		Set<String> maindBBpedia = new HashSet<>();
 		for (Object url: set) {
 			if (url instanceof String) {
 				String surl = (String)url;
-				if (isMainDBpediaEntity(surl)) return Optional.of(surl); 
+				if (isMainDBpediaEntity(surl)) maindBBpedia.add(surl);
 			}
 		}
-		log.debug("Found no main dbpedia entity in " + set);
-		return Optional.absent();
+		if (maindBBpedia.isEmpty()) {
+			log.debug("Found no main dbpedia entity in " + set);
+			return Optional.absent();
+		} else if (maindBBpedia.size() > 1) {
+			log.debug("Found multiple main dbpedia entities " + maindBBpedia);
+			//TODO: find a way to select the best option (e.g. Lünen, L%C3#BCnen,_Germany, Lünen,_Germany, Lunen) 
+		}
+		return Optional.of(maindBBpedia.iterator().next());
 	}
 
 	final boolean isWikiEnt(String entUrl) {
@@ -171,6 +231,17 @@ public class KBEntityMapper {
 		if (langDom.equals("en.")) langDom = "";
 		String entName = entUrl.substring(29);
 		return Optional.of(String.format("http://%sdbpedia.org/resource/%s", langDom, entName));
+	}
+	
+	Optional<String> rewriteDBpediaToWiki(String dbpResUrl) {
+		String langDom = "en.";
+		if (isLangDependentDBpediaEntity(dbpResUrl)) {
+			langDom = dbpResUrl.substring(7, 9) + ".";
+		}
+		String detectSeg = "dbpedia.org/resource/";
+		int index = dbpResUrl.indexOf(detectSeg) + detectSeg.length();
+		String entName = dbpResUrl.substring(index);
+		return Optional.of(String.format("http://%swikipedia.org/wiki/%s", langDom, entName));
 	}
 	
 	private boolean shouldIgnoreLang(String lang) {

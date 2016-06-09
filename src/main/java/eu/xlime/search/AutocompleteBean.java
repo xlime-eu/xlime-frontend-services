@@ -1,6 +1,9 @@
 package eu.xlime.search;
 
-import java.util.LinkedHashMap;
+import java.io.Serializable;
+import java.util.List;
+
+import eu.xlime.bean.UrlLabel;
 
 /**
  * Represents the autocomplete entities of a given {@link #keyword}.
@@ -10,29 +13,23 @@ import java.util.LinkedHashMap;
  *
  */
 
-public class AutocompleteBean {
+public class AutocompleteBean implements Serializable {
 	
-	private LinkedHashMap<String, String> entities;
-	private String first_entity;
+	private static final long serialVersionUID = 6832764178337745890L;
 	
-	public LinkedHashMap<String, String> getEntities() {
+	private List<UrlLabel> entities;
+	
+	public List<UrlLabel> getEntities() {
 		return entities;
 	}
 
-	public void setEntities(LinkedHashMap<String, String> entities) {
+	public void setEntities(List<UrlLabel> entities) {
 		this.entities = entities;
-	}	
-	
-	public String getFirst_entity() {
-		return first_entity;
-	}
-
-	public void setFirst_entity(String first_entity) {
-		this.first_entity = first_entity;
 	}
 
 	@Override
 	public String toString() {
-		return "Autocomplete: First entity:" + first_entity + " - [entities=" + entities + "]";
-	}
+		return "AutocompleteBean [entities=" + entities + "]";
+	}	
+
 }

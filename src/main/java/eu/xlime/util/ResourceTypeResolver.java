@@ -9,6 +9,7 @@ import eu.xlime.bean.SearchString;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.VideoSegment;
 import eu.xlime.bean.XLiMeResource;
+import eu.xlime.dao.SearchStringFactory;
 import eu.xlime.summa.bean.UIEntity;
 
 /**
@@ -21,15 +22,15 @@ public class ResourceTypeResolver {
 
 	public Class<? extends XLiMeResource> resolveType(String uri) {
 		if (isNewsArticle(uri)) return NewsArticleBean.class;
-		else if (isMicroPost(uri)) return MicroPostBean.class;
-		else if (isTVProgram(uri)) return TVProgramBean.class;
-		else if (isKBEntity(uri)) return UIEntity.class;
-		else if (isEREvent(uri)) return EREvent.class;
-		else if (isASRAnnotation(uri)) return ASRAnnotation.class;
-		else if (isOCRAnnotation(uri)) return OCRAnnotation.class;
-		else if (isVideoSegment(uri)) return VideoSegment.class;
-		else if (isSearchString(uri)) return SearchString.class;
-		else throw new RuntimeException("Could not determine xLiMe Resource type for " + uri);
+		if (isMicroPost(uri)) return MicroPostBean.class;
+		if (isTVProgram(uri)) return TVProgramBean.class;
+		if (isKBEntity(uri)) return UIEntity.class;
+		if (isEREvent(uri)) return EREvent.class;
+		if (isASRAnnotation(uri)) return ASRAnnotation.class;
+		if (isOCRAnnotation(uri)) return OCRAnnotation.class;
+		if (isVideoSegment(uri)) return VideoSegment.class;
+		if (isSearchString(uri)) return SearchString.class;
+		throw new RuntimeException("Could not determine xLiMe Resource type for " + uri);
 	}
 	
 	public boolean isNewsArticle(String uri) {
@@ -71,6 +72,6 @@ public class ResourceTypeResolver {
 	}
 	
 	public boolean isSearchString(String uri) {
-		return false; //TODO: implement
+		return uri.startsWith(SearchStringFactory.baseUrl);
 	}
 }

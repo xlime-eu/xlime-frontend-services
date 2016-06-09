@@ -1,9 +1,12 @@
 package eu.xlime.bean;
 
+import javax.persistence.Id;
+
 public class TVProgramBean implements MediaItem {
 
 	private static final long serialVersionUID = -6229457491463595552L;
 
+	@Id
 	private String url;
 	
 	private String title;

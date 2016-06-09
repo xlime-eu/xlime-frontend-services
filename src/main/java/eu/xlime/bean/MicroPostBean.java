@@ -1,5 +1,7 @@
 package eu.xlime.bean;
 
+import javax.persistence.Id;
+
 
 //import org.eclipse.persistence.oxm.annotations.XmlDiscriminatorValue;
 
@@ -8,6 +10,7 @@ public class MicroPostBean implements MediaItem {
 
 	private static final long serialVersionUID = -2888963022728761498L;
 
+	@Id
 	private String url;
 	
 	private Content content;

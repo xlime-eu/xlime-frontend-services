@@ -1,0 +1,20 @@
+PREFIX xlime: <http://xlime-project.org/vocab/>  
+PREFIX dcterms: <http://purl.org/dc/terms/>  
+PREFIX sioc: <http://rdfs.org/sioc/ns#> 
+
+SELECT ?g ?url ?created ?lang ?publisher ?source ?sourceType ?content ?creator {
+GRAPH ?g {   
+	?url a <http://rdfs.org/sioc/ns#MicroPost>. 
+	?url dcterms:created ?created. 
+	?url dcterms:language ?lang. 
+	?url dcterms:source ?source. 
+	?url xlime:hasSourceType ?sourceType. 
+	?url dcterms:publisher ?publisher. 
+	?url sioc:has_creator ?creator. 				
+	OPTIONAL { 
+		?url sioc:content ?content. 
+	}
+	#ReplaceByFilter
+} # end Graph ?g 
+} #ReplaceLimit 
+

@@ -7,13 +7,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MediaItemDaoTest {
+public class MediaItemImplDaoTest {
 
-	private static final Logger log = LoggerFactory.getLogger(MediaItemDaoTest.class);
+	private static final Logger log = LoggerFactory.getLogger(MediaItemImplDaoTest.class);
 	
 	@Test
 	public void testParseISODate() {
-		MediaItemDao testObj = new MediaItemDao();
+		MediaItemDaoImpl testObj = new MediaItemDaoImpl();
 		
 		String dateTimezone = "2015-05-04T01:25:17+02:00";
 		String dateNoTimezone = "2015-09-02T00:24:59";
@@ -24,7 +24,7 @@ public class MediaItemDaoTest {
 	
 	@Test
 	public void testExtractMainDomain() {
-		MediaItemDao testObj = new MediaItemDao();
+		MediaItemDaoImpl testObj = new MediaItemDaoImpl();
 
 		assertEquals("twitter.com", testObj.extractMainDomain("http://www.twitter.com"));
 		assertEquals("wordpress.com", testObj.extractMainDomain("http://jjjameson65.wordpress.com"));
@@ -33,7 +33,7 @@ public class MediaItemDaoTest {
 	
 	@Test
 	public void testCreatorUrlToLabel() {
-		MediaItemDao testObj = new MediaItemDao();
+		MediaItemDaoImpl testObj = new MediaItemDaoImpl();
 
 		assertEquals("Chris Nowell", testObj.creatorUrlToLabel("http://clubsearay.com/forum/index.php#Chris%20Nowell"));
 		assertEquals("YummyDestiny", testObj.creatorUrlToLabel("http://twitter.com/YummyDestiny")); 

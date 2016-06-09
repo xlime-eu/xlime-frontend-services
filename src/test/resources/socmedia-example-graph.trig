@@ -1,0 +1,2147 @@
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix kdo:   <http://kdo.render-project.eu/kdo#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix xlime: <http://xlime-project.org/vocab/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+{ <http://vico-research.com/social/b44f030f-d00c-4352-bb78-fa6a518d7c7f>
+          dcterms:title         "KIT Annotations" ;
+          prov:wasAttributedTo  <http://aifb.kit.edu> ;
+          prov:wasGeneratedBy   [ a                   prov:Activity ;
+                                  prov:endedAtTime    "2016-05-31T15:19:20"^^xsd:dateTime ;
+                                  prov:startedAtTime  "2016-05-31T15:19:20"^^xsd:dateTime
+                                ] .
+}
+
+<http://vico-research.com/social/b44f030f-d00c-4352-bb78-fa6a518d7c7f> {
+    <http://twitter.com/DeborahPTodd65>
+            a          sioc:UserAccount ;
+            sioc:name  "DeborahPTodd65" .
+    
+    <http://twitter.com/sr_newsuk>
+            a          sioc:UserAccount ;
+            sioc:name  "sr_newsuk" .
+    
+    <http://twitter.com/ci247>
+            a          sioc:UserAccount ;
+            sioc:name  "ci247" .
+    
+    <https://www.facebook.com/venomazn.de>
+            a          sioc:UserAccount ;
+            sioc:name  "vEnoMaZn" .
+    
+    <http://vico-research.com/social/181cb803-a680-334d-a419-556272878526>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:53:55"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/tealeaft/statuses/737658371680182273> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "Pound slumps after new Brexit poll puts 'leave' vote ahead https://t.co/I5vM0asYND" ;
+            sioc:has_creator         <http://twitter.com/tealeaft> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.344"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Ezra_Pound ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "5"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Slump_%28geology%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "6"^^xsd:long ;
+                                                              xlime:hasStopPosition   "12"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "23"^^xsd:long ;
+                                                              xlime:hasStopPosition   "29"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.622"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "30"^^xsd:long ;
+                                                              xlime:hasStopPosition   "34"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/cb97f35c-2285-35a4-b29f-5715996ca670>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:17"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/sr_newsuk/statuses/737654941582495744> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "UK voters leaning towards Brexit, Guardian poll reveals https://t.co/3wlMdNNjVL | Guardian" ;
+            sioc:has_creator         <http://twitter.com/sr_newsuk> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "26"^^xsd:long ;
+                                                              xlime:hasStopPosition   "32"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.944"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Guardian.co.uk ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "82"^^xsd:long ;
+                                                              xlime:hasStopPosition   "90"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.944"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Guardian.co.uk ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "34"^^xsd:long ;
+                                                              xlime:hasStopPosition   "42"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.994"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "43"^^xsd:long ;
+                                                              xlime:hasStopPosition   "47"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.997"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/7b98a15d-09ea-39c5-93d6-5bf9652554b3>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:52:20"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/Sitedealza/statuses/737657973955284994> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "SHOES DEALS #6673 > https://t.co/79m1wpkwHl MEN PUMA SUEDE CLASSIC+ 352634-03 BLACK/WHITE https://t.co/RKkH0vtO7H" ;
+            sioc:has_creator         <http://twitter.com/Sitedealza> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.789"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/MEN_%28band%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "44"^^xsd:long ;
+                                                              xlime:hasStopPosition   "47"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.711"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Puma_SE ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "48"^^xsd:long ;
+                                                              xlime:hasStopPosition   "52"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Econda Shoes EN" .
+    
+    <http://vico-research.com/social/3e6be504-a6bf-355c-8e31-521493ac1cca>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:11"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/Paul1Singh/statuses/737654917192687617> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "RT @MirrorPolitics: Brexit Tories tried to double VAT on energy bills - so would they really scrap it? https://t.co/INkcbfGQmO https://t.co…" ;
+            sioc:has_creator         <http://twitter.com/Paul1Singh> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.543"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Bill_%28law%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "64"^^xsd:long ;
+                                                              xlime:hasStopPosition   "69"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.924"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Conservative_Party_%28UK%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "27"^^xsd:long ;
+                                                              xlime:hasStopPosition   "33"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.509"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Double_%28baseball%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "43"^^xsd:long ;
+                                                              xlime:hasStopPosition   "49"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.94"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Energy ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "57"^^xsd:long ;
+                                                              xlime:hasStopPosition   "63"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.773"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Value_Added_Tax_%28United_Kingdom%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "50"^^xsd:long ;
+                                                              xlime:hasStopPosition   "53"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "20"^^xsd:long ;
+                                                              xlime:hasStopPosition   "26"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.615"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Scrap ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "93"^^xsd:long ;
+                                                              xlime:hasStopPosition   "98"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.78"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/RT_%28TV_network%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/suzyji>
+            a          sioc:UserAccount ;
+            sioc:name  "suzyji" .
+    
+    <http://www.beautyboard.de>
+            rdfs:label  "http://www.beautyboard.de" .
+    
+    <http://twitter.com/D__L__T>
+            a          sioc:UserAccount ;
+            sioc:name  "D__L__T" .
+    
+    <http://vico-research.com/social/7e7dc115-cbe1-31c8-ac7d-c9776e75b71e>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:17"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/Scrabble817/statuses/737654938868813824> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "BBC News - EU referendum: Voters want EU facts not fighting https://t.co/iIV7k8RZb9 #brexit #besttogether" ;
+            sioc:has_creator         <http://twitter.com/Scrabble817> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:BBC ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "3"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "11"^^xsd:long ;
+                                                              xlime:hasStopPosition   "13"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "38"^^xsd:long ;
+                                                              xlime:hasStopPosition   "40"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Referendum ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "14"^^xsd:long ;
+                                                              xlime:hasStopPosition   "24"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.564"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:BBC_News ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "8"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/863600d4-d3cd-378d-b143-cd9bd812f2ed>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:02"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/UKWorkStore/statuses/737654877493559296> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "David Davis:  The Economic Case for Brexit https://t.co/i4biWeXpm1" ;
+            sioc:has_creator         <http://twitter.com/UKWorkStore> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.765"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:David ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "5"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.582"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/David_Davis_%28British_politician%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "11"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "36"^^xsd:long ;
+                                                              xlime:hasStopPosition   "42"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.503"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Davis,_California> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "6"^^xsd:long ;
+                                                              xlime:hasStopPosition   "11"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/GrahamScambler>
+            a          sioc:UserAccount ;
+            sioc:name  "GrahamScambler" .
+    
+    <http://www.beautyboard.de#Exuser%2011>
+            a          sioc:UserAccount ;
+            sioc:name  "Exuser 11" .
+    
+    <http://twitter.com/thisfrenchlife>
+            a          sioc:UserAccount ;
+            sioc:name  "thisfrenchlife" .
+    
+    <http://twitter.com/RosyKnight>
+            a          sioc:UserAccount ;
+            sioc:name  "RosyKnight" .
+    
+    <http://www.twitter.com/>
+            rdfs:label  "Twitter" .
+    
+    <http://vico-research.com/social/ce9dabc5-9a54-32e5-bf1d-2518960d0a6d>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:19"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/McrJMCE/statuses/737654950378016768> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "This Friday @16h 'Competing Futures of the European Left @UoM for more info see:   https://t.co/R6Yzj5lljx\n2/2 #Brexit #EU #UK #McrJMCE" ;
+            sioc:has_creator         <http://twitter.com/McrJMCE> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.65"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/The_Left_%28Germany%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "52"^^xsd:long ;
+                                                              xlime:hasStopPosition   "56"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.667"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:2nd_Battalion_2nd_Marines ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "107"^^xsd:long ;
+                                                              xlime:hasStopPosition   "110"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.438"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/ITF_Men's_Circuit> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "28"^^xsd:long ;
+                                                              xlime:hasStopPosition   "35"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Party_of_the_European_Left ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "43"^^xsd:long ;
+                                                              xlime:hasStopPosition   "56"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.294"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Friday ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "5"^^xsd:long ;
+                                                              xlime:hasStopPosition   "11"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.98"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "43"^^xsd:long ;
+                                                              xlime:hasStopPosition   "51"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/QuickDealzz>
+            a          sioc:UserAccount ;
+            sioc:name  "QuickDealzz" .
+    
+    <http://vico-research.com/social/cfee2b65-7d39-3f30-8fb1-ea68bf52ca88>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:42:57"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/RosyKnight/statuses/737655612536983552> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "So now #EU has taken over #SocialMedia? Their arrogance is unbelievable. Far worse than #Hitler. We MUST #BREXIT https://t.co/kdVnOUQXee" ;
+            sioc:has_creator         <http://twitter.com/RosyKnight> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.571"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Hubris ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "46"^^xsd:long ;
+                                                              xlime:hasStopPosition   "55"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Manchester_United_Supporters'_Trust> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "100"^^xsd:long ;
+                                                              xlime:hasStopPosition   "104"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/0a1653b6-2384-3524-b023-17e161eaeb00>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:07"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/LeandaBL/statuses/737654897936584708> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "Uncertainty for UK's international role in case of #Brexit says @RGWhitman @EgmontInstitute @ChathamHouse https://t.co/JPwFnAi0ym @CambRELEX" ;
+            sioc:has_creator         <http://twitter.com/LeandaBL> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.999"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "16"^^xsd:long ;
+                                                              xlime:hasStopPosition   "20"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.864"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Uncertainty ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "11"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.918"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:England_national_football_team ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "21"^^xsd:long ;
+                                                              xlime:hasStopPosition   "34"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.957"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:International_English ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "21"^^xsd:long ;
+                                                              xlime:hasStopPosition   "39"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.658"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "16"^^xsd:long ;
+                                                              xlime:hasStopPosition   "18"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/obotheclown>
+            a          sioc:UserAccount ;
+            sioc:name  "obotheclown" .
+    
+    <http://twitter.com/McrJMCE>
+            a          sioc:UserAccount ;
+            sioc:name  "McrJMCE" .
+    
+    <http://vico-research.com/social/ff5239a7-3e4f-307c-be1d-46329220fac6>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:52:20"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/PikamDeals/statuses/737657973007351808> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "Shoes & Accessories > https://t.co/QwiOkgVJ2E #55 Nike Women's Dri-Fit Legendary Ribbed Training Tights-Black/Dark… https://t.co/8Sn2Prwr1H" ;
+            sioc:has_creator         <http://twitter.com/PikamDeals> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Ribbed ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "81"^^xsd:long ;
+                                                              xlime:hasStopPosition   "87"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.964"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Fashion_accessory ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "8"^^xsd:long ;
+                                                              xlime:hasStopPosition   "19"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Nike,_Inc.> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "50"^^xsd:long ;
+                                                              xlime:hasStopPosition   "60"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.889"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Honda_Fit ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "67"^^xsd:long ;
+                                                              xlime:hasStopPosition   "70"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.845"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Nike,_Inc.> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "50"^^xsd:long ;
+                                                              xlime:hasStopPosition   "54"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Tights ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "97"^^xsd:long ;
+                                                              xlime:hasStopPosition   "103"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.974"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Shoe ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "5"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.345"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Legendary_%28video_game%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "71"^^xsd:long ;
+                                                              xlime:hasStopPosition   "80"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Econda Shoes EN" .
+    
+    <http://vico-research.com/social/c693df83-040d-3c6a-9f45-993f43728aed>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:18"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/DIRECTD3MOCRACY/statuses/737654946892517376> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "#brexit  #TREASON LED HONEST #UK INTO #COMRADE #EU THUS A #commonlaw PEOPLES #grandjury SHOULD AID OUR LEAVING ? #nhs #voteout #lab #con #bb" ;
+            sioc:has_creator         <http://twitter.com/DIRECTD3MOCRACY> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Light-emitting_diode ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "18"^^xsd:long ;
+                                                              xlime:hasStopPosition   "21"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Thus_%28company%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "51"^^xsd:long ;
+                                                              xlime:hasStopPosition   "55"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.667"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Irish_National_Teachers'_Organisation> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "33"^^xsd:long ;
+                                                              xlime:hasStopPosition   "37"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.877"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Question_mark ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "111"^^xsd:long ;
+                                                              xlime:hasStopPosition   "112"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.6"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_States_Agency_for_International_Development ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "95"^^xsd:long ;
+                                                              xlime:hasStopPosition   "98"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/e6218034-e31d-3e8a-a019-f263108a2522>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:06"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/ci247/statuses/737654894132404224> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "UK voters leaning towards #Brexit , Guardian poll reveals https://t.co/bB69Os9oHQ < All to play for..." ;
+            sioc:has_creator         <http://twitter.com/ci247> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.882"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Play_%28theatre%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "91"^^xsd:long ;
+                                                              xlime:hasStopPosition   "95"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.975"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.968"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "45"^^xsd:long ;
+                                                              xlime:hasStopPosition   "49"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.861"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Guardian.co.uk ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "36"^^xsd:long ;
+                                                              xlime:hasStopPosition   "44"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/33bf1596-bfe5-3615-9686-650194058bdf>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:39:59"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/mo_njele/statuses/737654863811751937> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "RT @GuardianUS: UK voters leaning towards Brexit, Guardian poll reveals https://t.co/nKnWiPlfMP" ;
+            sioc:has_creator         <http://twitter.com/mo_njele> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.997"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "16"^^xsd:long ;
+                                                              xlime:hasStopPosition   "18"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.991"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "59"^^xsd:long ;
+                                                              xlime:hasStopPosition   "63"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.989"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/RT_%28TV_network%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.519"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:The_Guardian ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "50"^^xsd:long ;
+                                                              xlime:hasStopPosition   "58"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "42"^^xsd:long ;
+                                                              xlime:hasStopPosition   "48"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/5acfc08b-a362-35ed-9b54-9a3ed87b1f08>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:21"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/ddmc11/statuses/737654959156514816> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "@BreitbartLondon Thank you, D.L., absolutely correct. #USA vote for #Trump! #UK vote #Brexit! #Leave! Avoid Merkel's ruin of Europe!" ;
+            sioc:has_creator         <http://twitter.com/ddmc11> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.476"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Angela_Merkel ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "108"^^xsd:long ;
+                                                              xlime:hasStopPosition   "114"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.811"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Democratic_Party_%28United_States%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "28"^^xsd:long ;
+                                                              xlime:hasStopPosition   "29"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.481"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Deputy_Lieutenant ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "28"^^xsd:long ;
+                                                              xlime:hasStopPosition   "32"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Ruins ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "117"^^xsd:long ;
+                                                              xlime:hasStopPosition   "121"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/politics_db>
+            a          sioc:UserAccount ;
+            sioc:name  "politics_db" .
+    
+    <http://vico-research.com/social/9c81408e-4049-35a9-afd7-a1c603d2b2c6>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:51:32"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/obotheclown/statuses/737657770548269056> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "Let me guess: a black hole will gobble us up if we #Brexit?" ;
+            sioc:has_creator         <http://twitter.com/obotheclown> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.992"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Black ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "16"^^xsd:long ;
+                                                              xlime:hasStopPosition   "21"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Black_hole ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "16"^^xsd:long ;
+                                                              xlime:hasStopPosition   "26"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/7d25378d-cd42-359a-a296-d36624317085>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:15"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/abruiseonthesky/statuses/737654931990151168> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "RT @wdjstraw: Brexit campaigners tried to DOUBLE VAT on energy bills so would they really scrap it? https://t.co/nG4P10cU2C < their hypocri…" ;
+            sioc:has_creator         <http://twitter.com/abruiseonthesky> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.78"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/RT_%28TV_network%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.833"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Double_%28singer%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "42"^^xsd:long ;
+                                                              xlime:hasStopPosition   "48"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.543"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Bill_%28law%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "63"^^xsd:long ;
+                                                              xlime:hasStopPosition   "68"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.615"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Scrap ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "90"^^xsd:long ;
+                                                              xlime:hasStopPosition   "95"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.972"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Value_added_tax ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "49"^^xsd:long ;
+                                                              xlime:hasStopPosition   "52"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "14"^^xsd:long ;
+                                                              xlime:hasStopPosition   "20"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.94"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Energy ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "56"^^xsd:long ;
+                                                              xlime:hasStopPosition   "62"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/Sitedealza>
+            a          sioc:UserAccount ;
+            sioc:name  "Sitedealza" .
+    
+    <http://vico-research.com/social/05025542-33eb-3d47-95b8-ecd865d56085>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:54:41"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <https://plus.google.com/> ;
+            dcterms:source           <https://plus.google.com/105484973338472780925/posts/VeSEjdaoQq2> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "The battle for Brexit: Interview with Lord Callanan By New Europe The European political newspaper https://www.neweurope.eu/article/the-battle-for-brexit/ Martin Callanan, a member of the House of Lords and former Chairman of the European Conservatives and Reformists, does not shy away from expressing his political convictions. A proponent of the Leave campaign in the UK referendum for European Union membership, Lord Callanan sat down with New Europe to discuss the June 23 vote, and the state of the European Union.﻿ -Article: Martin Callanan, a member of the House of Lords and former Chairman of the European Conservatives and Reformists, does not shy away from expressing his political convictions. A proponent of the Leave campaign in the UK referendum for European Union membership, Lord Callanan sat down with New Europe to discuss the June 23 vote, and https://www.neweurope.eu/article/the-battle-for-brexit" ;
+            sioc:has_creator         <https://plus.google.com/105484973338472780925> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:June_23 ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "847"^^xsd:long ;
+                                                              xlime:hasStopPosition   "854"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.563"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Accession_of_Turkey_to_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "766"^^xsd:long ;
+                                                              xlime:hasStopPosition   "791"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.284"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/New_Europe_%28newspaper%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "821"^^xsd:long ;
+                                                              xlime:hasStopPosition   "831"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.33"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Reform_movement_%28pre-Confederation_Canada%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "257"^^xsd:long ;
+                                                              xlime:hasStopPosition   "267"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.678"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Political_campaign ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "732"^^xsd:long ;
+                                                              xlime:hasStopPosition   "740"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.563"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Accession_of_Turkey_to_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "389"^^xsd:long ;
+                                                              xlime:hasStopPosition   "414"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.563"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Conservative_Party_%28UK%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "616"^^xsd:long ;
+                                                              xlime:hasStopPosition   "629"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.284"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/New_Europe_%28newspaper%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "444"^^xsd:long ;
+                                                              xlime:hasStopPosition   "454"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Europe ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "825"^^xsd:long ;
+                                                              xlime:hasStopPosition   "831"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.507"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Politics ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "79"^^xsd:long ;
+                                                              xlime:hasStopPosition   "88"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.699"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_States_House_of_Representatives ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "565"^^xsd:long ;
+                                                              xlime:hasStopPosition   "570"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.361"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "766"^^xsd:long ;
+                                                              xlime:hasStopPosition   "774"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.563"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Conservative_Party_%28UK%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "239"^^xsd:long ;
+                                                              xlime:hasStopPosition   "252"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Battle ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "902"^^xsd:long ;
+                                                              xlime:hasStopPosition   "908"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.653"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:House_of_Lords ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "197"^^xsd:long ;
+                                                              xlime:hasStopPosition   "202"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.822"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Lord ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "416"^^xsd:long ;
+                                                              xlime:hasStopPosition   "420"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.699"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_States_House_of_Representatives ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "188"^^xsd:long ;
+                                                              xlime:hasStopPosition   "193"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.678"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Political_campaign ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "355"^^xsd:long ;
+                                                              xlime:hasStopPosition   "363"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.653"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:House_of_Lords ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "574"^^xsd:long ;
+                                                              xlime:hasStopPosition   "579"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.361"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "389"^^xsd:long ;
+                                                              xlime:hasStopPosition   "397"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.457"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Paul_Martin ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "532"^^xsd:long ;
+                                                              xlime:hasStopPosition   "538"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "15"^^xsd:long ;
+                                                              xlime:hasStopPosition   "21"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:June_23 ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "470"^^xsd:long ;
+                                                              xlime:hasStopPosition   "477"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.507"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Politics ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "684"^^xsd:long ;
+                                                              xlime:hasStopPosition   "693"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.361"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "230"^^xsd:long ;
+                                                              xlime:hasStopPosition   "238"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.361"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "70"^^xsd:long ;
+                                                              xlime:hasStopPosition   "78"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Referendum ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "374"^^xsd:long ;
+                                                              xlime:hasStopPosition   "384"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Battle ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "136"^^xsd:long ;
+                                                              xlime:hasStopPosition   "142"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Battle ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "4"^^xsd:long ;
+                                                              xlime:hasStopPosition   "10"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/United_Kingdom_Alternative_Vote_referendum,_2011> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "748"^^xsd:long ;
+                                                              xlime:hasStopPosition   "761"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Conservatives_and_Reformists ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "607"^^xsd:long ;
+                                                              xlime:hasStopPosition   "644"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.284"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/New_Europe_%28newspaper%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "55"^^xsd:long ;
+                                                              xlime:hasStopPosition   "65"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.833"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Chairman ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "214"^^xsd:long ;
+                                                              xlime:hasStopPosition   "222"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.822"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Lord ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "793"^^xsd:long ;
+                                                              xlime:hasStopPosition   "797"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Members_of_the_House_of_Lords ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "551"^^xsd:long ;
+                                                              xlime:hasStopPosition   "579"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.754"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:House_of_Lords ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "188"^^xsd:long ;
+                                                              xlime:hasStopPosition   "202"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.361"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "505"^^xsd:long ;
+                                                              xlime:hasStopPosition   "513"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.881"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_States ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "398"^^xsd:long ;
+                                                              xlime:hasStopPosition   "403"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Members_of_the_House_of_Lords ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "174"^^xsd:long ;
+                                                              xlime:hasStopPosition   "202"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.754"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:House_of_Lords ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "565"^^xsd:long ;
+                                                              xlime:hasStopPosition   "579"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.881"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_States ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "514"^^xsd:long ;
+                                                              xlime:hasStopPosition   "519"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Europe ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "448"^^xsd:long ;
+                                                              xlime:hasStopPosition   "454"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.33"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Reform_movement_%28pre-Confederation_Canada%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "634"^^xsd:long ;
+                                                              xlime:hasStopPosition   "644"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Martin_Callanan ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "155"^^xsd:long ;
+                                                              xlime:hasStopPosition   "170"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Europe ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "59"^^xsd:long ;
+                                                              xlime:hasStopPosition   "65"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/United_Kingdom_Alternative_Vote_referendum,_2011> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "371"^^xsd:long ;
+                                                              xlime:hasStopPosition   "384"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Newspaper ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "89"^^xsd:long ;
+                                                              xlime:hasStopPosition   "98"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.995"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "748"^^xsd:long ;
+                                                              xlime:hasStopPosition   "750"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.822"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Lord ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "38"^^xsd:long ;
+                                                              xlime:hasStopPosition   "42"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Conservatives_and_Reformists ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "230"^^xsd:long ;
+                                                              xlime:hasStopPosition   "267"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.361"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "607"^^xsd:long ;
+                                                              xlime:hasStopPosition   "615"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Referendum ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "751"^^xsd:long ;
+                                                              xlime:hasStopPosition   "761"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.777"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Interview_%28album%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "23"^^xsd:long ;
+                                                              xlime:hasStopPosition   "32"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.995"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "371"^^xsd:long ;
+                                                              xlime:hasStopPosition   "373"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.881"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_States ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "775"^^xsd:long ;
+                                                              xlime:hasStopPosition   "780"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.833"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Chairman ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "591"^^xsd:long ;
+                                                              xlime:hasStopPosition   "599"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Martin_Callanan ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "532"^^xsd:long ;
+                                                              xlime:hasStopPosition   "547"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.507"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Politics ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "307"^^xsd:long ;
+                                                              xlime:hasStopPosition   "316"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.457"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Paul_Martin ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "155"^^xsd:long ;
+                                                              xlime:hasStopPosition   "161"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.42"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Sovereign_state ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "492"^^xsd:long ;
+                                                              xlime:hasStopPosition   "497"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Social Network" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <https://plus.google.com/105484973338472780925>
+            a          sioc:UserAccount ;
+            sioc:name  "wcangel" .
+    
+    <http://twitter.com/Papiillon>
+            a          sioc:UserAccount ;
+            sioc:name  "Papiillon" .
+    
+    <http://twitter.com/DIRECTD3MOCRACY>
+            a          sioc:UserAccount ;
+            sioc:name  "DIRECTD3MOCRACY" .
+    
+    <https://www.facebook.com#Craft%20Christiana>
+            a          sioc:UserAccount ;
+            sioc:name  "Craft Christiana" .
+    
+    <http://twitter.com/OnlineIncomeAce>
+            a          sioc:UserAccount ;
+            sioc:name  "OnlineIncomeAce" .
+    
+    <http://vico-research.com/social/2391842e-b8e2-309a-b529-ae4879ea3288>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:04"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/Trading2riches/statuses/737654888126119936> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "UK voters leaning towards Brexit, Guardian poll reveals https://t.co/7b7AASUZdS #forex #trading" ;
+            sioc:has_creator         <http://twitter.com/Trading2riches> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.971"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Guardian.co.uk ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "34"^^xsd:long ;
+                                                              xlime:hasStopPosition   "42"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "26"^^xsd:long ;
+                                                              xlime:hasStopPosition   "32"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.997"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.994"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "43"^^xsd:long ;
+                                                              xlime:hasStopPosition   "47"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/4a1050d3-64d8-39e6-b1e4-17f066dceeab>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:20"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/thisfrenchlife/statuses/737654951648825344> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "RT @guardian: UK voters leaning towards Brexit, Guardian poll reveals https://t.co/mk0wmdvt57" ;
+            sioc:has_creator         <http://twitter.com/thisfrenchlife> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "40"^^xsd:long ;
+                                                              xlime:hasStopPosition   "46"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.991"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "57"^^xsd:long ;
+                                                              xlime:hasStopPosition   "61"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.989"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/RT_%28TV_network%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.997"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "14"^^xsd:long ;
+                                                              xlime:hasStopPosition   "16"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.519"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:The_Guardian ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "48"^^xsd:long ;
+                                                              xlime:hasStopPosition   "56"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/MikeRossP>
+            a          sioc:UserAccount ;
+            sioc:name  "MikeRossP" .
+    
+    <http://vico-research.com/social/888a1ad5-0056-3fbd-a2cf-24f5ec05e155>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:23"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/MikeRossP/statuses/737654963975884800> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "How will #ProjectFear respond given we've already been promised war and poverty after #brexit? https://t.co/Rl4PqUuDhW #TheEndIsNigh" ;
+            sioc:has_creator         <http://twitter.com/MikeRossP> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.547"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:War ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "64"^^xsd:long ;
+                                                              xlime:hasStopPosition   "67"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Poverty ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "72"^^xsd:long ;
+                                                              xlime:hasStopPosition   "79"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/Scrabble817>
+            a          sioc:UserAccount ;
+            sioc:name  "Scrabble817" .
+    
+    <http://vico-research.com/social/42e8b417-2955-3fae-9dfc-77d4c9c16533>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:15"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/OnlineIncomeAce/statuses/737654930480103425> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "Pro-brexit ministers 'cannot make savings spending promises' - Daily Mail https://t.co/kiUepLAjel" ;
+            sioc:has_creator         <http://twitter.com/OnlineIncomeAce> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.476"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Mail_%28application%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "69"^^xsd:long ;
+                                                              xlime:hasStopPosition   "73"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Daily_Mail ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "63"^^xsd:long ;
+                                                              xlime:hasStopPosition   "73"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.821"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Saving ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "34"^^xsd:long ;
+                                                              xlime:hasStopPosition   "41"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.517"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Minister_%28government%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "11"^^xsd:long ;
+                                                              xlime:hasStopPosition   "20"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/tealeaft>
+            a          sioc:UserAccount ;
+            sioc:name  "tealeaft" .
+    
+    <http://twitter.com/LeandaBL>
+            a          sioc:UserAccount ;
+            sioc:name  "LeandaBL" .
+    
+    <http://twitter.com/UKWorkStore>
+            a          sioc:UserAccount ;
+            sioc:name  "UKWorkStore" .
+    
+    <http://vico-research.com/social/35cbda11-b897-3a72-a27e-53a05be99867>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:09"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/D__L__T/statuses/737654905494605826> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "UK voters leaning towards Brexit, Guardian poll reveals https://t.co/vzG9cTosFH" ;
+            sioc:has_creator         <http://twitter.com/D__L__T> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.997"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "26"^^xsd:long ;
+                                                              xlime:hasStopPosition   "32"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.971"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Guardian.co.uk ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "34"^^xsd:long ;
+                                                              xlime:hasStopPosition   "42"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.994"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "43"^^xsd:long ;
+                                                              xlime:hasStopPosition   "47"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/582e93ee-7d46-3bb5-96a7-5c61737250b7>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:05"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/DeborahPTodd65/statuses/737654892471455746> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "RT @PaulEmbery: BREAKING: UK voters leaning towards Brexit, Guardian poll reveals. https://t.co/kd77WUJZj9" ;
+            sioc:has_creator         <http://twitter.com/DeborahPTodd65> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.989"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/RT_%28TV_network%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.997"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "26"^^xsd:long ;
+                                                              xlime:hasStopPosition   "28"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.991"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "69"^^xsd:long ;
+                                                              xlime:hasStopPosition   "73"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "52"^^xsd:long ;
+                                                              xlime:hasStopPosition   "58"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.519"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:The_Guardian ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "60"^^xsd:long ;
+                                                              xlime:hasStopPosition   "68"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/97edff30-b8dc-3180-b7a7-a0452f7acf8e>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:17"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/niederheiml/statuses/737654941980889089> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "RT @WantEnglandBack: The whole rotten EU truth will out\n\nUK voters leaning towards Brexit, Guardian poll reveals \n\nhttps://t.co/4Gt1HDi8e6" ;
+            sioc:has_creator         <http://twitter.com/niederheiml> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.985"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "100"^^xsd:long ;
+                                                              xlime:hasStopPosition   "104"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.542"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:The_Guardian ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "91"^^xsd:long ;
+                                                              xlime:hasStopPosition   "99"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.996"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "57"^^xsd:long ;
+                                                              xlime:hasStopPosition   "59"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "38"^^xsd:long ;
+                                                              xlime:hasStopPosition   "40"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Truth ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "41"^^xsd:long ;
+                                                              xlime:hasStopPosition   "46"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.983"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/RT_%28TV_network%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "83"^^xsd:long ;
+                                                              xlime:hasStopPosition   "89"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/niederheiml>
+            a          sioc:UserAccount ;
+            sioc:name  "niederheiml" .
+    
+    <http://vico-research.com/social/d85bbdd5-9583-31f3-8ad4-76d1e74c3999>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-25T17:40:25"^^xsd:dateTime ;
+            dcterms:language         "de" ;
+            dcterms:publisher        <http://www.facebook.com/> ;
+            dcterms:source           <http://www.facebook.com/109864515736132/posts/1742002296014874#109864515736132_1742002296014874> ;
+            dcterms:spatial          [ rdfs:label  "de" ] ;
+            sioc:content             "Hallo ^\nHabe eine frage .. und zwa haben sie diese suhe immer noch ? http://www.43einhalb.com/nike-wmns-air-max-thea-premium-beige-weiss-67110\nweill ich wollte gerne die nexte monat bestellen in 38.5 , oder 38 grösse . BITTE BEACHTEN: Uns ist aufgefallen, dass der Nike Air Max Thea circa eine Nummer kleiner ausfällt. Kombiniert wird eine Air Max-Sohle mit einem sehr hochwertigen Suede-Oberschuh. Der auffällige Thea kann nicht nur barfuß getragen werden, sondern ist außerdem mit einer herausnehmbaren Innensohle aus..." ;
+            sioc:has_creator         <https://www.facebook.com#Craft%20Christiana> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.921"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Nike_%28Unternehmen%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "265"^^xsd:long ;
+                                                              xlime:hasStopPosition   "269"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.833"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Thea> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "414"^^xsd:long ;
+                                                              xlime:hasStopPosition   "418"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.833"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Thea> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "278"^^xsd:long ;
+                                                              xlime:hasStopPosition   "282"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.46"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Air_%28franz%C3%B6sische_Band%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "340"^^xsd:long ;
+                                                              xlime:hasStopPosition   "343"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.7"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Hallo> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "5"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.611"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Beige> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "125"^^xsd:long ;
+                                                              xlime:hasStopPosition   "130"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.5"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Zirkumflex> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "6"^^xsd:long ;
+                                                              xlime:hasStopPosition   "7"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Besitz> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "8"^^xsd:long ;
+                                                              xlime:hasStopPosition   "12"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Barf%C3%BC%C3%9Figkeit> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "434"^^xsd:long ;
+                                                              xlime:hasStopPosition   "440"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.813"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Sohle_%28Bergbau%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "348"^^xsd:long ;
+                                                              xlime:hasStopPosition   "353"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.46"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Air_%28franz%C3%B6sische_Band%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "270"^^xsd:long ;
+                                                              xlime:hasStopPosition   "273"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Nike_Air_Max> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "340"^^xsd:long ;
+                                                              xlime:hasStopPosition   "347"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Premium> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "117"^^xsd:long ;
+                                                              xlime:hasStopPosition   "124"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Nike_Air_Max> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "270"^^xsd:long ;
+                                                              xlime:hasStopPosition   "277"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Monat> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "176"^^xsd:long ;
+                                                              xlime:hasStopPosition   "181"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Suede> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "382"^^xsd:long ;
+                                                              xlime:hasStopPosition   "387"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Social Network" ;
+            xlime:keywordFilterName  "Econda Manufacturers DE" .
+    
+    <http://vico-research.com/social/36d6bbaf-5a68-37bd-af87-fe5ced461425>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:51:10"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/fishhookdeals/statuses/737657679150190593> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "NIKE AIR JORDAN RETRO 5 FIRE RED WHITE SIZE 12 BLACK SHOES $155.00 via Amazon https://t.co/exem29UK9B #deals #nike #jordans" ;
+            sioc:has_creator         <http://twitter.com/fishhookdeals> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.445"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Amazon.com ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "71"^^xsd:long ;
+                                                              xlime:hasStopPosition   "77"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.323"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:All_India_Radio ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "5"^^xsd:long ;
+                                                              xlime:hasStopPosition   "8"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Thomas_Jordan_%28general%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "9"^^xsd:long ;
+                                                              xlime:hasStopPosition   "15"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.786"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Fully_Integrated_Robotised_Engine ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "24"^^xsd:long ;
+                                                              xlime:hasStopPosition   "28"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Flight_controller ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "16"^^xsd:long ;
+                                                              xlime:hasStopPosition   "21"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.264"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Red_%28band%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "29"^^xsd:long ;
+                                                              xlime:hasStopPosition   "32"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Black_%28video_game%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "47"^^xsd:long ;
+                                                              xlime:hasStopPosition   "52"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.75"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Nike,_Inc.> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "4"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Econda Shoes EN" .
+    
+    <http://vico-research.com/social/6e5338c0-d24d-37da-b880-906a2f8a2ca4>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2009-11-20T16:08:32"^^xsd:dateTime ;
+            dcterms:language         "de" ;
+            dcterms:publisher        <http://www.beautyboard.de> ;
+            dcterms:source           <http://www.beautyboard.de/showthread.php/209623-Paulas-Sonnenschutz#8> ;
+            dcterms:spatial          [ rdfs:label  "de" ] ;
+            sioc:content             "Mattierendes Sonnenfluid oder so ähnlich - ein kleine Flasche zum schütteln.\nIch habe mir heute im DM erstmal das Sundance DNA-Schutz mit LSF 30 gekauft - mal sehen,wie das ist." ;
+            sioc:has_creator         <http://www.beautyboard.de#Exuser18> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.969"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Deutsche_Mark> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "99"^^xsd:long ;
+                                                              xlime:hasStopPosition   "101"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.75"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Sundance_Film_Festival> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "114"^^xsd:long ;
+                                                              xlime:hasStopPosition   "122"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Junge_Liberale_%C3%96sterreich> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "138"^^xsd:long ;
+                                                              xlime:hasStopPosition   "141"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.882"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Ich> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "77"^^xsd:long ;
+                                                              xlime:hasStopPosition   "80"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Desoxyribonukleins%C3%A4ure> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "123"^^xsd:long ;
+                                                              xlime:hasStopPosition   "126"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.964"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Flasche> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "54"^^xsd:long ;
+                                                              xlime:hasStopPosition   "61"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Forum" ;
+            xlime:keywordFilterName  "214#946" .
+    
+    <http://twitter.com/ddmc11>
+            a          sioc:UserAccount ;
+            sioc:name  "ddmc11" .
+    
+    <http://vico-research.com/social/625a1eb8-d546-3bf1-b7e8-b18dfcab9c44>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-25T14:39:03"^^xsd:dateTime ;
+            dcterms:language         "de" ;
+            dcterms:publisher        <http://www.facebook.com/> ;
+            dcterms:source           <http://www.facebook.com/109864515736132/posts/999468800109028#109864515736132_999468800109028> ;
+            dcterms:spatial          [ rdfs:label  "de" ] ;
+            sioc:content             "Ihr habt Bock auf einen weißen Sneaker für den kommenden Sommer? Habt Bock auf etwas klassisches was ihr kennt?\n\nDann solltet ihr beim Nike Air Max 90 Mesh GS bei 43einhalb zuschlagen. Beim Mesh an der Toebox gibt es keinen Ärger mit hässlichen Falten.\n\nGS = #TeamkleineTreter ... yippieh.\n\nGrößen -  35.5, 36.5, 37.5, 38 und 38.5\n\nPreis - 99.95€\n\nShoplink - http://goo.gl/VshwQK" ;
+            sioc:has_creator         <https://www.facebook.com/venomazn.de> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.41"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Falte_%28Geologie%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "245"^^xsd:long ;
+                                                              xlime:hasStopPosition   "251"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Nike_Air_Max> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "140"^^xsd:long ;
+                                                              xlime:hasStopPosition   "147"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/%C3%84rger> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "224"^^xsd:long ;
+                                                              xlime:hasStopPosition   "229"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Sneaker> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "31"^^xsd:long ;
+                                                              xlime:hasStopPosition   "38"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.655"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Mesh_%28Band%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "190"^^xsd:long ;
+                                                              xlime:hasStopPosition   "194"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.984"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Schuhgr%C3%B6%C3%9Fe> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "291"^^xsd:long ;
+                                                              xlime:hasStopPosition   "297"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.442"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Bockbier> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "9"^^xsd:long ;
+                                                              xlime:hasStopPosition   "13"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.323"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Citro%C3%ABn_GS/GSA> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "156"^^xsd:long ;
+                                                              xlime:hasStopPosition   "158"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.46"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Air_%28franz%C3%B6sische_Band%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "140"^^xsd:long ;
+                                                              xlime:hasStopPosition   "143"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.954"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Nike_%28Unternehmen%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "135"^^xsd:long ;
+                                                              xlime:hasStopPosition   "139"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.323"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Citro%C3%ABn_GS/GSA> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "254"^^xsd:long ;
+                                                              xlime:hasStopPosition   "256"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.655"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Mesh_%28Band%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "151"^^xsd:long ;
+                                                              xlime:hasStopPosition   "155"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.364"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Klassische_Musik> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "85"^^xsd:long ;
+                                                              xlime:hasStopPosition   "96"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.442"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Bockbier> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "70"^^xsd:long ;
+                                                              xlime:hasStopPosition   "74"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Social Network" ;
+            xlime:keywordFilterName  "Econda Manufacturers DE" .
+    
+    <https://plus.google.com/>
+            rdfs:label  "Google+" .
+    
+    <http://www.beautyboard.de#Exuser18>
+            a          sioc:UserAccount ;
+            sioc:name  "Exuser18" .
+    
+    <http://twitter.com/mo_njele>
+            a          sioc:UserAccount ;
+            sioc:name  "mo_njele" .
+    
+    <http://twitter.com/Rich_Skelding>
+            a          sioc:UserAccount ;
+            sioc:name  "Rich_Skelding" .
+    
+    <http://twitter.com/abruiseonthesky>
+            a          sioc:UserAccount ;
+            sioc:name  "abruiseonthesky" .
+    
+    <http://vico-research.com/social/1fa62997-7f79-3cbc-863f-5bda18e6e137>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:52:03"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/QuickDealzz/statuses/737657903860068352> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "Clothing & Shoes >> Nike Women's Dri-Fit G87 Ikat Racer Training Shirt-black/white #048 https://t.co/EYMUQDC3Dj https://t.co/Yzn9bgJB5U" ;
+            sioc:has_creator         <http://twitter.com/QuickDealzz> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.97"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Shoe ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "11"^^xsd:long ;
+                                                              xlime:hasStopPosition   "16"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Ikat ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "45"^^xsd:long ;
+                                                              xlime:hasStopPosition   "49"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Shirt ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "65"^^xsd:long ;
+                                                              xlime:hasStopPosition   "70"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.857"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Nike,_Inc.> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "20"^^xsd:long ;
+                                                              xlime:hasStopPosition   "24"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.786"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Clothing ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "8"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.353"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Racer_%28simulator%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "50"^^xsd:long ;
+                                                              xlime:hasStopPosition   "55"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.889"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Honda_Fit ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "37"^^xsd:long ;
+                                                              xlime:hasStopPosition   "40"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Nike,_Inc.> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "20"^^xsd:long ;
+                                                              xlime:hasStopPosition   "30"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Econda Shoes EN" .
+    
+    <http://twitter.com/fishhookdeals>
+            a          sioc:UserAccount ;
+            sioc:name  "fishhookdeals" .
+    
+    <http://vico-research.com/social/b0dd4d1f-f7c9-3fb4-a4cf-c529eadc4077>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:04"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/Papiillon/statuses/737654887786422274> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "RT @GuardianUS: UK voters leaning towards Brexit, Guardian poll reveals https://t.co/nKnWiPlfMP" ;
+            sioc:has_creator         <http://twitter.com/Papiillon> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.989"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/RT_%28TV_network%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.991"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "59"^^xsd:long ;
+                                                              xlime:hasStopPosition   "63"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.519"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:The_Guardian ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "50"^^xsd:long ;
+                                                              xlime:hasStopPosition   "58"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.997"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "16"^^xsd:long ;
+                                                              xlime:hasStopPosition   "18"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "42"^^xsd:long ;
+                                                              xlime:hasStopPosition   "48"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://twitter.com/PikamDeals>
+            a          sioc:UserAccount ;
+            sioc:name  "PikamDeals" .
+    
+    <http://twitter.com/Trading2riches>
+            a          sioc:UserAccount ;
+            sioc:name  "Trading2riches" .
+    
+    <http://vico-research.com/social/7a6237e1-0d5f-38af-9292-4c72cb7e37c9>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:24"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/Rich_Skelding/statuses/737654968312811520> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "Stephen Hawking warns that #Brexit would be a disastrous black hole for #UK science\n\n#EUref #StrongerIn #RemainINEU https://t.co/8k9cQ5rssF" ;
+            sioc:has_creator         <http://twitter.com/Rich_Skelding> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.955"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Black ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "57"^^xsd:long ;
+                                                              xlime:hasStopPosition   "62"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Science ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "76"^^xsd:long ;
+                                                              xlime:hasStopPosition   "83"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Stephen_Hawking ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "15"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.46"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Hawking_radiation ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "8"^^xsd:long ;
+                                                              xlime:hasStopPosition   "15"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Black_hole ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "57"^^xsd:long ;
+                                                              xlime:hasStopPosition   "67"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.991"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Stephen ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "7"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://www.facebook.com/>
+            rdfs:label  "Facebook" .
+    
+    <http://twitter.com/Paul1Singh>
+            a          sioc:UserAccount ;
+            sioc:name  "Paul1Singh" .
+    
+    <http://vico-research.com/social/d08979cc-9695-3d24-924d-8e76d4e54c90>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:39:58"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/GrahamScambler/statuses/737654859772624896> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "Risk: Brexit > more right-of-centre Tory gov > more worker exploitation & gov oppression > repression of dissent > proto-fascist gov in UK." ;
+            sioc:has_creator         <http://twitter.com/GrahamScambler> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.951"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Exploitation ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "59"^^xsd:long ;
+                                                              xlime:hasStopPosition   "71"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.287"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Proletariat ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "52"^^xsd:long ;
+                                                              xlime:hasStopPosition   "58"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.993"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "136"^^xsd:long ;
+                                                              xlime:hasStopPosition   "138"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.977"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Centrism ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "29"^^xsd:long ;
+                                                              xlime:hasStopPosition   "35"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.647"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Risk ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "4"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.909"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Dissent ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "105"^^xsd:long ;
+                                                              xlime:hasStopPosition   "112"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.583"^^xsd:double ;
+                                       xlime:hasEntity      <http://dbpedia.org/resource/Conservative_Party_%28UK%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "36"^^xsd:long ;
+                                                              xlime:hasStopPosition   "40"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.456"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Right-wing_politics ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "20"^^xsd:long ;
+                                                              xlime:hasStopPosition   "35"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "6"^^xsd:long ;
+                                                              xlime:hasStopPosition   "12"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.512"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Italian_Fascism ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "121"^^xsd:long ;
+                                                              xlime:hasStopPosition   "128"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.937"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Political_repression ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "91"^^xsd:long ;
+                                                              xlime:hasStopPosition   "101"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Fascism ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "115"^^xsd:long ;
+                                                              xlime:hasStopPosition   "128"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Oppression ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "78"^^xsd:long ;
+                                                              xlime:hasStopPosition   "88"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/48ec6c3c-5c60-3da2-b6ca-b4183ad19bdd>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:16"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/suzyji/statuses/737654938281648128> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "UK voters leaning towards Brexit, Guardian poll reveals https://t.co/ggThggSsCf" ;
+            sioc:has_creator         <http://twitter.com/suzyji> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "26"^^xsd:long ;
+                                                              xlime:hasStopPosition   "32"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.994"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "43"^^xsd:long ;
+                                                              xlime:hasStopPosition   "47"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.997"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.971"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Guardian.co.uk ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "34"^^xsd:long ;
+                                                              xlime:hasStopPosition   "42"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/d367a18c-763e-38bd-a911-bd35350cd0f1>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2016-05-31T16:40:22"^^xsd:dateTime ;
+            dcterms:language         "en" ;
+            dcterms:publisher        <http://www.twitter.com/> ;
+            dcterms:source           <http://twitter.com/politics_db/statuses/737654961182539776> ;
+            dcterms:spatial          [ rdfs:label  "" ] ;
+            sioc:content             "UK voters leaning towards Brexit, Guardian poll reveals https://t.co/L351BwzGHc | Guardian" ;
+            sioc:has_creator         <http://twitter.com/politics_db> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.944"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Guardian.co.uk ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "34"^^xsd:long ;
+                                                              xlime:hasStopPosition   "42"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.997"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "2"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.994"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Opinion_poll ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "43"^^xsd:long ;
+                                                              xlime:hasStopPosition   "47"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.944"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:Guardian.co.uk ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "82"^^xsd:long ;
+                                                              xlime:hasStopPosition   "90"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      dbpedia:United_Kingdom_withdrawal_from_the_European_Union ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "26"^^xsd:long ;
+                                                              xlime:hasStopPosition   "32"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Microblog" ;
+            xlime:keywordFilterName  "Brexit EN" .
+    
+    <http://vico-research.com/social/d524ed92-104e-325e-b5da-579204bc3a2d>
+            a                        sioc:MicroPost ;
+            dcterms:created          "2009-11-21T14:54:13"^^xsd:dateTime ;
+            dcterms:language         "de" ;
+            dcterms:publisher        <http://www.beautyboard.de> ;
+            dcterms:source           <http://www.beautyboard.de/showthread.php/209673-e-s-in-kaltem-mittleren-grau-gesucht/page2#20> ;
+            dcterms:spatial          [ rdfs:label  "de" ] ;
+            sioc:content             "Probier doch mal so einen Grauton bei dm oder Douglas aus, um zu sehen, ob du so eine Farbe an dir magst.\nKönnte ja vielleicht doch gut aussehen, wenn du ein Winter bist.\nDie meistens Brauntöne sind ja warm, das ist dann klar, dass ein kalter Typ damit nicht optimal aussieht." ;
+            sioc:has_creator         <http://www.beautyboard.de#Exuser%2011> ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Winter> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "158"^^xsd:long ;
+                                                              xlime:hasStopPosition   "164"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Probierkunst> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "0"^^xsd:long ;
+                                                              xlime:hasStopPosition   "7"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "1"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Grau> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "26"^^xsd:long ;
+                                                              xlime:hasStopPosition   "33"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.708"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Dm-drogerie_markt> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "38"^^xsd:long ;
+                                                              xlime:hasStopPosition   "40"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.592"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Farbe> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "86"^^xsd:long ;
+                                                              xlime:hasStopPosition   "91"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.239"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Douglas_%28Isle_of_Man%29> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "46"^^xsd:long ;
+                                                              xlime:hasStopPosition   "53"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasAnnotation      [ xlime:hasConfidence  "0.692"^^xsd:double ;
+                                       xlime:hasEntity      <http://de.dbpedia.org/resource/Optimum> ;
+                                       xlime:hasPosition    [ xlime:hasStartPosition  "259"^^xsd:long ;
+                                                              xlime:hasStopPosition   "266"^^xsd:long
+                                                            ]
+                                     ] ;
+            xlime:hasSourceType      "Forum" ;
+            xlime:keywordFilterName  "214#946" .
+}

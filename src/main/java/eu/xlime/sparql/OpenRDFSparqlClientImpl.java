@@ -3,6 +3,7 @@ package eu.xlime.sparql;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.openrdf.http.client.HTTPClient;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.RateLimiter;
 
 import eu.xlime.sparql.SparqlClientFactory.UserPassword;
@@ -134,19 +136,51 @@ public class OpenRDFSparqlClientImpl implements SparqlClient {
     	else throw new RuntimeException("Unsupported result type " + desiredResultType);
     }
     
+
 	private TupleQueryResult doExecuteQuery(String query) {
+		try {
+			return doExecuteQuery(query, -1);
+		} catch (TimeoutException e) {
+			throw new RuntimeException(e); //this should never happen as no timeout is passed
+		}
+	}
+    
+	private TupleQueryResult doExecuteQuery(String query, long timeout) throws TimeoutException {
 		sparqlLimiter.acquire();
-		return con.evaluate(query);
+		if (timeout > 0) {
+			return con.evaluate(query, timeout);
+		} else return con.evaluate(query);
 	}
     
 	@Override
 	public Map<String, Map<String, String>> executeSPARQLQuery(String query) {
+		try {
+			return executeSPARQLQuery(query, -1);
+		} catch (TimeoutException e) {
+			throw new RuntimeException(e); //this should never happen as no timeout is passed
+		}
+	}
+
+	@Override
+	public Map<String, Map<String, String>> executeSPARQLQuery(String query,
+			long timeout) throws TimeoutException {
 		Map<String, Map<String,String>> results = new HashMap<String, Map<String,String>>();
 
-		TupleQueryResult tqr = doExecuteQuery(query);
+		TupleQueryResult tqr = doExecuteQuery(query, timeout);
 		results = asMap(tqr);
 		
 		return results; 
+	}
+
+	@Override
+	public Map<String, Map<String, String>> executeSPARQLOrEmpty(String query,
+			long timeout) {
+		try {
+			return executeSPARQLQuery(query, timeout);
+		} catch (TimeoutException e) {
+			logger.debug("Query timed out, returning empty resultset.", e);
+			return ImmutableMap.of();
+		}
 	}
 
 	private Map<String, Map<String, String>> asMap(TupleQueryResult tqr) {

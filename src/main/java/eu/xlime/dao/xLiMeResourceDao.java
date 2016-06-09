@@ -24,7 +24,7 @@ import eu.xlime.util.ResourceTypeResolver;
  */
 public class xLiMeResourceDao {
 
-	private static final MediaItemDao mediaItemDao = new MediaItemDao();
+	private static final MediaItemDao mediaItemDao = new MediaItemDaoImpl();
 	private static final ERDao eventRegistryDao = new ERDao();
 	private static final MediaItemAnnotationDao annotationDao = new MediaItemAnnotationDao();
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();

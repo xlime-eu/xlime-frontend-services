@@ -1,0 +1,23 @@
+PREFIX xlime: <http://xlime-project.org/vocab/>  
+PREFIX dcterms: <http://purl.org/dc/terms/> 
+PREFIX sioc: <http://rdfs.org/sioc/ns#> 
+PREFIX kdo: <http://kdo.render-project.eu/kdo#> 
+PREFIX ma: <http://www.w3.org/ns/ma-ont#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  
+
+SELECT distinct ?g ?s ?date ?type {
+GRAPH ?g { 
+	?s a ?type.  
+	{ 
+	  ?s a kdo:NewsArticle.
+	  ?s dcterms:created ?date.
+	} UNION { 
+	  ?s a ma:MediaResource. 
+	  ?s ma:date ?date.   
+	} UNION { 
+	  ?s a sioc:MicroPost. 
+	  ?s dcterms:created ?date.
+	}
+} # end graph ?g 
+} #ReplaceLimit 
+
