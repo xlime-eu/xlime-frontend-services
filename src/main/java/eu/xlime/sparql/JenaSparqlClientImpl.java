@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.collect.ImmutableList;
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.Query;
@@ -16,6 +19,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class JenaSparqlClientImpl implements SparqlClient {
 
+	private static final Logger log = LoggerFactory.getLogger(JenaSparqlClientImpl.class);
+	
 	private final Dataset dataset;
 	
 	public JenaSparqlClientImpl(Dataset dataset) {
@@ -46,9 +51,15 @@ public class JenaSparqlClientImpl implements SparqlClient {
 	}
 
 	private ResultSet doExecuteQuery(String query) {
-		Query q = QueryFactory.create(query);
-		QueryExecution qexec = QueryExecutionFactory.create(q, dataset);
-		return qexec.execSelect();
+		try {
+			Query q = QueryFactory.create(query);
+			QueryExecution qexec = QueryExecutionFactory.create(q, dataset);
+			return qexec.execSelect();
+		} catch (Throwable e) {
+			log.error("Error executing query " + query, e);
+			throw new RuntimeException("Error executing query " + query, e);
+		}
+	
 	}
     
     @SuppressWarnings("unchecked")

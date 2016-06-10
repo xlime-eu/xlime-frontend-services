@@ -36,6 +36,7 @@ import eu.xlime.bean.VideoSegment;
 import eu.xlime.sparql.QueryExecutionException;
 import eu.xlime.sparql.SparqlClient;
 import eu.xlime.sparql.SparqlQueryFactory;
+import eu.xlime.util.ListSplitter;
 
 /**
  * Base class for {@link MediaItemDao} implementations which use a Sparql 
@@ -125,7 +126,17 @@ public abstract class SparqlMediaItemDao extends AbstractMediaItemDao {
 	}
 
 	protected final Map<String, MicroPostBean> doFindMicroPosts(List<String> toFind) {
-		return doFindMicroPosts(toFind, 2); 
+		int maxListSize = 10;
+		if (toFind.size() > maxListSize) {
+			List<List<String>> subLists = new ListSplitter().splitIntoSubListsWithMaxSize(maxListSize, toFind);
+			Map<String, MicroPostBean> result = new HashMap<>(); 
+			for (List<String> sl: subLists) {
+				result.putAll(doFindMicroPosts(sl));
+			}
+			return result;
+		} else {
+			return doFindMicroPosts(toFind, 2);
+		}
 	}
 
 	private Map<String, MicroPostBean> doFindMicroPosts(List<String> toFind, int triesLeft) {

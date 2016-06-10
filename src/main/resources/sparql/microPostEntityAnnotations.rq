@@ -1,0 +1,15 @@
+PREFIX xlime: <http://xlime-project.org/vocab/> 
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+
+SELECT DISTINCT ?g ?ent ?confidence ?start ?end {
+GRAPH ?g { 
+	#encUrl a sioc:MicroPost. 
+	#encUrl xlime:hasAnnotation ?a.
+	?a xlime:hasEntity ?ent.
+	?a xlime:hasConfidence ?confidence.
+	?a xlime:hasPosition ?pos.
+	?pos xlime:hasStartPosition ?start.
+	?pos xlime:hasStopPosition ?end.
+} #end of Graph ?g
+}
+

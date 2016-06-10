@@ -1,0 +1,33 @@
+PREFIX xlime: <http://xlime-project.org/vocab/>  
+PREFIX dcterms: <http://purl.org/dc/terms/>  
+PREFIX sioc: <http://rdfs.org/sioc/ns#> 
+PREFIX kdo: <http://kdo.render-project.eu/kdo#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+
+SELECT ?g 
+	#replaceByUrlVar
+	?created ?lang ?publisher ?source ?title ?content ?geolat ?geolon ?geoname {
+GRAPH ?g {
+	#url a kdo:NewsArticle. 
+	#url dcterms:created ?created.  
+	#url dcterms:language ?lang.
+	OPTIONAL { 
+		#url dcterms:publisher ?pub. 
+		?pub rdfs:label ?publisher. 
+	}
+	#url dcterms:source ?source. 
+	#url dcterms:title ?title . 
+	OPTIONAL { 
+		#url sioc:content ?content. }
+	OPTIONAL { 
+		#url dcterms:spatial ?spat. 
+		?spat geo:lat ?geolat. 
+		?spat geo:long ?geolon
+		OPTIONAL {  
+			?spat <http://www.geonames.org/ontology#name> ?geoname
+		}
+	}   
+	#ReplaceByFilter
+} # end Graph ?g 
+} #ReplaceLimit 

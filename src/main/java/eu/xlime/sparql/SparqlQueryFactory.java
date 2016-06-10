@@ -24,64 +24,26 @@ public class SparqlQueryFactory {
 	private static final Logger log = LoggerFactory.getLogger(SparqlQueryFactory.class);
 	
 	public String dbpediaUIEntity(String url, String lang) {
-		final String encUrl = "<" + url + ">";
-		return 	"PREFIX dbo: <http://dbpedia.org/ontology/> " +
-				"PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
-				"SELECT DISTINCT ?label ?depiction ?type FROM <http://dbpedia.org> WHERE { " +
-			    " OPTIONAL { " + 
-				  encUrl + " a ?type . " +
-			    " } " +
-				
-				" OPTIONAL { " + 
-				encUrl + " <http://www.w3.org/2000/01/rdf-schema#label> ?label ." +
-				  String.format("FILTER regex(lang(?label), \"%s\", \"i\") . ", lang) +
-				" } " +
-						
-				" OPTIONAL { " +
-				 "{ " + encUrl + " foaf:depiction ?depiction . } UNION " +
-				 "{ " + encUrl + " dbo:thumbnail ?depiction . } " +
-				" } " +
-				 
-			"}";
+		final String encUrl = bracketUrl(url);
+		String qPattern = load("sparql/dbpediaUIEntity.rq");
+		return qPattern.replaceAll("#encUrl", encUrl)
+			.replaceAll("#ReplaceByLangFilter", String.format("FILTER regex(lang(?label), \"%s\", \"i\") . ", lang));
 	}
 	
 	public String microPostEntityAnnotations(String url) {
-		final String encUrl = "<" + url + ">";
-		return "PREFIX xlime: <http://xlime-project.org/vocab/> " + 
-			"PREFIX dcterms: <http://purl.org/dc/terms/> " + 
-			"PREFIX sioc: <http://rdfs.org/sioc/ns#> " +
-
-			"SELECT DISTINCT ?mp ?ent ?confidence ?start ?end { " + 
-			  encUrl + " a sioc:MicroPost. " +
-			  encUrl + " xlime:hasAnnotation ?a. " +
-			  "?a xlime:hasEntity ?ent. " +
-			  "?a xlime:hasConfidence ?confidence. " +
-			  "?a xlime:hasPosition ?pos. " +
-			  "?pos xlime:hasStartPosition ?start. " +
-			  "?pos xlime:hasStopPosition ?end. " +
-		"}";
+		final String encUrl = bracketUrl(url);
+		String qPattern = load("sparql/microPostEntityAnnotations.rq");
+		return qPattern.replaceAll("#encUrl", encUrl);
 	}
 	
 	public String newsArticleEntityAnnotations(String url) {
-		final String encUrl = "<" + url + ">";
-		return "PREFIX xlime: <http://xlime-project.org/vocab/> " + 
-			"PREFIX dcterms: <http://purl.org/dc/terms/> " + 
-			"PREFIX sioc: <http://rdfs.org/sioc/ns#> " +
-			"PREFIX kdo: <http://kdo.render-project.eu/kdo#> " +
-			
-			"SELECT DISTINCT ?mp ?ent ?confidence ?entLabel { " + 
-			  encUrl + " a kdo:NewsArticle. " +
-			  encUrl + " xlime:hasAnnotation ?a. " +
-			  "?a xlime:hasEntity ?ent. " +
-			  "?a xlime:hasConfidence ?confidence. " +
-			  " OPTIONAL { " +
-			   "?a rdfs:label ?entLabel. " +
-			  "}" +
-		"}";
+		final String encUrl = bracketUrl(url);
+		String qPattern = load("sparql/newsArticleEntityAnnotations.rq");
+		return qPattern.replaceAll("#encUrl", encUrl);
 	}
 	
 	public String sameAs(String url) {
-		final String encUrl = "<" + url + ">";
+		final String encUrl = bracketUrl(url);
 		return 	
 			"PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
 			"SELECT DISTINCT ?sameAs { " + 
@@ -91,7 +53,7 @@ public class SparqlQueryFactory {
 	}
 	
 	public String dbpediaSameAsPrimaryTopicOf(String wikiUrl) {
-		final String encUrl = "<" + wikiUrl + ">";
+		final String encUrl = bracketUrl(wikiUrl);
 		return 
 			"PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
 			"PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
@@ -105,8 +67,10 @@ public class SparqlQueryFactory {
 	public String microPostDetails(List<String> urls) {
 		int limit = (30 * urls.size()) + 1;
 		String qPattern = load("sparql/microPostDetails.rq");
-		return qPattern.replaceAll("#ReplaceByFilter", filterOneOfUrls("?url", urls))
-			.replaceAll("#ReplaceLimit", "LIMIT " + limit);
+		return qPattern.replaceAll("#url", "?url")
+				.replaceAll("#replaceByUrlVar", "?url")
+				.replaceAll("#ReplaceByFilter", filterOneOfUrls("?url", urls))
+				.replaceAll("#ReplaceLimit", "LIMIT " + limit);
 	}
 	
 	public String siocNameOf(String url) {
@@ -131,156 +95,49 @@ public class SparqlQueryFactory {
 	}
 	
 	public String microPostDetails(String url) {
-		final String encUrl = "<" + url + ">";
-		return "PREFIX xlime: <http://xlime-project.org/vocab/> " + 
-				"PREFIX dcterms: <http://purl.org/dc/terms/> " + 
-				"PREFIX sioc: <http://rdfs.org/sioc/ns#> " + 
-
-				"SELECT ?created ?lang ?publisher ?pubName ?source ?sourceType ?content ?creator ?creatorLabel { " +  
-				encUrl + " a <http://rdfs.org/sioc/ns#MicroPost>." + 
-				encUrl + " dcterms:created ?created. " +
-				encUrl + " dcterms:language ?lang. " + 
-				encUrl + " dcterms:publisher ?publisher. " +
-				" OPTIONAL { " +
-				  "?publisher rdfs:label ?pubName. " + 
-				" } " + 
-				encUrl + " dcterms:source ?source. " + 
-				encUrl + " xlime:hasSourceType ?sourceType. " + 
-				" OPTIONAL { " + 
-				encUrl + " sioc:content ?content. " + 
-				"} " + 
-				encUrl + " sioc:has_creator ?creator. " + 
-				" OPTIONAL { " +
-				  " ?creator sioc:name ?creatorLabel . " + 
-				"} " +
-				"} LIMIT 30";		
+		final String encUrl = bracketUrl(url);
+		String qPattern = load("sparql/microPostDetails.rq");
+		return qPattern.replaceAll("#url", encUrl)
+				.replaceAll("#replaceByUrlVar", "")
+				.replaceAll("#ReplaceByFilter", "")
+				.replaceAll("#ReplaceLimit", "LIMIT 30");
 	}
 	
 
 	public String newsArticleDetails(List<String> urls) {
 		int limit = (30 * urls.size()) + 1;
-		return "PREFIX xlime: <http://xlime-project.org/vocab/> " +  
-			"PREFIX dcterms: <http://purl.org/dc/terms/> " +  
-			"PREFIX sioc: <http://rdfs.org/sioc/ns#> " +  
-			"PREFIX kdo: <http://kdo.render-project.eu/kdo#> " +
-			"PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> " + 
-
-			"SELECT ?url ?created ?lang ?publisher ?source ?title ?content ?geolat ?geolon ?geoname { " + 
-			"?url a kdo:NewsArticle. " + 
-			"?url dcterms:created ?created. " +  
-			"?url dcterms:language ?lang. " +
-			" OPTIONAL { " +
-				"?url dcterms:publisher ?pub. " +
-				" ?pub rdfs:label ?publisher. " +
-			"}" +
-			"?url dcterms:source ?source. " + 
-			"?url dcterms:title ?title . " +
-			" OPTIONAL { " +
-				"?url sioc:content ?content. } " +
-			" OPTIONAL { " +
-				"?url dcterms:spatial ?spat. " +
-				"?spat geo:lat ?geolat. " +
-				"?spat geo:long ?geolon " +
-				"OPTIONAL { " + 
-					"?spat <http://www.geonames.org/ontology#name> ?geoname" +
-				"}" +
-			"}" + 
-			filterOneOfUrls("?url", urls) + 
-			"} LIMIT " + limit;
+		String qPattern = load("sparql/newsArticleDetails.rq");
+		return qPattern.replaceAll("#url", "?url")
+				.replaceAll("#replaceByUrlVar", "?url")
+				.replaceAll("#ReplaceByFilter", filterOneOfUrls("?url", urls))
+				.replaceAll("#ReplaceLimit", "LIMIT " + limit);
 	}
 	
 	public String newsArticleDetails(String url) {
-		final String encUrl = "<" + url + ">";
-		return "PREFIX xlime: <http://xlime-project.org/vocab/> " +  
-			"PREFIX dcterms: <http://purl.org/dc/terms/> " +  
-			"PREFIX sioc: <http://rdfs.org/sioc/ns#> " +  
-			"PREFIX kdo: <http://kdo.render-project.eu/kdo#> " +
-			"PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> " + 
-
-			"SELECT ?created ?lang ?publisher ?source ?title ?content ?geolat ?geolon ?geoname { " + 
-			encUrl + " a kdo:NewsArticle. " + 
-			encUrl + " dcterms:created ?created. " +  
-			encUrl + " dcterms:language ?lang. " +
-			" OPTIONAL { " +
-				encUrl + " dcterms:publisher ?pub. " +
-				" ?pub rdfs:label ?publisher. " +
-			"}" +
-			encUrl + " dcterms:source ?source. " + 
-			encUrl + " dcterms:title ?title . " +
-			" OPTIONAL { " +
-				encUrl + " sioc:content ?content. } " +
-			" OPTIONAL { " +
-				encUrl + " dcterms:spatial ?spat. " +
-				"?spat geo:lat ?geolat. " +
-				"?spat geo:long ?geolon " +
-				"OPTIONAL { " + 
-					"?spat <http://www.geonames.org/ontology#name> ?geoname" +
-				"}" +
-			"}" + 
-			"} LIMIT 30";
+		final String encUrl = bracketUrl(url);
+		String qPattern = load("sparql/newsArticleDetails.rq");
+		return qPattern.replaceAll("#url", encUrl)
+				.replaceAll("#replaceByUrlVar", "")
+				.replaceAll("#ReplaceByFilter", "")
+				.replaceAll("#ReplaceLimit", "LIMIT 30");
 	}
 
 	public String mediaResource(List<String> urls) {
 		int limit = (30 * urls.size()) + 1;
-		return "PREFIX xlime: <http://xlime-project.org/vocab/> " +  
-		"PREFIX dcterms: <http://purl.org/dc/terms/> " +  
-		"PREFIX sioc: <http://rdfs.org/sioc/ns#> " +  
-		"PREFIX ma: <http://www.w3.org/ns/ma-ont#> " +
-		"PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> " + 
-
-		"SELECT ?url ?broadcastDate ?duration ?publisher ?relImage ?source ?title ?description ?geoname { " + 
-		"?url a ma:MediaResource. " + 
-		"?url ma:date ?broadcastDate. " +
-		"?url ma:duration ?duration." +
-		"?url ma:title ?title . " +
-		" OPTIONAL { " +
-			"?url ma:hasPublisher ?pub. " +
-			" ?pub rdfs:label ?publisher. " +
-		"}" +
-		" OPTIONAL { " + 
-			"?url ma:hasSource ?source. " +
-		"} " +
-		" OPTIONAL { " + 
-		    "?url ma:description ?description ." +
-		"}" +
-		" OPTIONAL { " +
-			"?url ma:hasRelatedImage ?relImage. } " +
-		" OPTIONAL { " +
-			"?url ma:hasRelatedLocation ?geoname. " +
-		"}" + 
-		filterOneOfUrls("?url", urls) +
-		"} LIMIT " + limit;
+		String qPat = load("sparql/mediaResource.rq");
+		return qPat.replaceAll("#url", "?url")
+				.replaceAll("#replaceByUrlVar", "?url")
+				.replaceAll("#ReplaceByFilter", filterOneOfUrls("?url", urls))
+				.replaceAll("#ReplaceByLimit", "LIMIT " + limit);
 	}
 	
 	public String mediaResource(String url) {
-		final String encUrl = "<" + url + ">";
-		return "PREFIX xlime: <http://xlime-project.org/vocab/> " +  
-			"PREFIX dcterms: <http://purl.org/dc/terms/> " +  
-			"PREFIX sioc: <http://rdfs.org/sioc/ns#> " +  
-			"PREFIX ma: <http://www.w3.org/ns/ma-ont#> " +
-			"PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> " + 
-
-			"SELECT ?broadcastDate ?duration ?publisher ?relImage ?source ?title ?description ?geoname { " + 
-			encUrl + " a ma:MediaResource. " + 
-			encUrl + " ma:date ?broadcastDate. " +
-			encUrl + " ma:duration ?duration." +
-			encUrl + " ma:title ?title . " +
-			" OPTIONAL { " +
-				encUrl + " ma:hasPublisher ?pub. " +
-				" ?pub rdfs:label ?publisher. " +
-			"}" +
-			" OPTIONAL { " + 
-				encUrl + " ma:hasSource ?source. " +
-			"} " +
-			" OPTIONAL { " + 
-			    encUrl + " ma:description ?description ." +
-			"}" +
-			" OPTIONAL { " +
-				encUrl + " ma:hasRelatedImage ?relImage. } " +
-			" OPTIONAL { " +
-				encUrl + " ma:hasRelatedLocation ?geoname. " +
-			"}" + 
-			"} LIMIT 30";
+		final String encUrl = bracketUrl(url);
+		String qPat = load("sparql/mediaResource.rq");
+		return qPat.replaceAll("#url", encUrl)
+				.replaceAll("#replaceByUrlVar", "")
+				.replaceAll("#ReplaceByFilter", "")
+				.replaceAll("#ReplaceByLimit", "LIMIT 30");
 	}
 
 	public String mediaItemUrlsByDate(long dateFrom, long dateTo, int limit, DateTimeFormatter... dateFormats) {

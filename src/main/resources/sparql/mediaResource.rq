@@ -1,0 +1,33 @@
+PREFIX xlime: <http://xlime-project.org/vocab/>  
+PREFIX dcterms: <http://purl.org/dc/terms/>  
+PREFIX sioc: <http://rdfs.org/sioc/ns#>  
+PREFIX ma: <http://www.w3.org/ns/ma-ont#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+
+SELECT ?g
+  	#replaceByUrlVar 
+  	?broadcastDate ?duration ?publisher ?relImage ?source ?title ?description ?geoname {
+GRAPH ?g {  
+	#url a ma:MediaResource.
+	#url ma:date ?broadcastDate.
+	#url ma:duration ?duration.
+	#url ma:title ?title .
+	OPTIONAL { 
+		#url ma:hasPublisher ?pub.
+		?pub rdfs:label ?publisher.
+	}
+	OPTIONAL { 
+		#url ma:hasSource ?source.
+	}
+	OPTIONAL { 
+		#url ma:description ?description .
+	}
+	OPTIONAL {
+		#url ma:hasRelatedImage ?relImage. }
+	OPTIONAL { 
+		#url ma:hasRelatedLocation ?geoname.
+	} 
+	#ReplaceByFilter
+} # end of graph g
+} #ReplaceByLimit

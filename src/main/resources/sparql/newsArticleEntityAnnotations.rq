@@ -1,0 +1,17 @@
+PREFIX xlime: <http://xlime-project.org/vocab/> 
+PREFIX dcterms: <http://purl.org/dc/terms/> 
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX kdo: <http://kdo.render-project.eu/kdo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+			
+SELECT DISTINCT ?g ?ent ?confidence ?entLabel {
+GRAPH ?g { 
+	#encUrl a kdo:NewsArticle. 
+	#encUrl xlime:hasAnnotation ?a.
+	?a xlime:hasEntity ?ent.
+	?a xlime:hasConfidence ?confidence.
+	OPTIONAL { 
+		?a rdfs:label ?entLabel.
+	}
+} #end of Graph g
+}
