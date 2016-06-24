@@ -28,11 +28,13 @@ import eu.xlime.bean.XLiMeResource;
 import eu.xlime.dao.MediaItemAnnotationDao;
 import eu.xlime.dao.MediaItemDao;
 import eu.xlime.dao.MediaItemDaoImpl;
+import eu.xlime.dao.UIEntityDao;
 import eu.xlime.dao.xLiMeResourceDao;
+import eu.xlime.dao.annotation.MediaItemAnnotationDaoImpl;
+import eu.xlime.dao.entity.UIEntityDaoImpl;
 import eu.xlime.search.SearchItemDao;
 import eu.xlime.sphere.bean.Recommendation;
 import eu.xlime.sphere.bean.Spheres;
-import eu.xlime.summa.UIEntityFactory;
 import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.ResourceTypeResolver;
 import eu.xlime.util.score.ScoreFactory;
@@ -51,12 +53,12 @@ public class SpheresFactory {
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
 	private static final xLiMeResourceDao resourceDao = new xLiMeResourceDao();
 	private static final MediaItemDao mediaItemDao = new MediaItemDaoImpl();
-	private static final MediaItemAnnotationDao mediaItemAnnotationDao = new MediaItemAnnotationDao();
-	private static final SearchItemDao searcher = new SearchItemDao();
-	private static final UIEntityFactory uiEntityFactory = UIEntityFactory.instance;
+	private static final MediaItemAnnotationDao mediaItemAnnotationDao = new MediaItemAnnotationDaoImpl();
+	private static final UIEntityDao uiEntityFactory = UIEntityDaoImpl.instance;
 	private static final ScoreFactory scoref = ScoreFactory.instance;
 		
 	public Spheres buildSpheres(List<String> contextUrls) {
+		final long start = System.currentTimeMillis();
 		Spheres result = new Spheres();
 		List<XLiMeResource> context = resolveContextUrls(contextUrls);
 		result.setInner(asTopRecommendations(context));
@@ -74,6 +76,7 @@ public class SpheresFactory {
 				result.setOuter(recs.subList(5, Math.min(15, recs.size())));
 			} else result.setOuter(ImmutableList.<Recommendation>of());
 		}
+		log.debug(String.format("Built sphere based on %s contextUrls in %s ms", contextUrls.size(), (System.currentTimeMillis() - start)));
 		return result;
 	}
 
@@ -93,8 +96,14 @@ public class SpheresFactory {
 	}
 
 	private List<Recommendation> calcRecs(List<XLiMeResource> context) {
+		final long startEntRec = System.currentTimeMillis(); 
 		List<Recommendation> entities = mapToRecommendation(calcRecEntities(context));
+		log.debug(String.format("Found %s ent recs in %sms", entities.size(), (System.currentTimeMillis() - startEntRec)));
+		
+		final long startMedItRec = System.currentTimeMillis();
 		List<Recommendation> mediaItems = mapToRecommendation(calcRecMediaItems(context));
+		log.debug(String.format("Found %s mediaItem recs in %sms", mediaItems.size(), (System.currentTimeMillis() - startEntRec)));
+		
 		log.debug(String.format("Weaving %s entities and %s media-items", entities.size(), mediaItems.size()));
 		return weave(entities, mediaItems);
 	}
@@ -140,11 +149,11 @@ public class SpheresFactory {
 			} else if (res instanceof SearchString) {
 				String keywords = ((SearchString)res).getValue();
 				String justif = String.format("Matches search '%s'", keywords);
-				ScoredSet<String> miUrls = searcher.findMediaItemUrlsByText(keywords);
+				ScoredSet<String> miUrls = mediaItemDao.findMediaItemUrlsByText(keywords);
 				medItUrls.addAll(miUrls);
 			} else if (res instanceof UIEntity) {
 				String entUrl = ((UIEntity) res).getUrl();
-				ScoredSet<String> matches = searcher.findMediaItemUrlsByKBEntity(entUrl); 
+				ScoredSet<String> matches = mediaItemAnnotationDao.findMediaItemUrlsByKBEntity(entUrl); 
 				medItUrls.addAll(matches);
 			} else {
 				// TODO: match other types of 
@@ -178,9 +187,9 @@ public class SpheresFactory {
 				//TODO: can we use http://km.aifb.kit.edu/services/xlid-lexica-ui/ instead, this would give us greater control and info on confidence for the scores
 				String keywords = ((SearchString) res).getValue();
 				String justif = String.format("Matches search '%s'", keywords);
-				List<UrlLabel> urlLabels = searcher.autoCompleteEntities(keywords);
-				for (UrlLabel ul : urlLabels) {
-					builder.add(uiEntityFactory.retrieveFromUri(ul.getUrl()),
+				List<UrlLabel> urlLabels = uiEntityFactory.autoCompleteEntities(keywords);
+				for (UIEntity uiEnt : uiEntityFactory.retrieveFromUris(mapUrls(urlLabels))) {
+					builder.add(uiEnt,
 							scoref.newScore(1.0, justif));
 				}
 			} else {
@@ -190,6 +199,15 @@ public class SpheresFactory {
 		}
 		return builder.build();
 	}
+
+	private List<String> mapUrls(List<UrlLabel> urlLabels) {
+		List<String> result = new ArrayList<String>();
+		for (UrlLabel ul: urlLabels) {
+			result.add(ul.getUrl());
+		}
+		return result;
+	}
+
 
 	/**
 	 * Flattens the input collection (which has more information) into an output 

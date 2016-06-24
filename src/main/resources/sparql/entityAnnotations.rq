@@ -1,0 +1,16 @@
+PREFIX xlime: <http://xlime-project.org/vocab/> 
+
+SELECT DISTINCT ?g ?s ?ent ?confidence ?start ?end {
+GRAPH ?g { 
+	?s xlime:hasAnnotation ?a.
+	?a xlime:hasEntity ?ent.
+	?a xlime:hasConfidence ?confidence.
+	OPTIONAL {
+		?a xlime:hasPosition ?pos.
+		?pos xlime:hasStartPosition ?start.
+		?pos xlime:hasStopPosition ?end.
+	}
+	#ReplaceByFilter
+} #end of Graph ?g
+} #ReplaceLimit
+

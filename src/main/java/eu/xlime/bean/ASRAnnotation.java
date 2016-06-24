@@ -1,5 +1,7 @@
 package eu.xlime.bean;
 
+import javax.persistence.Id;
+
 /**
  * Represents the output of some ASR process on an audio stream.
  * 
@@ -8,11 +10,22 @@ package eu.xlime.bean;
  */
 public class ASRAnnotation implements XLiMeResource {
 
-	private static final long serialVersionUID = -492673668791572135L;
+	private static final long serialVersionUID = -3665559261491087237L;
 
+	@Id
+	private String url;
+	
 	private VideoSegment inSegment;
 	
 	private String recognizedText;
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public VideoSegment getInSegment() {
 		return inSegment;
@@ -29,5 +42,12 @@ public class ASRAnnotation implements XLiMeResource {
 	public void setRecognizedText(String recognizedText) {
 		this.recognizedText = recognizedText;
 	}
-	
+
+	@Override
+	public String toString() {
+		return String.format(
+				"ASRAnnotation [url=%s, inSegment=%s, recognizedText=%s]", url,
+				inSegment, recognizedText);
+	}
+
 }

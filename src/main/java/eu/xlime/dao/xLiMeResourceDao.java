@@ -11,8 +11,9 @@ import eu.xlime.bean.SearchString;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.VideoSegment;
 import eu.xlime.bean.XLiMeResource;
+import eu.xlime.dao.annotation.MediaItemAnnotationDaoImpl;
+import eu.xlime.dao.entity.UIEntityDaoImpl;
 import eu.xlime.eventreg.ERDao;
-import eu.xlime.summa.UIEntityFactory;
 import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.ResourceTypeResolver;
 
@@ -26,7 +27,7 @@ public class xLiMeResourceDao {
 
 	private static final MediaItemDao mediaItemDao = new MediaItemDaoImpl();
 	private static final ERDao eventRegistryDao = new ERDao();
-	private static final MediaItemAnnotationDao annotationDao = new MediaItemAnnotationDao();
+	private static final MediaItemAnnotationDao annotationDao = new MediaItemAnnotationDaoImpl();
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
 	
 	/**
@@ -58,7 +59,7 @@ public class xLiMeResourceDao {
 		else if (TVProgramBean.class.equals(resType)) 
 			return (Optional<T>)mediaItemDao.findTVProgram(uri);
 		else if (UIEntity.class.equals(resType)) 
-			return (Optional<T>)Optional.of(UIEntityFactory.instance.retrieveFromUri(uri));
+			return (Optional<T>)UIEntityDaoImpl.instance.retrieveFromUri(uri);
 		else if (EREvent.class.equals(resType)) 
 			return (Optional<T>)eventRegistryDao.retrieveEvent(uri);
 		else if (ASRAnnotation.class.equals(resType)) 

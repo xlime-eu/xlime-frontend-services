@@ -1,5 +1,7 @@
 package eu.xlime.bean;
 
+import javax.persistence.Id;
+
 /**
  * Represents the output of some OCR annotation on a given video segment.
  * @author RDENAUX
@@ -7,10 +9,20 @@ package eu.xlime.bean;
  */
 public class OCRAnnotation implements XLiMeResource {
 
-	private static final long serialVersionUID = 4212794730125578348L;
+	private static final long serialVersionUID = 2519007514533234438L;
+	
+	@Id
+	private String url;
 	private VideoSegment inSegment;
 	private String recognizedText;
 	
+	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public VideoSegment getInSegment() {
 		return inSegment;
 	}

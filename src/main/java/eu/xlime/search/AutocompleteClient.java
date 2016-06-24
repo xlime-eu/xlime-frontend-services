@@ -59,11 +59,14 @@ public class AutocompleteClient {
 			}
 		};
 
+		long start = System.currentTimeMillis();
 		try {
 			return Optional.of(autocompleteModelCache.get(keywords, valueLoader));
 		} catch (ExecutionException e) {
 			log.warn("Error loading autocompleteModel for " + keywords, e);
 			return Optional.absent();
+		} finally {
+			log.debug(String.format("Executed retrieveAutocompleteModel in %s ms", (System.currentTimeMillis() - start)));
 		}
 	}
 

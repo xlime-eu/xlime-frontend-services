@@ -1,11 +1,13 @@
 package eu.xlime.mongo;
 
+import java.util.Locale;
 import java.util.Properties;
 
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Optional;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
@@ -50,23 +52,34 @@ public class DBCollectionProvider {
     	} finally {
         	super.finalize();
         }
-
-    }	
+    }
+    
 	/**
 	 * 
 	 * @param beanClass
 	 * @return
 	 * @deprecated Mongo's API is deprecating {@link DBCollection}, migrate to {@link #getMongoCollection(Class)} instead
 	 */
-	public <T extends XLiMeResource> DBCollection getDBCollection(Class<T> beanClass) {
+	public <T extends XLiMeResource> DBCollection getDBCollection(Class<T> beanClass, Optional<Locale> locale) {
 		DB db = client.getDB(dbName);
-		return db.getCollection(beanClass.getSimpleName());
+		String collName = String.format("%s%s", localeCollectionPrefix(locale), beanClass.getSimpleName());
+		return db.getCollection(collName);
 	}
 
-	public <T extends XLiMeResource> MongoCollection<Document> getMongoCollection(Class<T> beanClass) {
-		String dbName = ConfigOptions.XLIME_MONGO_RESOURCE_DATABASE_NAME.getValue(cfgProps);
+	private String localeCollectionPrefix(Optional<Locale> locale) {
+		if (locale == null || !locale.isPresent()) return "";
+		if (locale.get().getLanguage().equals(Locale.UK.getLanguage())) return "";
+		return String.format("%s_", locale.get().getLanguage());
+	}
+
+	public <T extends XLiMeResource> DBCollection getDBCollection(Class<T> beanClass) {
+		return getDBCollection(beanClass, Optional.<Locale>absent());
+	}
+	
+	public <T extends XLiMeResource> MongoCollection<Document> getMongoCollection(Class<T> beanClass, Optional<Locale> locale) {
 		MongoDatabase db = client.getDatabase(dbName);
-		return db.getCollection(beanClass.getSimpleName());
+		String collName = String.format("%s%s", localeCollectionPrefix(locale), beanClass.getSimpleName());
+		return db.getCollection(collName);
 	}
 	
 }

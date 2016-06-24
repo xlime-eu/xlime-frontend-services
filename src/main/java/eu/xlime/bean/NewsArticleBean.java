@@ -2,10 +2,10 @@ package eu.xlime.bean;
 
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-//import org.eclipse.persistence.oxm.annotations.XmlDiscriminatorValue;
 
-//@XmlDiscriminatorValue("http://kdo.render-project.eu/kdo#NewsArticle")
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class NewsArticleBean implements MediaItem {
 
 	private static final long serialVersionUID = -6418249353449068589L;

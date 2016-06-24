@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 
@@ -23,11 +24,24 @@ public class SparqlQueryFactory {
 
 	private static final Logger log = LoggerFactory.getLogger(SparqlQueryFactory.class);
 	
-	public String dbpediaUIEntity(String url, String lang) {
-		final String encUrl = bracketUrl(url);
+	public String dbpediaUIEntity(List<String> urls, String lang) {
+		if (urls == null || urls.isEmpty()) throw new IllegalArgumentException("urls must be non null and non empty");
+		int limit = (15 * urls.size()) + 1;
 		String qPattern = load("sparql/dbpediaUIEntity.rq");
-		return qPattern.replaceAll("#encUrl", encUrl)
-			.replaceAll("#ReplaceByLangFilter", String.format("FILTER regex(lang(?label), \"%s\", \"i\") . ", lang));
+		return qPattern.replaceAll("#encUrl", "?uri")
+				.replaceAll("#urlVar", "?uri")
+				.replaceAll("#ReplaceByLangFilter", String.format("FILTER regex(lang(?label), \"%s\", \"i\") . ", lang))
+				//skip dbpedia.org/classes/yago types, as there are a lot of these and are not very useful for our purposes
+				.replaceAll("#ReplaceByFilter", "FILTER (!regex(?type, \"yago\"))\n\t" + filterOneOfUrls("?uri", urls))
+				.replaceAll("#ReplaceByLimit", "LIMIT " + limit);
+	}
+	
+	public String entityAnnotation(List<String> entUrls) {
+		int limit = (30 * entUrls.size()) + 1;
+		String qPattern = load("sparql/entityAnnotations.rq");
+		return qPattern
+				.replaceAll("#ReplaceByFilter", filterOneOfUrls("?ent", entUrls))
+				.replaceAll("#ReplaceLimit", "LIMIT " + limit);
 	}
 	
 	public String microPostEntityAnnotations(String url) {
@@ -39,6 +53,12 @@ public class SparqlQueryFactory {
 	public String newsArticleEntityAnnotations(String url) {
 		final String encUrl = bracketUrl(url);
 		String qPattern = load("sparql/newsArticleEntityAnnotations.rq");
+		return qPattern.replaceAll("#encUrl", encUrl);
+	}
+	
+	public String subtitleTrackEntityAnnotations(String url) {
+		final String encUrl = bracketUrl(url);
+		String qPattern = load("sparql/subtitleEntityAnnotations.rq");
 		return qPattern.replaceAll("#encUrl", encUrl);
 	}
 	
@@ -196,6 +216,28 @@ public class SparqlQueryFactory {
 				" FILTER(?c > " + confThreshold + ")" +
 				"} LIMIT 30";
 	}
+
+	public String subtitleSegmentsByDate(long dateFrom, long dateTo, int limit, DateTimeFormatter... dateFormats) {
+		String qPattern = load("sparql/subtitlesByDate.rq");
+		String dateFilter = String.format("FILTER (%s) ",  dateFilter("?startTime", dateFrom, dateTo, dateFormats));
+		qPattern = qPattern.replaceAll("#ReplaceDateFilter", dateFilter);
+		String limitStr = String.format(" LIMIT %s", limit);
+		return qPattern.replaceAll("#ReplaceLimit", limitStr);
+	}
+	
+	public String subtitleSegmentsFromSubtitleTrackUri(String subtitleTrackUri) {
+		String qPattern = load("sparql/subtitlesByDate.rq");
+		String uriFilter = filterOneOfUrls("?s", ImmutableList.of(subtitleTrackUri));
+		qPattern = qPattern.replaceAll("#ReplaceDateFilter", uriFilter);
+		return qPattern.replaceAll("#ReplaceLimit", "");
+	}
+	
+	public String allSubtitleSegments(int limit) {
+		String qPattern = load("sparql/subtitlesByDate.rq");
+		qPattern = qPattern.replaceAll("#ReplaceDateFilter", "");
+		String limitStr = String.format(" LIMIT %s", limit);
+		return qPattern.replaceAll("#ReplaceLimit", limitStr);
+	}
 	
 	private String filterOneOfUrls(String var, Collection<String> entUrls) {
 		return filterOneOf(var, bracketUrl(entUrls));
@@ -344,5 +386,7 @@ public class SparqlQueryFactory {
 		if (!f.exists()) throw new FileNotFoundException("File does not exist " + f.getAbsolutePath());
 		return Files.toString(f, Charsets.UTF_8);
 	}
+
+
 	
 }

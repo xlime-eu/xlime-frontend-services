@@ -13,6 +13,9 @@ public class Duration implements Serializable {
 	private int minutes;
 	private int seconds;
 	
+	public Duration() {
+	}
+	
 	public Duration(double totalSeconds) {
 		super();
 		this.totalSeconds = totalSeconds;

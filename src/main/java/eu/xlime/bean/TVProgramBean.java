@@ -2,6 +2,9 @@ package eu.xlime.bean;
 
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class TVProgramBean implements MediaItem {
 
 	private static final long serialVersionUID = -6229457491463595552L;

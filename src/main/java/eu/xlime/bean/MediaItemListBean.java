@@ -11,6 +11,8 @@ public class MediaItemListBean {
 	private List<MediaItem> mediaItems = new ArrayList<>();
 	
 	private List<String> errors = new ArrayList<>();
+	
+	private List<String> messages = new ArrayList<>();
 
 	public List<MediaItem> getMediaItems() {
 		return mediaItems;
@@ -32,9 +34,25 @@ public class MediaItemListBean {
 		return errors;
 	}
 
-	@Override
-	public String toString() {
-		return "MediaItemListBean [mediaItems=" + mediaItems + "]";
+	
+	public List<String> getMessages() {
+		return messages;
 	}
 	
+	public void addMessage(String message) {
+		messages.add(message);
+	}
+
+	@Override
+	public String toString() {
+		final int maxLen = 5;
+		return String.format(
+				"MediaItemListBean [mediaItems=%s, errors=%s, messages=%s]",
+				mediaItems != null ? mediaItems.subList(0,
+						Math.min(mediaItems.size(), maxLen)) : null,
+				errors != null ? errors.subList(0,
+						Math.min(errors.size(), maxLen)) : null,
+				messages != null ? messages.subList(0,
+						Math.min(messages.size(), maxLen)) : null);
+	}
 }

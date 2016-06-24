@@ -1,6 +1,5 @@
 package eu.xlime.search;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +19,15 @@ import eu.xlime.Config;
 import eu.xlime.Config.Opt;
 import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.UrlLabel;
+import eu.xlime.dao.MediaItemAnnotationDao;
+import eu.xlime.dao.MediaItemDao;
+import eu.xlime.dao.UIEntityDao;
 import eu.xlime.sparql.SparqlClient;
 import eu.xlime.sparql.SparqlClientFactory;
 import eu.xlime.sparql.SparqlQueryFactory;
 import eu.xlime.util.CacheFactory;
 import eu.xlime.util.KBEntityMapper;
+import eu.xlime.util.KBEntityMapperImpl;
 import eu.xlime.util.score.ScoreFactory;
 import eu.xlime.util.score.ScoredSet;
 import eu.xlime.util.score.ScoredSetImpl;
@@ -35,14 +38,15 @@ import eu.xlime.util.score.ScoredSetImpl;
  * @author Nuria Garcia
  * @email ngarcia@expertsystem.com
  *
+ * @deprecated Use methods in {@link MediaItemDao}, {@link MediaItemAnnotationDao} or {@link UIEntityDao}
  */
 
 public class SearchItemDao {
 
 	public static final Logger log = LoggerFactory.getLogger(SearchItemDao.class.getName());
 
-	public static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
-	private static final KBEntityMapper kbEntityMapper = new KBEntityMapper();
+	private static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
+	private static final KBEntityMapper kbEntityMapper = new KBEntityMapperImpl();
 	private static final ScoreFactory scoref = ScoreFactory.instance;
 
 	private static Cache<String, ScoredSet<String>> searchEntityCache = CacheFactory.instance.buildCache("searchEntityCache");
@@ -56,6 +60,7 @@ public class SearchItemDao {
 	 * Currently, this match is based on annotations found in the media-items. 
 	 *   
 	 * @param entity_url
+	 * @deprecated Use {@link MediaItemAnnotationDao#findMediaItemUrlsByKBEntity(String)}
 	 * @return
 	 */
 	public ScoredSet<String> findMediaItemUrlsByKBEntity(final String entity_url){
@@ -82,6 +87,7 @@ public class SearchItemDao {
 	 * of the media-items.
 	 * 
 	 * @param text
+	 * @deprecated use {@link MediaItemDao#findMediaItemUrlsByText(String)}
 	 * @return
 	 */
 	public ScoredSet<String> findMediaItemUrlsByText(final String text){
@@ -143,6 +149,11 @@ public class SearchItemDao {
 		return builder.build();
 	}
 
+	/**
+	 * @deprecated moved to {@link UIEntityDao#autoCompleteEntities(String)}
+	 * @param text
+	 * @return
+	 */
 	public List<UrlLabel> autoCompleteEntities(String text) {
 		AutocompleteClient client = new AutocompleteClient();
 		Optional<AutocompleteBean> autocomplete = client.retrieveAutocomplete(text);
@@ -158,11 +169,15 @@ public class SearchItemDao {
 	 * @return
 	 */
 	ScoredSet<String> retrieveMediaItemUrlsFromFreeText(String text) {
+		return retrieveMediaItemsUrlsFromFreeTextViaKITSearchClient(text);
+	}
+
+	private ScoredSet<String> retrieveMediaItemsUrlsFromFreeTextViaKITSearchClient(
+			String text) {
+		ScoredSet<String> sources = new KITSearchClient().retrieveKitsearch(text);
+		log.debug("Found " + sources.size() + " media-item sources for '" + text + "'");
 		final SparqlClient sparqler = getXLiMeSparqlClient();
 		ScoredSet.Builder<String> builder = ScoredSetImpl.builder();
-		KITSearchClient client = new KITSearchClient();
-		ScoredSet<String> sources = client.retrieveKitsearch(text);
-		log.debug("Found " + sources.size() + " media-item sources for '" + text + "'");
 		
 		if (!sources.isEmpty()) {
 			String query = qFactory.mediaItemUrisBySource(sources.asList());
@@ -172,14 +187,6 @@ public class SearchItemDao {
 			builder.addAll(toUrlScoredSet(result));
 		}
 		
-/*		for (String source : sources) {
-			String query = qFactory.mediaItemUrisBySource(ImmutableList.of(source));
-			log.debug("Retrieving media items URI using: " + query);
-			Map<String, Map<String, String>> result = sparqler.executeSPARQLQuery(query);
-			log.debug(String.format("Found %s media items for source %s", result.size(), source));
-			urls.addAll(toUrlList(result));
-		}
-		*/
 		log.trace("Media Items: " + builder.toString());
 		return builder.build();
 	}

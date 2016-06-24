@@ -9,6 +9,7 @@ import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.VideoSegment;
+import eu.xlime.util.score.ScoredSet;
 
 /**
  * Interface for retrieving {@link MediaItem}s from some back-end storage 
@@ -19,9 +20,27 @@ import eu.xlime.bean.VideoSegment;
  */
 public interface MediaItemDao {
 
+	/**
+	 * Finds a {@link MediaItem} based on its identifying url
+	 * @param url
+	 * @return
+	 */
 	Optional<? extends MediaItem> findMediaItem(String url);
 
+	/**
+	 * Find media items by their URIs
+	 * @param urls
+	 * @return
+	 */
 	List<MediaItem> findMediaItems(List<String> urls);
+
+	/**
+	 * Perform a text search to find {@link MediaItem}s (but only return their urls).
+	 * 
+	 * @param text
+	 * @return
+	 */
+	ScoredSet<String> findMediaItemUrlsByText(final String text);
 	
 	<T extends MediaItem> List<T> findMediaItems(Class<T> clazz, List<String> urls);
 
@@ -60,4 +79,9 @@ public interface MediaItemDao {
 	 * @return
 	 */
 	List<String> findAllMediaItemUrls(int limit);
+	
+	List<String> findMediaItemsByDate(long dateFrom, long dateTo,
+			int limit);
+	
+	
 }

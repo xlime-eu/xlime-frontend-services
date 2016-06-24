@@ -1,0 +1,9 @@
+# list of supported domains by the KBEntityMapper
+http://dbpedia.org
+http://www.wikidata.org
+http://fr.dbpedia.org
+http://de.dbpedia.org
+http://es.dbpedia.org
+http://fr.dbpedia.org
+http://it.dbpedia.org
+http://zh.dbpedia.org

@@ -1,0 +1,31 @@
+PREFIX xlime: <http://xlime-project.org/vocab/>  
+PREFIX dcterms: <http://purl.org/dc/terms/> 
+PREFIX sioc: <http://rdfs.org/sioc/ns#> 
+PREFIX kdo: <http://kdo.render-project.eu/kdo#> 
+PREFIX ma: <http://www.w3.org/ns/ma-ont#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+
+SELECT distinct 
+?text ?g ?s ?lang ?startTime ?streamPos {
+GRAPH ?g { 
+	?s a ma:SubtitleTrack.
+	?s xlime:hasSubtitles ?sub.
+	{{ ?sub xlime:hasSubittleText ?text 
+	  } UNION {
+	  ?sub xlime:hasSubtitleText ?text
+	}} 
+	OPTIONAL {
+	  ?sub xlime:hasStartTime ?startTime.
+	}
+	OPTIONAL {
+	  ?sub xlime:hasStreamPosition ?streamPos.
+	}
+	OPTIONAL {
+	  ?s ma:hasLanguage ?langnode.
+	  ?langnode rdfs:label ?lang.
+	}
+	#ReplaceDateFilter
+} # end graph ?g 
+} #ReplaceLimit 
+

@@ -3,7 +3,7 @@
   <groupId>eu.xlime</groupId>
   <artifactId>frontend-services</artifactId>
   <packaging>war</packaging>
-  <version>0.0.5-SNAPSHOT</version>
+  <version>0.0.6-SNAPSHOT</version>
   <name>xLiMe Public Front-end Services webapp</name>
   <url>http://xlime-eu.github.io/</url>
   <prerequisites>
@@ -50,6 +50,21 @@
 		<artifactId>jena-core</artifactId>
 		<version>2.13.0</version>
 	</dependency>
+	<dependency>
+		<!-- Used for the util.fst packages (used in the FstThesaurus)
+		-->
+		<groupId>org.apache.lucene</groupId>
+		<artifactId>lucene-core</artifactId>
+		<version>4.10.4</version>
+	</dependency>
+	<!--
+	<dependency>
+	 Used for the CompactHashSet 
+		<groupId>net.ontopia</groupId>
+		<artifactId>ontopia-engine</artifactId>
+		<version>5.3.0</version>
+	</dependency>
+	-->
 	<dependency>
 		<groupId>org.apache.jena</groupId>
 		<artifactId>jena-arq</artifactId>

@@ -2,10 +2,10 @@ package eu.xlime.bean;
 
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-//import org.eclipse.persistence.oxm.annotations.XmlDiscriminatorValue;
 
-//@XmlDiscriminatorValue("http://rdfs.org/sioc/ns#MicroPost")
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class MicroPostBean implements MediaItem {
 
 	private static final long serialVersionUID = -2888963022728761498L;

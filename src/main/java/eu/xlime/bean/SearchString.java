@@ -1,5 +1,7 @@
 package eu.xlime.bean;
 
+import javax.persistence.Id;
+
 /**
  * Represents a single search {@link String} input by some user. 
  * The search string may contain multiple tokens and may be in a
@@ -14,12 +16,24 @@ package eu.xlime.bean;
  */
 public class SearchString implements XLiMeResource {
 
-	private static final long serialVersionUID = 7817062006086569275L;
+	private static final long serialVersionUID = -7569466264514317915L;
+
+	@Id
+	private String url;
 	
 	/**
 	 * The value of the Search String
 	 */
 	private String value;
+
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public String getValue() {
 		return value;
@@ -31,13 +45,14 @@ public class SearchString implements XLiMeResource {
 
 	@Override
 	public String toString() {
-		return "SearchString [value=" + value + "]";
+		return String.format("SearchString [url=%s, value=%s]", url, value);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
 		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
@@ -51,6 +66,11 @@ public class SearchString implements XLiMeResource {
 		if (getClass() != obj.getClass())
 			return false;
 		SearchString other = (SearchString) obj;
+		if (url == null) {
+			if (other.url != null)
+				return false;
+		} else if (!url.equals(other.url))
+			return false;
 		if (value == null) {
 			if (other.value != null)
 				return false;

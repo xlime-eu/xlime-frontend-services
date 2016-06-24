@@ -1,258 +1,94 @@
 package eu.xlime.dao;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Ordering;
 
-import eu.xlime.Config;
-import eu.xlime.Config.Opt;
 import eu.xlime.bean.ASRAnnotation;
-import eu.xlime.bean.AnnotationPosition;
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.OCRAnnotation;
+import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
-import eu.xlime.bean.VideoSegment;
-import eu.xlime.sparql.SparqlClient;
-import eu.xlime.sparql.SparqlClientFactory;
-import eu.xlime.sparql.SparqlQueryFactory;
-import eu.xlime.summa.UIEntityFactory;
-import eu.xlime.util.KBEntityMapper;
-import eu.xlime.util.ResourceTypeResolver;
+import eu.xlime.summa.bean.UIEntity;
+import eu.xlime.util.score.ScoredSet;
 
-public class MediaItemAnnotationDao {
-
-	private static final Logger log = LoggerFactory.getLogger(MediaItemAnnotationDao.class);
-	
-	private static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
-	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
-	private static final KBEntityMapper kbEntityMapper = new KBEntityMapper();	
-
-	public List<EntityAnnotation> findMediaItemEntityAnnotations(String url) {
-		if (typeResolver.isNewsArticle(url))
-			return findNewsArticleEntityAnnotations(url);
-		else if (typeResolver.isMicroPost(url))
-			return findMicroPostEntityAnnotations(url);
-		else if (typeResolver.isTVProgram(url))
-			return ImmutableList.of();// TODO: implement via subtitles, ASR, OCR, annotation of EPG data.
-		else throw new RuntimeException("Cannot map url to a known xLiMe media-item type " + url);
-	}
-	
-	public List<EntityAnnotation> findMicroPostEntityAnnotations(final String url) {
-		log.trace("Finding entity annotations for micropost " + url);
-		Config cfg = new Config();
-		final SparqlClient sparqler = getXliMeSparqlClient();
-		String query = qFactory.microPostEntityAnnotations(url);
-		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
-		
-		return toEntityAnnotations(result, url);
-	}
-	
-	private SparqlClient getXliMeSparqlClient() {
-		return new SparqlClientFactory().getXliMeSparqlClient();
-	}
-
-	public List<EntityAnnotation> findNewsArticleEntityAnnotations(final String url) {
-		log.trace("Finding entity annotations for newsarticle " + url);
-		Config cfg = new Config();
-		final SparqlClient sparqler = getXliMeSparqlClient();
-		String query = qFactory.newsArticleEntityAnnotations(url);
-		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
-		
-		return toEntityAnnotations(result, url);
-	}
-	
-	public Optional<ASRAnnotation> findASRAnnotation(String uri) {
-		log.trace("Finding the ASRAnnotation " + uri);
-		// TODO implement
-		return Optional.absent();
-	}
-
-	public List<OCRAnnotation> findOCRAnnotationsFor(final TVProgramBean mediaResource) {
-		log.trace("Finding the OCRAnnotations for " + mediaResource);
-		Config cfg = new Config();
-		final SparqlClient sparqler = getXliMeSparqlClient();
-		String query = qFactory.mediaResourceOCRAnnotations(mediaResource.getUrl());
-		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
-		
-		return toMediaResourceOCRAnnotations(result, mediaResource);
-	}
-	
-	public Optional<OCRAnnotation> findOCRAnnotation(String ocrAnnotUri) {
-		log.trace("Finding the OCRAnnotation " + ocrAnnotUri);
-		/* TODO: since OCR annotations do not have uris in sparql enpoint:
-		 * 1. map to mediaResource uri via naming convention, 
-		 * 2. find mediaResource via uri (needs MediaItemDao), 
-		 * 3. find all OCR annotations via #findOCRAnnotationsFor and 
-		 * 4. return one that matches, if any... 
-		 */
-		return Optional.absent();
-	}
-	
-	private List<OCRAnnotation> toMediaResourceOCRAnnotations(
-			Map<String, Map<String, String>> resultSet, TVProgramBean tvProg) {
-		if (resultSet == null || resultSet.keySet().isEmpty()) {
-			log.debug("No ocr annotations for " + tvProg.getUrl());
-			return ImmutableList.of();
-		}		
-		log.debug("Creating OCRAnnotation from resultset with " + resultSet.size() + " tuples.");
-		List<OCRAnnotation> result = new ArrayList<>();
-		for (String id: resultSet.keySet()) {
-			Map<String, String> tuple = resultSet.get(id);
-			Optional<OCRAnnotation> optAnn = toOCRAnnotation(tuple, tvProg);
-			if (optAnn.isPresent()) result.add(optAnn.get());
-		}		
-		return result;
-	}
-
-	final Optional<OCRAnnotation> toOCRAnnotation(Map<String, String> tuple,
-			TVProgramBean tvProg) {
-		OCRAnnotation result = new OCRAnnotation();
-		if (tuple.containsKey("ocr") && tuple.containsKey("vidTrack")) {
-			OCRContent ocrContent = new OCRContent(tuple.get("ocr"));
-			result.setInSegment(toVideoSegment(tvProg, ocrContent.timestamp));
-			result.setRecognizedText(ocrContent.recognizedText);
-		} else {
-			log.warn("No OCR content found for " + tvProg.getUrl());
-			return Optional.absent();
-		}
-		return Optional.of(result);
-	}
-	
-	private VideoSegment toVideoSegment(TVProgramBean tvProg, double timestamp) {
-		VideoSegment result = new VideoSegment();
-		result.setPartOf(tvProg);
-		return result;
-	}
-
-	public static class OCRContent {
-		final String literal;
-		final double timestamp;
-		final String recognizedText;
-		
-		public OCRContent(String literalOCRContent) {
-			literal = literalOCRContent;
-			timestamp = extractTimeStamp(literalOCRContent);
-			recognizedText = extractRecognizedText(literalOCRContent);
-		}
-		
-		private String extractRecognizedText(String literalOCRContent) {
-			int splitIndex = literalOCRContent.indexOf(',');
-			return literalOCRContent.substring(splitIndex + 1);
-		}
-
-		private double extractTimeStamp(String literalOCRContent) {
-			int splitIndex = literalOCRContent.indexOf(',');
-			if (splitIndex <= 0) throw new RuntimeException("Illegal format of OCR content. "
-					+ "Expecting :\n\t<timestamp> ', ' <recognizedText>\n\t but found: \n\t " + literalOCRContent);
-			return Double.parseDouble(literalOCRContent.substring(0, splitIndex));
-		}
-
-	}
-
-	private List<EntityAnnotation> toEntityAnnotations(Map<String, Map<String, String>> resultSet,
-			String url) {
-		if (resultSet == null || resultSet.keySet().isEmpty()) {
-			log.debug("No entities for " + url);
-			return ImmutableList.of();
-		}
-		log.debug("Creating EntityAnnotation from resultset with " + resultSet.size() + " tuples.");
-		List<EntityAnnotation> result = new ArrayList<>();
-		for (String id: resultSet.keySet()) {
-			Map<String, String> tuple = resultSet.get(id);
-			Optional<EntityAnnotation> optEntAnn = toEntityAnnotation(tuple);
-			if (optEntAnn.isPresent()) result.add(optEntAnn.get());
-		}
-		return cleanEntAnns(result);
-	}
+public interface MediaItemAnnotationDao {
 
 	/**
-	 * Cleans the list of {@link EntityAnnotation}s by: combining duplicates (merging its positions 
-	 * and merging their confidence scores) and sorting the results to showing the annotations with
-	 * a higher confidence first. This method could also filter annotations to only show those above
-	 * a certain threshold.
+	 * Returns {@link EntityAnnotation}s for a given media item, specified by its xLiMe Url.
 	 * 
-	 * @param list
+	 * The Dao implementation is free to return a subset of all the {@link EntityAnnotation}s
+	 * and to return them in any order; however, we suggest returning them sorted by descending 
+	 * score (i.e. entity annotations with a higher score should be at the beginning of the list). 
+	 *  
+	 * @param url
 	 * @return
 	 */
-	private List<EntityAnnotation> cleanEntAnns(List<EntityAnnotation> list) {
-		final Map<String, EntityAnnotation> merged = new HashMap<>();
-		for (EntityAnnotation unmerged : list) {
-			String entUrl = unmerged.getEntity().getUrl();
-			EntityAnnotation mergedEA = unmerged;
-			if (merged.containsKey(entUrl)) {
-				mergedEA = merged.get(entUrl);
-				mergedEA.setConfidence(best(mergedEA.getConfidence(), unmerged.getConfidence()));
-			} else {
-				merged.put(entUrl, unmerged);
-			}
-		}
-		
-		Ordering<EntityAnnotation> byConfidence = Ordering.natural().reverse().onResultOf(new Function<EntityAnnotation, Double>() {
-			@Override
-			public Double apply(EntityAnnotation input) {
-				return input.getConfidence();
-			}
-		});
-		
-		List<EntityAnnotation> result = new ArrayList<>(merged.values());
-		Collections.sort(result, byConfidence);
-		
-		//TODO: cut-off at threshold?
-		return ImmutableList.copyOf(result);
-	}
+	List<EntityAnnotation> findMediaItemEntityAnnotations(String mediaItemUrl);
 
-	private double best(double a, double b) {
-		return Math.max(a, b);
-	}
+	List<EntityAnnotation> findMicroPostEntityAnnotations(String microPostUrl);
 
-	private Optional<EntityAnnotation> toEntityAnnotation(Map<String, String> tuple) {
-		EntityAnnotation ea = new EntityAnnotation();
-		try {
-			if (tuple.containsKey("ent")) {
-				String entUrl = tuple.get("ent");
-				Optional<String> canonEntUrl = kbEntityMapper.toCanonicalEntityUrl(entUrl);
-				if (!canonEntUrl.isPresent()) {
-					log.debug("No canonical entity found for " + entUrl + " not converting to EntityAnnotation");
-					return Optional.absent();
-				} else {
-					ea.setEntity(UIEntityFactory.instance.retrieveFromUri(canonEntUrl.get()));
-				}
-			} else return Optional.absent(); //having an entity is mandatory
-			if (tuple.containsKey("confidence")) {
-				ea.setConfidence(Double.parseDouble(tuple.get("confidence")));
-			}
-		} catch (Exception e) {
-			log.debug("Error reading EntityAnnotation from tuple" + e);
-			return Optional.absent();
-		}
-		return Optional.of(ea);
-	}
+	List<EntityAnnotation> findNewsArticleEntityAnnotations(String newsArticleUrl);
+	
+	/**
+	 * 
+	 * @param subtitleTrackUrl
+	 * @return
+	 */
+	List<EntityAnnotation> findSubtitleTrackEntityAnnotations(String subtitleTrackUrl);
+	
+	/**
+	 * 
+	 * @param kbEntity
+	 * @return
+	 */
+	List<EntityAnnotation> findEntityAnnotationsFor(UIEntity kbEntity);
+	
+	/**
+	 * Find URLs of {@link MediaItem}s which have been annotated with a entity, given by 
+	 * its entityUrl.
+	 * 
+	 * @param entityUrl
+	 * @return
+	 */
+	ScoredSet<String> findMediaItemUrlsByKBEntity(final String entityUrl);
 
-	private Optional<AnnotationPosition> toAnnPosition(Map<String, String> tuple) {
-		AnnotationPosition pos = new AnnotationPosition();
-		try {
-			if (tuple.containsKey("start")) {
-				pos.setStart(Long.parseLong(tuple.get("start")));
-			}
-			if (tuple.containsKey("end")) {
-				pos.setStart(Long.parseLong(tuple.get("end")));
-			}
-		} catch (NumberFormatException ne) {
-			log.debug("Error parsing annotation position", ne);
-			return Optional.absent();
-		}
-		return Optional.of(pos);
-	}
+	Optional<ASRAnnotation> findASRAnnotation(String mediaItemUri);
 
+	List<OCRAnnotation> findOCRAnnotationsFor(TVProgramBean mediaResource);
 
+	Optional<OCRAnnotation> findOCRAnnotation(String ocrAnnotUri);
+	
+	/**
+	 * Finds the subtitle segments for a given tvProgram 
+	 * @param tvProgUri
+	 * @return
+	 */
+	List<SubtitleSegment> findSubtitleSegmentsForTVProg(String tvProgUri);
+	
+	/**
+	 * Finds {@link SubtitleSegment}s for a given keyword text query
+	 * @param textQuery
+	 * @return
+	 */
+	List<SubtitleSegment> findSubtitleSegmentsByText(String textQuery);	
+	
+	/**
+	 * Finds a number of available {@link SubtitleSegment}s.
+	 * 
+	 * @return
+	 */
+	List<SubtitleSegment> findAllSubtitleSegments(int limit);
+
+	/**
+	 * Finds a number of available {@link SubtitleSegment}s which were broadcast between 
+	 * two timestamps.
+	 * 
+	 * @param dateFrom
+	 * @param dateTo
+	 * @param limit
+	 * @return
+	 */
+	List<SubtitleSegment> findAllSubtitleSegmentsByDate(long dateFrom, long dateTo, int limit);
+	
 }

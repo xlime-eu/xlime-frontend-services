@@ -16,6 +16,7 @@ import org.openrdf.model.vocabulary.RDFS;
 import com.google.common.base.Optional;
 
 import eu.xlime.bean.UrlLabel;
+import eu.xlime.dao.entity.UIEntityDaoImpl;
 import eu.xlime.summa.bean.EntitySummary;
 import eu.xlime.summa.bean.SummaryStatement;
 import eu.xlime.summa.bean.UIEntity;
@@ -119,7 +120,7 @@ public class EntitySummaryFromRDFModelFactory {
 	}
 
 	private UIEntity retrieveUIEntity(String entUri) {
-		return UIEntityFactory.instance.retrieveFromUri(entUri);
+		return UIEntityDaoImpl.instance.retrieveFromUri(entUri).get();
 	}
 
 

@@ -98,4 +98,10 @@ public class UIDate implements Serializable {
         
 		return "now";
 	}
+
+	@Override
+	public String toString() {
+		return String.format("UIDate [timestamp=%s]", timestamp);
+	}
+	
 }

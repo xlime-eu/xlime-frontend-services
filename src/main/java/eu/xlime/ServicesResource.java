@@ -23,11 +23,12 @@ import eu.xlime.bean.UrlLabel;
 import eu.xlime.dao.MediaItemAnnotationDao;
 import eu.xlime.dao.MediaItemDao;
 import eu.xlime.dao.MediaItemDaoImpl;
-import eu.xlime.search.SearchItemDao;
+import eu.xlime.dao.UIEntityDao;
+import eu.xlime.dao.annotation.MediaItemAnnotationDaoImpl;
+import eu.xlime.dao.entity.UIEntityDaoImpl;
 import eu.xlime.sphere.SpheresFactory;
 import eu.xlime.sphere.bean.Spheres;
 import eu.xlime.summa.SummaClient;
-import eu.xlime.summa.UIEntityFactory;
 import eu.xlime.summa.bean.EntitySummary;
 import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.score.ScoredSet;
@@ -44,13 +45,14 @@ public class ServicesResource {
 	private static final Logger log = LoggerFactory.getLogger(ServicesResource.class);
 	
 	private static final MediaItemDao mediaItemDao = new MediaItemDaoImpl();
-	private static final MediaItemAnnotationDao mediaItemAnnotationDao = new MediaItemAnnotationDao();
+	private static final MediaItemAnnotationDao mediaItemAnnotationDao = new MediaItemAnnotationDaoImpl();
 	private static final SummaClient summaClient = new SummaClient();
 	private static final SpheresFactory spheresFactory = new SpheresFactory();	
-	private static final SearchItemDao searchItemDao = new SearchItemDao();	
+	private static final UIEntityDao uiEntityDao = UIEntityDaoImpl.instance;
 
 	public ServicesResource() {
-		log.info("Created " + this.getClass().getSimpleName());
+		log.info(String.format("Created %s with %s, %s, %s, %s and %s", this.getClass().getSimpleName(), 
+				mediaItemDao, mediaItemAnnotationDao, summaClient, spheresFactory, uiEntityDao));
 	}
 	
 	@GET
@@ -60,6 +62,7 @@ public class ServicesResource {
 		log.info("Received " + urls);
 		MediaItemListBean milb = lookupMediaItems(urls);
 		if (milb.getMediaItems().isEmpty() && !milb.getErrors().isEmpty()) {
+			log.info("returning errors" + milb.getErrors());
 			Response errorResponse = Response.serverError().entity(milb.getErrors()).build();
 			return errorResponse;
 		}
@@ -78,10 +81,10 @@ public class ServicesResource {
 				if (optMedItem.isPresent()) {
 					milb.addMediaItem(optMedItem.get());
 				} else {
-					milb.addError("Failed to find media-item for " + url);
+					milb.addMessage("Failed to find media-item for " + url);
 				}
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				log.error("Error retrieving media items for " + url, e1);
 				milb.addError(e1.getLocalizedMessage());
 			} 
 		}
@@ -108,6 +111,7 @@ public class ServicesResource {
 		int limit = 50;
 		if (minutes <= 0) minutes = 5;
 		List<String> urls = mediaItemDao.findLatestMediaItemUrls(minutes, limit);
+		log.info("Found latest media items " + urls);
 		return mediaItem(urls);
 	}
 	
@@ -189,20 +193,29 @@ public class ServicesResource {
 	}
 
 	private List<UIEntity> findEntities(String query) {
-		List<UrlLabel> urlLabels = searchItemDao.autoCompleteEntities(query);
+		List<UrlLabel> urlLabels = uiEntityDao.autoCompleteEntities(query);
 		List<UIEntity> ents = new ArrayList<>();
-		if (!urlLabels.isEmpty()) for (UrlLabel ul: urlLabels.subList(0, Math.min(5, urlLabels.size()))) {
-			ents.add(UIEntityFactory.instance.retrieveFromUri(ul.getUrl()));
+		if (!urlLabels.isEmpty()) 
+			for (UIEntity ent: UIEntityDaoImpl.instance.retrieveFromUris(mapUris(urlLabels.subList(0, Math.min(5, urlLabels.size()))))) {
+				ents.add(ent);
 		}
 		return ents;
+	}
+
+	private List<String> mapUris(List<UrlLabel> urlLabels) {
+		List<String> result = new ArrayList<String>();
+		for (UrlLabel ul: urlLabels) {
+			result.add(ul.getUrl());
+		}
+		return result;
 	}
 
 	private ScoredSet<String> findMediaItemUrls(String query) {
 		ScoredSet<String> foundMedItemUrls;
 		if(query.startsWith("http://"))			
-			foundMedItemUrls = searchItemDao.findMediaItemUrlsByKBEntity(query);
+			foundMedItemUrls = mediaItemAnnotationDao.findMediaItemUrlsByKBEntity(query);
 		else
-			foundMedItemUrls = searchItemDao.findMediaItemUrlsByText(query);
+			foundMedItemUrls = mediaItemDao.findMediaItemUrlsByText(query);
 		return foundMedItemUrls;
 	}
 

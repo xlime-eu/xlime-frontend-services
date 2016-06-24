@@ -4,27 +4,32 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.google.common.base.Optional;
+
+import eu.xlime.dao.UIEntityDao;
+import eu.xlime.dao.entity.UIEntityDaoImpl;
 import eu.xlime.summa.bean.UIEntity;
 
 public class UIEntityFactoryITCase {
 
 	@Test
 	public void testRetrieveFromUri() {
-		UIEntityFactory factory = UIEntityFactory.instance;
-		UIEntity entity = factory.retrieveFromUri("http://dbpedia.org/resource/Berlin");
+		UIEntityDao factory = UIEntityDaoImpl.instance;
+		Optional<UIEntity> entity = factory.retrieveFromUri("http://dbpedia.org/resource/Berlin");
 		System.out.println("Found entity " + entity);
-		assertNotNull(entity);
-		assertEquals("Berlin", entity.getLabel());
-		assertEquals(2, entity.getDepictions().size());
-		assertTrue(entity.getTypes().contains("http://schema.org/Place"));
+		assertTrue(entity.isPresent());
+		assertEquals("Berlin", entity.get().getLabel());
+		assertEquals(2, entity.get().getDepictions().size());
+		assertTrue(entity.get().getTypes().contains("http://schema.org/Place"));
 	}
 
 	@Test
 	public void testRetrieveFromUri2() {
-		UIEntityFactory factory = UIEntityFactory.instance;
-		UIEntity entity = factory.retrieveFromUri("http://dbpedia.org/resource/S&P_500_Index");
-		System.out.println("Found entity " + entity);
-		assertNotNull(entity);
+		UIEntityDao factory = UIEntityDaoImpl.instance;
+		Optional<UIEntity> optEntity = factory.retrieveFromUri("http://dbpedia.org/resource/S&P_500_Index");
+		System.out.println("Found entity " + optEntity);
+		assertTrue(optEntity.isPresent());
+		UIEntity entity = optEntity.get();
 		assertEquals("S&P 500 Index", entity.getLabel());
 //		assertEquals(2, entity.getDepictions().size()); // 0 from xLiMe, 2 from dbpedia
 		assertTrue(entity.getTypes().isEmpty());
@@ -32,14 +37,19 @@ public class UIEntityFactoryITCase {
 
 	@Test
 	public void testRetrieveFromUri3() {
-		UIEntityFactory factory = UIEntityFactory.instance;
-		UIEntity entity = factory.retrieveFromUri("http://dbpedia.org/resource/Sneakers_%28footwear%29");
-		System.out.println("Found entity " + entity);
-		assertNotNull(entity);
-		assertNull(entity.getLabel());
-		assertTrue(entity.getDepictions().isEmpty());
-		entity = factory.retrieveFromUri("http://dbpedia.org/resource/Sneakers_(footwear)");
-		System.out.println("Found entity " + entity);
+		UIEntityDao factory = UIEntityDaoImpl.instance;
+		String uri = "http://dbpedia.org/resource/Sneakers_%28footwear%29";
+		String iri = "http://dbpedia.org/resource/Sneakers_(footwear)";
+		Optional<UIEntity> optEntity = factory.retrieveFromUri(uri);
+		assertFalse(optEntity.isPresent()); //not present because not an IRI encoded, need to decode:
+		optEntity = factory.retrieveFromUri(iri);
+		System.out.println("Found entity " + optEntity);
+		UIEntity entity = optEntity.get();
+//		assertNotNull(entity);
+//		assertNull(entity.getLabel());
+//		assertTrue(entity.getDepictions().isEmpty());
+//		entity = factory.retrieveFromUri("http://dbpedia.org/resource/Sneakers_(footwear)").get();
+//		System.out.println("Found entity " + entity);
 		assertEquals("Sneakers (footwear)", entity.getLabel());
 		assertEquals(2, entity.getDepictions().size());
 	}
@@ -53,9 +63,9 @@ public class UIEntityFactoryITCase {
 	}
 
 	private void retrieveAll(String... urls) {
-		UIEntityFactory factory = UIEntityFactory.instance;
+		UIEntityDao factory = UIEntityDaoImpl.instance;
 		for (String url: urls) {
-			UIEntity entity = factory.retrieveFromUri(url);
+			UIEntity entity = factory.retrieveFromUri(url).get();
 			System.out.println("Found entity " + entity);
 			assertNotNull(entity);
 		}

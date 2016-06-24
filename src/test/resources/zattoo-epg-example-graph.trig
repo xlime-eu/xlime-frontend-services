@@ -1,0 +1,269 @@
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix freebase: <http://rdf.freebase.com/ns/> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix kdo: <http://kdo.render-project.eu/kdo#> .
+@prefix ma: <http://www.w3.org/ns/ma-ont#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix wikide: <http://de.wikipedia.org/wiki/> .
+@prefix wikien: <http://en.wikipedia.org/wiki/> .
+@prefix wikies: <http://es.wikipedia.org/wiki/> .
+@prefix wikisl: <http://sl.wikipedia.org/wiki/> .
+@prefix xlime: <http://xlime-project.org/vocab/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}
+
+
+{
+    <http://zattoo.com/processed/113962660> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-06-10T12:46:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-06-10T12:46:33.599601+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/113962660> {
+    <http://zattoo.com/program/113962660> a ma:MediaResource ;
+        ma:date "2016-06-10T12:51:00+00:00"^^xsd:dateTime ;
+        ma:description "EN DIRECT.  The sports recap of the day with France 24 journalists and a summary of world sports news, both on and off the field." ;
+        ma:duration 3.6e+02 ;
+        ma:hasPublisher [ rdfs:label "France 24 [en]" ] ;
+        ma:hasTrack <http://zattoo.com/program/113962660/audio>,
+            <http://zattoo.com/program/113962660/subtitle>,
+            <http://zattoo.com/program/113962660/video> ;
+        ma:title "SPORTS" .
+}

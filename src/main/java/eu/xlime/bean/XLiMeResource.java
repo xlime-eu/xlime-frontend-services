@@ -24,7 +24,8 @@ import eu.xlime.summa.bean.UIEntity;
 	    @Type(value = SubtitleSegment.class, name="http://xlime.eu/vocab/SubtitleSegment"),
 	    @Type(value = EREvent.class, name = "http://rdfs.org/sioc/ns#MicroPost"),
 	    @Type(value = UIEntity.class, name = "http://xlime.eu/vocab/kbEntity"),
-	    @Type(value = SearchString.class, name = "http://xlime.eu/vocab/searchString")
+	    @Type(value = SearchString.class, name = "http://xlime.eu/vocab/searchString"),
+	    @Type(value = EntityAnnotation.class, name = "http://xlime.eu/vocab/EntityAnnotation")
 	    }) 
 @XmlSeeAlso({MicroPostBean.class, NewsArticleBean.class, TVProgramBean.class})
 //@XmlDiscriminatorNode("@type")
@@ -35,4 +36,9 @@ import eu.xlime.summa.bean.UIEntity;
  */
 public interface XLiMeResource extends Serializable {
 
+	/**
+	 * Returns the URL identifying this {@link XLiMeResource}.
+	 * @return
+	 */
+	String getUrl();
 }

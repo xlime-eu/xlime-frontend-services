@@ -22,7 +22,7 @@ public class SparqlQueryFactoryTest {
 	
 	@Test
 	public void testDBpediaUIEntity() throws Exception {
-		String q = qFactory.dbpediaUIEntity("http://example.com", "es");
+		String q = qFactory.dbpediaUIEntity(ImmutableList.of("http://example.com"), "es");
 		assertIsValidSelect(q);
 	}
 	

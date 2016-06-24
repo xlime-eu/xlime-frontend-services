@@ -1,10 +1,10 @@
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/> 
 
-SELECT DISTINCT ?label ?depiction ?type FROM <http://dbpedia.org> WHERE {
-	OPTIONAL { 
-	  #encUrl a ?type .
-	}
+SELECT DISTINCT
+#urlVar 
+?label ?depiction ?type FROM <http://dbpedia.org> WHERE {
+	#encUrl a ?type .
 				
 	OPTIONAL { 
 	  #encUrl <http://www.w3.org/2000/01/rdf-schema#label> ?label .
@@ -15,5 +15,7 @@ SELECT DISTINCT ?label ?depiction ?type FROM <http://dbpedia.org> WHERE {
 		{ #encUrl foaf:depiction ?depiction . } UNION 
 		{ #encUrl dbo:thumbnail ?depiction . } 
 	}
-}
+	
+	#ReplaceByFilter
+} #ReplaceByLimit
 
