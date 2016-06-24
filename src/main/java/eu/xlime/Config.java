@@ -21,7 +21,11 @@ public class Config {
 	private static final Logger LOG = LoggerFactory.getLogger(Config.class);
 
 	private static final String xLiMeCfgPath = "XLIME_CFG_PATH";
-	private static final String cfgFileName = "xlime-ui-services.properties";	
+	private static final String cfgFileName = "xlime-ui-services.properties";
+	/**
+	 * Used to remember the last cfg path (to avoid logging the same path every time)
+	 */
+	private static String lastCfgPath = null;
 
 	private final File configFile;
 	
@@ -124,7 +128,7 @@ public class Config {
 	 *  
 	 * @return
 	 */
-	private Properties getCfgProps() {
+	public Properties getCfgProps() {
 		if (needsRefresh(readProps))
 			readProps = readPropertiesFromConfigFile();
 
@@ -170,7 +174,10 @@ public class Config {
 
 	private static File resolveConfigPropsFile() {
 		String cfgPath = System.getenv(xLiMeCfgPath);
-		LOG.info("ConfigPath from sysenvs: " + cfgPath);
+		if (lastCfgPath == null || !lastCfgPath.equals(cfgPath)) {
+			lastCfgPath = cfgPath;
+			LOG.info("ConfigPath from sysenvs: " + cfgPath);
+		}
 		if (cfgPath == null) {
 			File currentDir = new File("."); 
 			LOG.debug("No " + xLiMeCfgPath + " available from sysenv:\n" + System.getenv() + " using current folder instead " + currentDir.getAbsolutePath());
