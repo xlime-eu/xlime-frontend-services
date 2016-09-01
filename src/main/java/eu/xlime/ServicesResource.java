@@ -26,6 +26,9 @@ import eu.xlime.dao.MediaItemDaoImpl;
 import eu.xlime.dao.UIEntityDao;
 import eu.xlime.dao.annotation.MediaItemAnnotationDaoImpl;
 import eu.xlime.dao.entity.UIEntityDaoImpl;
+import eu.xlime.datasum.CachedDatasetSummaryFactory;
+import eu.xlime.datasum.DatasetSummaryFactory;
+import eu.xlime.datasum.bean.DatasetSummary;
 import eu.xlime.sphere.SpheresFactory;
 import eu.xlime.sphere.bean.Spheres;
 import eu.xlime.summa.SummaClient;
@@ -49,11 +52,27 @@ public class ServicesResource {
 	private static final SummaClient summaClient = new SummaClient();
 	private static final SpheresFactory spheresFactory = new SpheresFactory();	
 	private static final UIEntityDao uiEntityDao = UIEntityDaoImpl.instance;
+	private static final DatasetSummaryFactory dsSummaFactory = CachedDatasetSummaryFactory.instance;
 
 	public ServicesResource() {
 		log.info(String.format("Created %s with %s, %s, %s, %s and %s", this.getClass().getSimpleName(), 
 				mediaItemDao, mediaItemAnnotationDao, summaClient, spheresFactory, uiEntityDao));
 	}
+
+	@GET
+	@Path("/dataset-summary")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response datasetSummary(@QueryParam("ds") String datasetId) {
+		log.info("Received /dataset-summary?ds=" + datasetId);
+		DatasetSummary summa = new DatasetSummary();
+		if ("sparql".equalsIgnoreCase(datasetId)) 
+			summa = dsSummaFactory.createXLiMeSparqlSummary();
+		else if ("mongo".equalsIgnoreCase(datasetId)) 
+			summa = dsSummaFactory.createXLiMeMongoSummary();
+		else return Response.serverError().entity("Unsupported datasetId " + datasetId).build();
+		return Response.ok(summa).build();
+	}
+
 	
 	@GET
 	@Path("/mediaItem")

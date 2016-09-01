@@ -1,0 +1,38 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . 
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ma: <http://www.w3.org/ns/ma-ont#> .
+@prefix xlime: <http://xlime-project.org/vocab/> .
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+@prefix prov:  <http://ww.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . 
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ma: <http://www.w3.org/ns/ma-ont#> .
+@prefix xlime: <http://xlime-project.org/vocab/> .
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+@prefix prov:  <http://ww.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .{
+<http://unitn.it/ocr/0f28b734-c77d-4e95-be6c-9bbee6d0e761>
+          dcterms:title         "UNITN OCR" ;
+          prov:wasAttributedTo  <http://www.unitn.it> ;
+          prov:wasGeneratedBy   [ a                   prov:Activity ;
+                                  prov:endedAtTime    "2016-06-27 19:38:12.486669"^^xsd:date ;
+                                  prov:startedAtTime  "2016-06-27 19:38:16.486669"^^xsd:date
+                                ] .
+}
+
+# start of a new UNITN named graph / meta information above
+<http://unitn.it/ocr/0f28b734-c77d-4e95-be6c-9bbee6d0e761>
+{
+    <http://zattoo.com/program/114199830> ma:hasTrack
+<http://zattoo.com/program/114199830/video> .
+    <http://zattoo.com/program/114199830/video> a ma:VideoTrack ;
+    sioc:content """
+98326950.000000, mmﬁimmnu, HT
+ﬁ-ﬁimmnu
+,immune immune """ .
+}

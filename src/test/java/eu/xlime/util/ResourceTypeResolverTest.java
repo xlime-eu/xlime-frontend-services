@@ -2,14 +2,22 @@ package eu.xlime.util;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
+
 import org.junit.Test;
 
+import eu.xlime.bean.Content;
+import eu.xlime.bean.Duration;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.SearchString;
 import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.UIDate;
+import eu.xlime.bean.UrlLabel;
 import eu.xlime.bean.VideoSegment;
+import eu.xlime.bean.VideoSegmentPosition;
+import eu.xlime.bean.ZattooStreamPosition;
 import eu.xlime.summa.bean.UIEntity;
 
 public class ResourceTypeResolverTest {
@@ -35,5 +43,28 @@ public class ResourceTypeResolverTest {
 		SubtitleSegment subtitSeg = new SubtitleSegment();
 		subtitSeg.setUrl("http://zattoo.com/program/111364459/subtitles/111364459/111364460");
 		assertEquals("http://zattoo.com/program/111364459/subtitles", testObj.extractSubtitleTrackUri(subtitSeg));
+	}
+	
+	@Test
+	public void test_toWatchUrl_VideoSegment() throws Exception {
+		ResourceTypeResolver testObj = new ResourceTypeResolver();
+
+		VideoSegment vs = new VideoSegment();
+		vs.setUrl("http://zattoo.com/program/113684536/2342/2342");
+		ZattooStreamPosition pos = new ZattooStreamPosition();
+		pos.setValue(98022976);
+		vs.setPosition(pos);
+		vs.setStartTime(null);
+		
+		TVProgramBean progBean = new TVProgramBean();
+		progBean.setBroadcastDate(new UIDate(new SimpleDateFormat("YYYY-MM-DD'T'hh:mm:ss").parse("2016-06-13T17:30:00")));
+		progBean.setDescription(new Content());
+		progBean.setDuration(new Duration(3600));
+		progBean.setPublisher(new UrlLabel());
+		progBean.setTitle("heute leben");
+		progBean.setUrl("http://zattoo.com/program/113684648");
+		vs.setPartOf(progBean);
+		
+		assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/bbc-one/113684648/1451925000000/1451928600000/1443963727500", testObj.toWatchUrl(vs));
 	}
 }

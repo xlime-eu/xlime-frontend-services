@@ -16,7 +16,7 @@ public interface SparqlClient {
 	 * need to use a particular instance of {@link SparqlClient} that provides such 
 	 * information.  
 	 *
-	 * @param query a valid SPARQL query
+	 * @param query a valid SPARQL <code>SELECT</code> query
 	 * @return a {@link java.util.Map} object.
 	 */
 	Map<String, Map<String, String>> executeSPARQLQuery(String query);
@@ -28,7 +28,7 @@ public interface SparqlClient {
 	 * @return
 	 */
 	Map<String, Map<String, String>> executeSPARQLQuery(String query, long timeout) throws TimeoutException;
-
+	
 	/**
 	 * Same as {@link #executeSPARQLOrEmpty(String, long)}, but catches the {@link TimeoutException} 
 	 * and returns an empty resultset.

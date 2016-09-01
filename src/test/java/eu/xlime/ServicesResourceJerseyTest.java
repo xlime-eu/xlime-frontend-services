@@ -17,6 +17,7 @@ import org.junit.Test;
 import com.google.common.collect.ImmutableMap;
 
 import eu.xlime.bean.MediaItemListBean;
+import eu.xlime.datasum.bean.DatasetSummary;
 
 public class ServicesResourceJerseyTest extends JerseyTest {
 
@@ -94,6 +95,34 @@ public class ServicesResourceJerseyTest extends JerseyTest {
 //		MediaItemListBean resp = res.request().get(MediaItemListBean.class);
 		System.out.println("MediaItemListBean with " + resp.getMediaItems().size() + " media items and " + resp.getErrors().size() + " errors.");
 		System.out.println(resp);
+		assertNotNull(resp);
+	}
+	
+	@Test
+	public void test_sparqlDatasetSummayr() throws Exception {
+		WebTarget res = target("services/dataset-summary");
+		Response response = res.queryParam("ds", "sparql").request().get();
+		System.out.println("Response: " + response);
+		assertEquals("response " + response, 200, response.getStatus());
+		assertEquals(MediaType.APPLICATION_JSON_TYPE, response.getMediaType());
+		System.out.println(response.getLength());
+		System.out.println("has entity: " + response.hasEntity());
+		DatasetSummary resp = response.readEntity(DatasetSummary.class);
+		System.out.println("resp" + resp);
+		assertNotNull(resp);
+	}
+	
+	@Test
+	public void test_mongoDatasetSummayr() throws Exception {
+		WebTarget res = target("services/dataset-summary");
+		Response response = res.queryParam("ds", "mongo").request().get();
+		System.out.println("Response: " + response);
+		assertEquals("response " + response, 200, response.getStatus());
+		assertEquals(MediaType.APPLICATION_JSON_TYPE, response.getMediaType());
+		System.out.println(response.getLength());
+		System.out.println("has entity: " + response.hasEntity());
+		DatasetSummary resp = response.readEntity(DatasetSummary.class);
+		System.out.println("resp" + resp);
 		assertNotNull(resp);
 	}
 	

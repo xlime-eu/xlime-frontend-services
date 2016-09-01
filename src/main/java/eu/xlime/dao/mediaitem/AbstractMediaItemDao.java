@@ -1,6 +1,7 @@
 package eu.xlime.dao.mediaitem;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -155,7 +156,26 @@ public abstract class AbstractMediaItemDao implements MediaItemDao {
 			log.debug("Filter out sandbox zattoo related images as these are forbidden by the server.");
 			tvProgramBean.setRelatedImage(null);
 		}
+		tvProgramBean.setWatchUrl(typeResolver.toWatchUrl(tvProgramBean));
 		return tvProgramBean;
+	}
+	
+	protected final <T extends MediaItem> Iterable<T> cleanMediaItems(
+			Collection<T> values) {
+		List<T> result = new ArrayList<T>();
+		for (T val: values) {
+			result.add(cleanMediaItem(val));
+		}
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected final <T extends MediaItem> T cleanMediaItem(T dirty) {
+		if (dirty instanceof NewsArticleBean) return (T) clean((NewsArticleBean)dirty);
+		if (dirty instanceof TVProgramBean) return (T) clean((TVProgramBean) dirty);
+		if (dirty instanceof MicroPostBean) return (T) clean((MicroPostBean) dirty);
+		log.warn("Unsupported mediaItem " + dirty);
+		return dirty;
 	}
 	
 }

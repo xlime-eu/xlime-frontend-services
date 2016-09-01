@@ -1,0 +1,12 @@
+PREFIX xlime: <http://xlime-project.org/vocab/> 
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX ma: <http://www.w3.org/ns/ma-ont#> 
+
+SELECT DISTINCT ?g ?vidTrack ?ocr {
+GRAPH ?g { 
+	#encUrl ma:hasTrack ?vidTrack .
+	?vidTrack a ma:VideoTrack.
+	?vidTrack sioc:content ?ocr.
+} #end of Graph ?g
+} #ReplaceLimit
+

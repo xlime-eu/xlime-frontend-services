@@ -123,7 +123,7 @@ public class ListUtil {
 			end = e;
 		}
 	}
-	
+		
 	/**
 	 * Creates a List of size n of {@link Span}s that cover the
 	 * space between 0 and fullSize. I.e. the spans in the list do not overlap 
@@ -138,6 +138,8 @@ public class ListUtil {
 		assert(n < fullSize -1);
 		List<Span> result = new ArrayList<Span>();
 		int segmentSize = fullSize/n;
+		if (segmentSize == 0) 
+			throw new IllegalArgumentException(String.format("Cannot split %s into %s segments", fullSize, n));
 		for (int i = 0; i < n; i++) {
 			int begin = i * segmentSize;
 			int end = (i + 1) * segmentSize;

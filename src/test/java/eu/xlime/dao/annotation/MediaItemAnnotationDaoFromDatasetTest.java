@@ -16,7 +16,9 @@ import com.google.common.base.Optional;
 import com.hp.hpl.jena.query.Dataset;
 
 import eu.xlime.bean.EntityAnnotation;
+import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
+import eu.xlime.bean.TVProgramBean;
 import eu.xlime.testkit.DatasetLoader;
 import eu.xlime.util.KBEntityMapper;
 import eu.xlime.util.NullEnDBpediaKBEntityMapper;
@@ -93,6 +95,17 @@ public class MediaItemAnnotationDaoFromDatasetTest {
 		assertNotNull(eas);
 		System.out.println(String.format("Found %s entity annots %s", eas.size(), eas));
 		assertEquals(3, eas.size());
+	}
+	
+	@Test
+	public void test_findOCRAnnotationsFor() throws Exception {
+		MediaItemAnnotationDaoFromDataset inst = createTestMediaItemDaoFromDataset("src/test/resources/tv-ocr-example-graph.trig");
+
+		TVProgramBean tvb = new TVProgramBean();
+		tvb.setUrl("http://zattoo.com/program/114078287");
+		List<OCRAnnotation> oas = inst.findOCRAnnotationsFor(tvb);
+		System.out.println(String.format("Found %s ocr annots %s", oas.size(), oas));
+		assertEquals(4, oas.size());
 	}
 		
 	private MediaItemAnnotationDaoFromDataset createTestMediaItemDaoFromDataset(String fpath) {

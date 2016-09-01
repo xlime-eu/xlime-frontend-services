@@ -5,13 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.mongojack.DBCursor;
@@ -38,8 +31,6 @@ import eu.xlime.dao.MongoXLiMeResourceStorer;
 import eu.xlime.dao.XLiMeResourceStorer;
 import eu.xlime.mongo.DBCollectionProvider;
 import eu.xlime.util.ListUtil;
-import eu.xlime.util.score.Score;
-import eu.xlime.util.score.ScoreFactory;
 import eu.xlime.util.score.ScoredSet;
 import eu.xlime.util.score.ScoredSetImpl;
 
@@ -115,7 +106,7 @@ public class MongoMediaItemDao extends AbstractMediaItemDao implements XLiMeReso
 
 	@Override
 	public List<TVProgramBean> findTVPrograms(List<String> uris) {
-		return mongoStorer.getDBCollection(TVProgramBean.class).find().in("_id", uris).toArray();
+		return ImmutableList.copyOf(cleanMediaItems(mongoStorer.getDBCollection(TVProgramBean.class).find().in("_id", uris).toArray()));
 	}
 
 	@Override

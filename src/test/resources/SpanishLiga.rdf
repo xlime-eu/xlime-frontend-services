@@ -1,0 +1,2920 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns="http://dbpedia.org/property/"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+<rdf:Description
+    rdf:about="http://dbpedia.org/ontology/SoccerClub">
+  <label xmlns="http://www.w3.org/2000/01/rdf-schema#">club</label>
+  <label xmlns="http://www.w3.org/2000/01/rdf-schema#">team</label>
+</rdf:Description>
+
+<rdf:Description
+    rdf:about="http://dbpedia.org/ontology/SoccerPlayer">
+  <label xmlns="http://www.w3.org/2000/01/rdf-schema#">player</label>
+  <label xmlns="http://www.w3.org/2000/01/rdf-schema#">football player</label>
+</rdf:Description>
+
+<rdf:Description
+    rdf:about="http://dbpedia.org/ontology/SoccerManager">
+  <label xmlns="http://www.w3.org/2000/01/rdf-schema#">manager</label>
+  <label xmlns="http://www.w3.org/2000/01/rdf-schema#">trainer</label>
+</rdf:Description>
+
+<rdf:Description
+    rdf:about="http://dbpedia.org/property/currentclub">
+  <label xmlns="http://www.w3.org/2000/01/rdf-schema#">plays for</label>
+  <label xmlns="http://www.w3.org/2000/01/rdf-schema#">has current club</label>
+</rdf:Description>
+
+<rdf:Description
+    rdf:about="http://dbpedia.org/property/manager">
+  <label xmlns="http://www.w3.org/2000/01/rdf-schema#">has manager</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Real_Madrid_C.F.">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Real Madrid C.F.</label>
+	<manager rdf:resource="http://dbpedia.org/resource/José_Mourinho"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/José_Mourinho">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Cristiano_Ronaldo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cristiano Ronaldo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Dos Santos Aveiro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Michael_Essien">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Michael Essien</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Essien</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Royston_Drenthe">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Royston Drenthe</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Drenthe</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sami_Khedira">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sami Khedira</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Khedira</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Mesut_%C3%96zil">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mesut Özil</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Özil</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81ngel_di_Mar%C3%ADa">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ángel di María</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Di Maria Hernandez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gonzalo_Higua%C3%ADn">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gonzalo Higuaín</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Higuain</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ra%C3%BAl_Albiol">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Raúl Albiol</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Albiol</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_Arbeloa">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Arbeloa</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Xabi_Alonso">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Xabi Alonso</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Antonio_Ad%C3%A1n">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Antonio Adán</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Adan</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Marcelo_Vieira">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marcelo Vieira</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vieira</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Karim_Benzema">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Karim Benzema</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Benzema</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Fernando_Gago">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fernando Gago</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gago</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sergio_Ramos">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sergio Ramos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ramos</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pepe_%28footballer_born_1983%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pepe (footballer born 1983)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ricardo_Carvalho">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ricardo Carvalho</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Carvalho</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Silveira de Carvalho</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Iker_Casillas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iker Casillas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Casillas Fernández</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Luka_Modri%C4%87">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Luka Modriç</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Modric</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Diego_L%C3%B3pez_Rodr%C3%ADguez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diego López Rodríguez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">López Rodríguez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/F%C3%A1bio_Coentr%C3%A3o">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fábio Coentrão</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Coentrao</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_Morata">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Morata</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Morata</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Hamit_Alt%C4%B1ntop">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Hamit Altıntop</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Altıntop</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miguel_Aceval">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Miguel Aceval</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aceval</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Roberto_Rojas_%28Spanish_footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Roberto Rojas (Spanish footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rojas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Mar%C3%ADa_Callej%C3%B3n">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José María Callejón</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Callejon</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rapha%C3%ABl_Varane">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Raphaël Varane</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Varane</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jes%C3%BAs_Fern%C3%A1ndez_Collado">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jesús Fernández Collado</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Santiago_Mu%C3%B1ez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Santiago Muñez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/S%C3%AFm%C3%A2_S%C3%A2b%C3%A1h">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sïmâ Sâbáh</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sabah</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Enzo_Fern%C3%A1ndez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Enzo Fernández</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Zidane</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Nacho_%28footballer_born_1990%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nacho (footballer born 1990)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juan_Jos%C3%A9_Narv%C3%A1ez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juan José Narváez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Narváez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Madrid_C.F."/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Valencia_CF">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Valencia CF</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Ernesto_Valverde"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ernesto_Valverde">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Valverde</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ernesto Valverde</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sergio_Canales">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sergio Canales</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Canales</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sofiane_Feghouli">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sofiane Feghouli</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Feghouli</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Adil_Rami">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Adil Rami</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rami</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alberto_Costa_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alberto Costa (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Costa</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miguel_Monteiro">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Miguel Monteiro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/J%C3%A9r%C3%A9my_Mathieu">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jérémy Mathieu</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mathieu</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%89ver_Banega">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Éver Banega</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Banega</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ricardo_Costa_%28Portuguese_footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Costa</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ricardo Costa (Portuguese footballer)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jonas_Gon%C3%A7alves_Oliveira">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jonas Gonçalves Oliveira</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Goncalves Oliveira</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Vicente_Guaita">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vicente Guaita</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Guaita</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Roberto_Soldado">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Roberto Soldado</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Soldado</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/David_Albelda">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">David Albelda</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Albelda</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jonathan_Viera">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jonathan Viera</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Viera</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Antonio_Barrag%C3%A1n">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Antonio Barragán</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Barragan</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Nelson_Haedo_Valdez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nelson Haedo Valdez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Valdez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Diego_Alves_Carreira">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diego Alves Carreira</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alves Carreira</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pablo_Piatti">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pablo Piatti</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Piatti</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Aly_Cissokho">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aly Cissokho</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cissokho</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Andr%C3%A9s_Guardado">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Andrés Guardado</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Guardado</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/V%C3%ADctor_Ruiz_Torre">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Víctor Ruiz Torre</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ruiz Torre</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jo%C3%A3o_Pereira_%28Portuguese_footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">João Pereira (Portuguese footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pereira</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Daniel_Parejo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Daniel Parejo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Parejo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juan_Bernat">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juan Bernat</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bernat</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Diego_Alves">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alves Carreira</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diego Alves</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alves</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Valencia_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Deportivo_de_La_Coru%C3%B1a">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Deportivo de La Coruna</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Domingos_Paciência"/>
+	<manager rdf:resource="http://dbpedia.org/resource/Fernando_Vázquez"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Domingos_Paciência">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Fernando_Vázquez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Diego_Seoane_P%C3%A9rez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diego Seoane Pérez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Deportivo_de_La_Coru%C3%B1a"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pablo_%C3%81lvarez_N%C3%BA%C3%B1ez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pablo Álvarez Núñez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alvarez Nunez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvarez Núñez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Deportivo_de_La_Coru%C3%B1a"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Diego_Colotto">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diego Colotto</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Colotto</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Deportivo_de_La_Coru%C3%B1a"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alberto_Junior_Rodr%C3%ADguez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alberto Junior Rodríguez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rodriguez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Deportivo_de_La_Coru%C3%B1a"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Xisco_%28footballer_born_1986%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Xisco (footballer born 1986)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Deportivo_de_La_Coru%C3%B1a"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Real_Sociedad">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Real Sociedad</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Philippe_Montanier"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Philippe_Montanier">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Philippe Montanier</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Montanier</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/McDonald_Mariga">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">McDonald Mariga</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mariga</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Carlos_Vela">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Carlos Vela</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vela Garrido</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Asier_Illarramendi">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Asier Illarramendi</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Illarramendi</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Claudio_Bravo_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Claudio Bravo (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bravo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Carlos_Mart%C3%ADnez_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Carlos Martínez (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Martinez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Imanol_Agirretxe">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Imanol Agirretxe</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Agirretxe</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/E%C3%B1aut_Zubikarai">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Eñaut Zubikarai</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Zubikarai</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/David_Zurutuza">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">David Zurutuza</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Zurutuza</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Antoine_Griezmann">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Antoine Griezmann</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Griezmann</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Mikel_Gonz%C3%A1lez_Mart%C3%ADnez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mikel González Martínez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gonzalez Martinez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alberto_de_la_Bella">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alberto de la Bella</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">La Bella</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">De La Bella</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Diego_Ifr%C3%A1n">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diego Ifrán</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gonzalo_Castro_Iriz%C3%A1bal">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gonzalo Castro Irizábal</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Castro Irizábal</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ion_Ansotegi">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ion Ansotegi</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ansotegi</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gorka_Elustondo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gorka Elustondo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Elustondo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Daniel_Estrada_Agirrezabalaga">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Daniel Estrada Agirrezabalaga</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Estrada</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Estrada Agirrezabalga</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Markel_Bergara">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Markel Bergara</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bergara</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/I%C3%B1igo_Mart%C3%ADnez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iñigo Martínez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Martínez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Liassine_Cadamuro">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Liassine Cadamuro</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cadamuro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rub%C3%A9n_Pardo_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rubén Pardo (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pardo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Liassine_Cadamuro-Benta%C3%AFba">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Liassine Cadamuro-Bentaïba</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cadamuro-Bentaiba</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javier_Ros">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javier Ros</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ros</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Sociedad"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Levante_UD">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Levante UD</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Juan_Ignacio_Martínez"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juan_Ignacio_Martínez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miguel_Alfonso_Herrero">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Miguel Alfonso Herrero</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/David_Navarro_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">David Navarro (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Navarro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gustavo_Mun%C3%BAa">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gustavo Munúa</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Munua</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pedro_Roberto_Silva_Botelho">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pedro Roberto Silva Botelho</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Botelho</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rayo_Vallecano">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rayo Vallecano</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Paco_(footballer)"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Nikolaos_Karabelas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nikolaos Karabelas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Karampelas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rafa_Jord%C3%A0">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rafa Jordà</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jorda</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juanlu_%28footballer_born_1980%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juanlu (footballer born 1980)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pedro_L%C3%B3pez_Mu%C3%B1oz">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pedro López Muñoz</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lopez Munoz</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Loukas_Vyntra">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Loukas Vyntra</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vyntra</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Keylor_Navas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Keylor Navas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Navas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Javier_Barkero">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Javier Barkero</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bakero</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juan_Francisco_Garc%C3%ADa">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juan Francisco García</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sergio_Mart%C3%ADnez_Ballesteros">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sergio Martínez Ballesteros</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ballesteros</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Nano_%28Spanish_footballer_born_1980%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nano (Spanish footballer born 1980)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Massimo_Volta">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Massimo Volta</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Volta</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pedro_R%C3%ADos">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pedro Ríos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rios</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Dariusz_Dudka">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Dariusz Dudka</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Dudka</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Carlos_Aranda">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Carlos Aranda</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aranda</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Christian_Lell">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Christian Lell</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lell</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%93scar_Serrano_Rodr%C3%ADguez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Óscar Serrano Rodríguez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Serrano Rodriguez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Roger_Mart%C3%AD_Salvador">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Roger Martí Salvador</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Papakouli_Diop">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Papakouli Diop</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diop</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/H%C3%A9ctor_Rodas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Héctor Rodas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rodas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Vicente_Iborra">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vicente Iborra</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iborra</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iborra de la Fuente</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sergio_Ballesteros">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ballesteros</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sergio Ballesteros</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Hig%C3%B3n">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Higón</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Higón</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Roger_Mart%C3%AD">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Roger Martí</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rub%C3%A9n_Garc%C3%ADa_Santos">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rubén García Santos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">García Santos</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Obafemi_Martins">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Obafemi Martins</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Martins</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Levante_UD"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Real_Valladolid">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Real Valladolid</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Miroslav_Dukic"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miroslav_Dukic">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Patrick_Ebert">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Patrick Ebert</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ebert</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jaime_Jim%C3%A9nez_Merlo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jaime Jiménez Merlo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/V%C3%ADctor_P%C3%A9rez_Alonso">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Víctor Pérez Alonso</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Perez Alonso</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Manucho">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Manucho</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Contreiras Gonçalves</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Antonio_Rukavina">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Antonio Rukavina</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rukavina</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alberto_Bueno">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alberto Bueno</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bueno</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Llu%C3%ADs_Sastre">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lluís Sastre</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sastre</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_Rubio">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Rubio</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rubio</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Daniel_Larsson_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Daniel Larsson (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Larsson</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Mikel_Balenziaga">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mikel Balenziaga</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Balenziaga</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%93scar_Gonz%C3%A1lez_Marcos">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Óscar González Marcos</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sergio_Matabuena">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sergio Matabuena</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Matabuena</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jofre_Mateu">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jofre Mateu</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javi_Guerra">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javi Guerra</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Guerra</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Carlos_Pe%C3%B1a_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Carlos Peña (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pena</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javier_Baraja">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javier Baraja</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Baraja</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Marc_Valiente">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marc Valiente</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Valiente</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Lassana_Camar%C3%A1">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lassana Camará</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Dani_Hern%C3%A1ndez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Dani Hernández</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Hernandez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/May_Mahlangu">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">May Mahlangu</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mahlangu</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Valdet_Rama">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Valdet Rama</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rama</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Daniel_Aquino_Pintos">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Daniel Aquino Pintos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aquino Pintos</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ismail_Abdul_Razak">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ismail Abdul Razak</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Razak</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Nauzet_Alem%C3%A1n">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nauzet Alemán</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jes%C3%BAs_Rueda_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jesús Rueda (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rueda</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rub%C3%A9n_Pe%C3%B1a">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pena</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rubén Peña</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jean-Landry_Bassilekin">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jean-Landry Bassilekin</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bassilekin</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Valladolid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/RCD_Mallorca">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mallorca</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Gregorio_Manzano"/>
+	<manager rdf:resource="http://dbpedia.org/resource/Joaquín_Caparrós"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gregorio_Manzano">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gregorio Manzano</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Manzano</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Joaquín_Caparrós">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Giovani_dos_Santos">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Giovani dos Santos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Dos Santos</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Nunes">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Nunes</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nunes</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alejandro_Alfaro">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alejandro Alfaro</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alfaro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Michael_Pereira">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pereira</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Michael Pereira</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Kevin_Garc%C3%ADa_Mart%C3%ADnez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Kevin García Martínez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Dudu_Aouate">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Dudu Aouate</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aouate</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Luis_Mart%C3%AD">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Luis Martí</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marti</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81ngel_Javier_Arizmendi">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ángel Javier Arizmendi</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Arizmendi</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Getafe_CF">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Getafe CF</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Luis_García_Plaza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Antonio_L%C3%B3pez_Guerrero">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Antonio López Guerrero</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">López Guerrero</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jo%C3%A3o_Victor_de_Albuquerque_Bruno">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">João Victor de Albuquerque Bruno</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Tomer_Hemed">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Tomer Hemed</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Hemed</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/V%C3%ADctor_Casades%C3%BAs">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Víctor Casadesús</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Casadesús</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Emilio_Nsue">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Emilio Nsue</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nsue</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sergio_Tejera">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sergio Tejera</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Tejera</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Marvin_Ogunjimi">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marvin Ogunjimi</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ogunjimi</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javi_M%C3%A1rquez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javi Márquez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marquez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rub%C3%A9n_Mi%C3%B1o">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rubén Miño</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mino</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juan_Calatayud">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juan Calatayud</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Calatayud</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Joaqu%C3%ADn_Navarro_Jim%C3%A9nez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Joaquín Navarro Jiménez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Navarro Jiménez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Yeray_G%C3%B3mez_Ferragut">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Yeray Gómez Ferragut</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gómez Ferragut</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_Gim%C3%A9nez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Giménez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Manuel_Flores">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Manuel Flores</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Flores</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pablo_Mar%C3%AD_Villar">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pablo Marí Villar</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marí Villar</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pedro_Bigas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pedro Bigas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bigas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Abd%C3%B3n_Prats">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Abdón Prats</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Francisco_Hern%C3%A1ndez_Marcos">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Francisco Hernández Marcos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Hernández Marcos</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Charlie_Took">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Charlie Took</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Took Essome</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Anderson_Concei%C3%A7%C3%A3o">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Anderson Conceição</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Brandon_Thomas_Llamas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Brandon Thomas Llamas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/RCD_Mallorca"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Real_Betis">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Real Betis</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Pepe_Mel"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pepe_Mel">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pepe Mel</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mel</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Antonio_Amaya">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Antonio Amaya</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Amaya</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Fabricio_Agosto_Ram%C3%ADrez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fabricio Agosto Ramírez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pedro_Mario_%C3%81lvarez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pedro Mario Álvarez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mario Alvarez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jorge_Molina_Vidal">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jorge Molina Vidal</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Molina Vidal</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rub%C3%A9n_P%C3%A9rez_del_M%C3%A1rmol">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rubén Pérez del Mármol</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pérez del Mármol</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Salva_Sevilla">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Salva Sevilla</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sevilla</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Casto_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Casto (footballer)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javier_Matilla">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javier Matilla</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Matilla</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Paulo_Afonso_Santos_J%C3%BAnior">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Paulo Afonso Santos Júnior</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Momo_%28Spanish_footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Momo (Spanish footballer)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Be%C3%B1at_Etxebarria">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Beñat Etxebarria</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rub%C3%A9n_Castro">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rubén Castro</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Castro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ignacio_P%C3%A9rez_Santamar%C3%ADa">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ignacio Pérez Santamaría</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Ca%C3%B1as_Ruiz-Herrera">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Cañas Ruiz-Herrera</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Canas Ruiz Herrera</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Damien_Perquis">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Damien Perquis</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Perquis</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miki_Roqu%C3%A9">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Miki Roqué</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Roque</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lex_Mart%C3%ADnez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Martínez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álex Martínez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Adri%C3%A1n_San_Miguel_del_Castillo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Adrián San Miguel del Castillo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Castillo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javier_Chica">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javier Chica</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Chica</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Nosa_Igiebor">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nosa Igiebor</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Igiebor</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_Vadillo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Vadillo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vadillo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sergio_Rodr%C3%ADguez_Hurtado">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sergio Rodríguez Hurtado</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juan_Calahorro">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juan Calahorro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alejandro_Pozuelo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alejandro Pozuelo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pozuelo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Betis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/CA_Osasuna">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Osasuna</label>
+	<manager rdf:resource="http://dbpedia.org/resource/José_Luis_Mendilibar"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/José_Luis_Mendilibar">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Masoud_Shojaei">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Masoud Shojaei</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Shojaei</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rub%C3%A9n_Gonz%C3%A1lez_Rocha">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rubén González Rocha</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jukka_Raitala">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jukka Raitala</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Raitala</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Fernando_Macedo_da_Silva">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fernando Macedo da Silva</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Dami%C3%A0_Abella">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Damià Abella</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ra%C3%BAl_Garc%C3%ADa_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Raúl García (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Garcia</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Emiliano_Armenteros">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Emiliano Armenteros</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Armenteros</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sisinio_Gonz%C3%A1lez_Mart%C3%ADnez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sisinio González Martínez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Asier_Riesgo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Asier Riesgo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Riesgo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Enrique_Sola">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Enrique Sola</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sola</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_Cejudo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Cejudo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cejudo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Francisco_Pu%C3%B1al">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Francisco Puñal</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Punal</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Dejan_Leki%C4%87">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Dejan Lekiç</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lekic</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Manuel_Ortiz_Toribio">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Manuel Ortiz Toribio</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ortiz Toribio</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miguel_Fla%C3%B1o">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Miguel Flaño</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Flano</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Marc_Bertr%C3%A1n_Vilanova">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marc Bertrán Vilanova</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bertran Vilanova</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Nino_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nino (footballer)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Andr%C3%A9s_Fern%C3%A1ndez_Moreno">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Andrés Fernández Moreno</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ion_Echaide">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ion Echaide</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Echaide</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Joseba_Llorente">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Joseba Llorente</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Llorente</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Llorente Etxarri</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Oier_Sanjurjo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Oier Sanjurjo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alejandro_Arribas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alejandro Arribas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Arribas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Xavi_Annunziata">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Xavi Annunziata</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Annunziata</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/David_Timor">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">David Timor</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Timor</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Roberto_Torres_Morales">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Roberto Torres Morales</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Torres Morales</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Manuel_Onwu">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Manuel Onwu</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Onwu</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Raoul_C%C3%A9dric_Lo%C3%A9">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Raoul Cédric Loé</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Loe</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/CA_Osasuna"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Paco_(footballer)">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alejandro_Dami%C3%A1n_Dom%C3%ADnguez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alejandro Damián Domínguez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Dominguez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ra%C3%BAl_Bravo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bravo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Raúl Bravo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Carlos_Fern%C3%A1ndez_V%C3%A1zquez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Carlos Fernández Vázquez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ra%C3%BAl_Tamudo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Raúl Tamudo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Tamudo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Mikel_Labaka">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mikel Labaka</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Labaka</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Manuel_Casado">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Manuel Casado</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Casado</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Roberto_Rom%C3%A1n_Triguero">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Roberto Román Triguero</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Triguero</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javi_Fuego">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javi Fuego</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fuego</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Francisco_Medina_Luna">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Francisco Medina Luna</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/David_Cobe%C3%B1o">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">David Cobeño</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cobeno</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miguel_%C3%81ngel_S%C3%A1nchez_Mu%C3%B1oz">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Miguel Ángel Sánchez Muñoz</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gabriel_Machado">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gabriel Machado</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Machado</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Adri%C3%A1n_Gonz%C3%A1lez_Morales">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Adrián González Morales</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Manuel_Arana_Rodr%C3%ADguez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Manuel Arana Rodríguez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Arana</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Arana Rodriguez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alberto_Perea">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alberto Perea</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Perea</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Roberto_Trashorras">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Roberto Trashorras</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Trashorras</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Anaitz_Arbilla">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Anaitz Arbilla</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Arbilla</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alhassane_Bangoura">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alhassane Bangoura</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bangoura</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Daniel_Gim%C3%A9nez_Hern%C3%A1ndez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Daniel Giménez Hernández</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Giménez Hernandez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Giménez Hernández</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lex_G%C3%A1lvez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álex Gálvez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gálvez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gálvez Jimena</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/L%C3%A9o_Baptist%C3%A3o">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Léo Baptistão</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Baptistão</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rub%C3%A9n_Ramiro_Pastor">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rubén Ramiro Pastor</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ramiro Pastor</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Rayo_Vallecano"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/M%C3%A1laga_CF">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Malaga CF</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Manuel_Pellegrini"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Manuel_Pellegrini">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Manuel Pellegrini</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pellegrini</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ju%C3%A1n_%C3%81ngel_Seb%C3%A1stio">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juán Ángel Sebástio</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/M%C3%A1laga_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juan_Angel_Sebastio">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juan Angel Sebastio</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/M%C3%A1laga_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Luis_García_Plaza">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/David_Abraham_%28footballer%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">David Abraham (footballer)</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Abraham</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miguel_%C3%81ngel_Moy%C3%A0">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Miguel Ángel Moyà</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Moya</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miguel_Torres_G%C3%B3mez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Miguel Torres Gómez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Torres Gómez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Manuel_Jim%C3%A9nez_Ortiz">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Manuel Jiménez Ortiz</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jiménez Ortiz</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Manuel Jiménez Ortiz</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juan_Rodr%C3%ADguez_%28footballer_born_1982%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rodriguez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juan Rodríguez (footballer born 1982)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Adri%C3%A1n_Colunga_P%C3%A9rez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Adrián Colunga Pérez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Xavi_Torres">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Xavi Torres</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Torres</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Miguel_Marcos_Madera">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Miguel Marcos Madera</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marcos Madera</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Diego_Castro">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Castro</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diego Castro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Juan_Valera_Esp%C3%ADn">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Juan Valera Espín</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Valera Espín</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81ngel_Lafita">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ángel Lafita</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lafita</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Real_Zaragoza">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Real Zaragoza</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Manuel_Jiménez_Jiménez"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alberto_Lopo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alberto Lopo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lopo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jordi_Codina">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jordi Codina</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Codina</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jaime_Gavil%C3%A1n">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jaime Gavilán</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gavilan</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Rafael_L%C3%B3pez_G%C3%B3mez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rafael López Gómez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_V%C3%A1zquez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Vázquez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vázquez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pablo_Sarabia">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pablo Sarabia</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sarabia</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Medhi_Lacen">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Medhi Lacen</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lacen</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Yacine_Qasmi">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Yacine Qasmi</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Qasmi</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Abdelaziz_Barrada">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Abdelaziz Barrada</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Barrada</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Hugo_Fraile">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Hugo Fraile</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fraile</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Adri%C3%A1n_Colunga">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Adrián Colunga</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Colunga</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Getafe_CF"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Celta_de_Vigo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Celta de Vigo</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Abel_Resino"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Abel_Resino">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Abel Resino</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Resino</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Enrique_de_Lucas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lucas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Enrique de Lucas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Park_Chu-Young">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Park</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Park Chu-Young</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Michael_Krohn-Dehli">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Michael Krohn-Dehli</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Krohn-Dehli</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ignacio_Insa_Bohigues">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ignacio Insa Bohigues</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Insa Bohigues</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Augusto_Fern%C3%A1ndez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fernandez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Augusto Fernández</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javi_Varas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javi Varas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Varas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Fabi%C3%A1n_Orellana">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Orellana</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fabián Orellana</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Samuel_Llorca">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Samuel Llorca</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Llorca Ripoll</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Vadim_Demidov">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vadim Demidov</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Demidov</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Carlos_Bellv%C3%ADs">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Carlos Bellvís</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bellvis</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Mario_Bermejo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mario Bermejo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bermejo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Antonio_Rodr%C3%ADguez_Dovale">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Antonio Rodríguez Dovale</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rodriguez Dovale</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lex_L%C3%B3pez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">López</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álex López</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Borja_Oubi%C3%B1a">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Borja Oubiña</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Oubiña</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Roberto_Lago">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lago</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Roberto Lago</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Iago_Aspas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aspas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iago Aspas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jonathan_Vila">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vila</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jonathan Vila</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Andr%C3%A9s_T%C3%BA%C3%B1ez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Andrés Túñez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Tunez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Hugo_Mallo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mallo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Hugo Mallo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Celta_de_Vigo"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Manuel_Jiménez_Jiménez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Luis_Garc%C3%ADa_Fern%C3%A1ndez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Luis García Fernández</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">García Fernández</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Fernando_Meira">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fernando Meira</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Meira</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Henri_Bienvenu">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Henri Bienvenu</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Nienvenu</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Maurizio_Lanzaro">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Maurizio Lanzaro</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Lanzaro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/H%C3%A9lder_Postiga">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Hélder Postiga</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Postiga</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Stefan_Babovi%C4%87">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Babovic</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Stefan Baboviç</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javier_Paredes">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Paredes</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javier Paredes</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Leo_Franco">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Franco</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Leo Franco</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/R%C3%BAben_Micael">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rúben Micael</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Micael</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Freitas da Ressureição</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ra%C3%BAl_Goni">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Goni</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Raúl Goni</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ivan_Obradovi%C4%87">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ivan Obradoviç</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Obradovic</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81d%C3%A1m_Pint%C3%A9r">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ádám Pintér</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pinter</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Cristian_S%C4%83punaru">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cristian Săpunaru</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sapunaru</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Marco_P%C3%A9rez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Perez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marco Pérez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Francisco_Monta%C3%B1%C3%A9s">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Francisco Montañés</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Montañés</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Mar%C3%ADa_Movilla">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José María Movilla</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Movilla</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Franco_Zuculini">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Zuculini</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Franco Zuculini</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Eduard_Oriol">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Eduard Oriol</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Oriol</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javier_%C3%81lamo_Cruz">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javier Álamo Cruz</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álamo Cruz</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Manuel_Fern%C3%A1ndez_Reyes">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Manuel Fernández Reyes</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fernández Reyes</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/V%C3%ADctor_Rodr%C3%ADguez_Romero">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Víctor Rodríguez Romero</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rodriguez Romero</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pablo_Alcolea_Guerrero">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pablo Alcolea Guerrero</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alcolea Guerrero</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Real_Zaragoza"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Athletic_Bilbao">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Athletic Bilbao</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Marcelo_Bielsa"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Marcelo_Bielsa">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marcelo Bielsa</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Bielsa</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Aritz_Aduriz">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aritz Aduriz</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aduriz</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Fernando_Llorente">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Llorente</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fernando Llorente</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Fernando_Amorebieta">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fernando Amorebieta</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Amorebieta</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gorka_Iraizoz">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gorka Iraizoz</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iraizoz</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Aitor_Ocio">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aitor Ocio</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ocio</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ander_Herrera">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Herrera</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ander Herrera</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ander_Iturraspe">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ander Iturraspe</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iturraspe</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Iker_Muniain">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iker Muniain</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Muniain</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Igor_Gabilondo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gabilondo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Igor Gabilondo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Borja_Ekiza">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Borja Ekiza</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ekiza</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Carlos_Gurpegui">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Carlos Gurpegui</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gurpegui</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Andoni_Iraola">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Andoni Iraola</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iraola</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Mikel_San_Jos%C3%A9">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mikel San José</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">San José</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gaizka_Toquero">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gaizka Toquero</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Toquero</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jon_Aurtenetxe">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jon Aurtenetxe</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aurtenetxe</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Xabier_Castillo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Castillo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Xabier Castillo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Markel_Susaeta">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Susaeta</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Markel Susaeta</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Igor_Mart%C3%ADnez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Martinez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Igor Martínez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%93scar_de_Marcos">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Óscar de Marcos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">De Marcos</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ismael_L%C3%B3pez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">López</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ismael López</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Aymeric_Laporte">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Aymeric Laporte</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Laporte</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Iker_Undabarrena">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iker Undabarrena</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Undabarrena</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/I%C3%B1igo_Ruiz_de_Galarreta">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iñigo Ruiz de Galarreta</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ruiz de Galarreta</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jon%C3%A1s_Ramalho">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ramalho</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jonás Ramalho</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ibai_G%C3%B3mez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gomez</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ibai Gómez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Erik_Mor%C3%A1n">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Erik Morán</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Morán</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_Pe%C3%B1a_Herrero">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Peña Herrero</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Peña</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jon_Xabier_Vidal">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vidal</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jon Xabier Vidal</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Athletic_Bilbao"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Atl%C3%A9tico_Madrid">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Atletico Madrid</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Diego_Simeone"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Diego_Simeone">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diego Simeone</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Simeone</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Antonio_Reyes">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Reyes</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Antonio Reyes</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Atl%C3%A9tico_Madrid"/>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sevilla_FC">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Sevilla FC</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Unai_Emery"/>
+	<manager rdf:resource="http://dbpedia.org/resource/Míchel_(footballer)"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_Dom%C3%ADnguez_Soto">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Domínguez Soto</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Domínguez Soto</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Atl%C3%A9tico_Madrid"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Unai_Emery">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Unai Emery</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Emery</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Míchel_(footballer)">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Geoffrey_Kondogbia">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Geoffrey Kondogbia</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Kondogbia</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Hedwiges_Maduro">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Hedwiges Maduro</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Maduro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Andr%C3%A9s_Palop">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Andrés Palop</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Palop</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jes%C3%BAs_Navas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Navas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jesús Navas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%81lvaro_Negredo">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Álvaro Negredo</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Negredo</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Fernando_Navarro">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Navarro</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fernando Navarro</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Baba_Diawara">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diawara</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Baba Diawara</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gary_Medel">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Medel</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gary Medel</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Federico_Fazio">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Federico Fazio</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fazio</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Diego_Perotti">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Diego Perotti</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Perotti</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alberto_Bot%C3%ADa">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alberto Botía</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Botía</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ivan_Rakiti%C4%87">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ivan Rakitiç</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Rakitic</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Piotr_Trochowski">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Piotr Trochowski</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Trochowski</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Campa%C3%B1a">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Campaña</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">José Campaña</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javier_Herv%C3%A1s">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Javier Hervás</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Hervas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Cicinho_%28footballer_born_1986%29">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Mendonca Dos Santos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cicinho (footballer born 1986)</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/Sevilla_FC"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/FC_Barcelona">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerClub"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Barcelona</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Barca</label>
+	<manager rdf:resource="http://dbpedia.org/resource/Tito_Vilanova"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Tito_Vilanova">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerManager"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Tito Vilanova</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vilanova</label>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Andr%C3%A9s_Iniesta">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Andres Iniesta</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iniesta</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Cesc_F%C3%A0bregas">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cesc Fabregas</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Fabregas</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Lionel_Messi">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Lionel Messi"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Messi"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Lionel Andrés Messi"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jordi_Alba">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jordi Alba"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Alba"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jordi Alba Ramos"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jordi  Alba"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Francesc_Vilanova">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Francesc Vilanova"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Vilanova"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Tito Vilanova"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Francesc Vilanova i Bayó"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/%C3%89ric_Abidal">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Eric Abidal</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Abidal</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Adriano_Correia">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Adriano Correia</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Correia</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Pedro_Rodr%C3%ADguez_Ledesma">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pedro Rodriguez Ledesma</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Ledesma</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Sergio_Busquets">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Sergio Busquets"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Busquets"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Sergio Busquets i Burgos"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Sergio Busquets Burgos"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Javier_Mascherano">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Javier Mascherano"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Mascherano"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Javier Alejandro Mascherano"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jos%C3%A9_Manuel_Pinto">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jose Manuel Pinto</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pinto</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/David_Villa">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"David Villa"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Villa"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"David Villa Sánchez"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Xavi">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Xavi</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Carles_Puyol">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Carles Puyol"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Puyol"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Carles Puyol i Saforcada"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Gerard_Piqu%C3%A9">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Gerard Pique</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Pique</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Daniel_Alves">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Daniel Alves"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Alves"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Daniel Alves da Silva"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Dani Alves"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/V%C3%ADctor_Vald%C3%A9s">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Victor Valdes</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Valdes</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Thiago_Alc%C3%A2ntara">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Thiago Alcantara</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ramiro_Figueiras_Amarelle">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Ramiro Figueiras Amarelle"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Figueiras Amarelle"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Ahmed_Shafeeq_Ibrahim_Moosa">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Ahmed Shafeeq Ibrahim Moosa"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Aboutrika"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Mohamed Aboutrika"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Shehab Elabnoudy"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Shehab Ayman Abdelfattah Elabnoudy />شهاب ايمن عبد الفتاح الابنودي"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Marc_Bartra">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Marc Bartra</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Baltra</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Marc Bartra"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Baltra"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Marc Bartra Aregall"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Marc Baltra"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Alexis_S%C3%A1nchez">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Alexis Sanchez</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jonathan_dos_Santos">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Dos Santos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jonathan dos Santos</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jonathan dos Santos"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Dos Santos"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jonathan dos Santos Ramírez"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jonathan Dos Santos"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Cristian_Tello">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Cristian Tello</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Tello</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Cristian Tello"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Tello"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Cristian Tello Herrera"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Esther_Sullastres">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Esther Sullastres"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Sullastres"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Esther Sullastres Ayuso"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jordi_Vinyals">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Jordi Vinyals</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Vinyals</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jordi Vinyals"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Vinyals"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jordi Vinyals Martori"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Thiago_Alc%C3%A1ntara">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Jordi_Roura">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jordi Roura"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Roura"@en</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">"Jordi Roura Solà"@en</label>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Nia_Tsivtsivadze">
+	<rdf:type rdf:resource="http://dbpedia.org/ontology/SoccerPlayer"/>
+	<currentclub rdf:resource="http://dbpedia.org/resource/FC_Barcelona"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://dbpedia.org/resource/Andr%25C3%25A9s_Iniesta">
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Andres Iniesta</label>
+	<label xmlns="http://www.w3.org/2000/01/rdf-schema#">Iniesta</label>
+</rdf:Description>
+
+</rdf:RDF>

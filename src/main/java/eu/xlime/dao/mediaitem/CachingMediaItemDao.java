@@ -61,7 +61,7 @@ public class CachingMediaItemDao extends AbstractMediaItemDao {
 		log.debug(String.format("Found %s cached and %s uncached newsArticles", cached.size(), nonCached.size()));
 		
 		return ImmutableList.<NewsArticleBean>builder()
-				.addAll(cleanCached(cached.values())).addAll(nonCached.values())
+				.addAll(cleanMediaItems(cached.values())).addAll(nonCached.values())
 				.build();
 	}
 
@@ -80,24 +80,6 @@ public class CachingMediaItemDao extends AbstractMediaItemDao {
 			log.warn("Error loading searchString result for " + text, e);
 			return ScoredSetImpl.empty();
 		}
-	}
-
-	private <T extends MediaItem> Iterable<T> cleanCached(
-			Collection<T> values) {
-		List<T> result = new ArrayList<T>();
-		for (T val: values) {
-			result.add(cleanCached(val));
-		}
-		return result;
-	}
-	
-	@SuppressWarnings("unchecked")
-	private <T extends MediaItem> T cleanCached(T dirty) {
-		if (dirty instanceof NewsArticleBean) return (T) clean((NewsArticleBean)dirty);
-		if (dirty instanceof TVProgramBean) return (T) clean((TVProgramBean) dirty);
-		if (dirty instanceof MicroPostBean) return (T) clean((MicroPostBean) dirty);
-		log.warn("Unsupported mediaItem " + dirty);
-		return dirty;
 	}
 	
 	private <T extends MediaItem> Map<String, T> asUrlMap(
@@ -121,7 +103,7 @@ public class CachingMediaItemDao extends AbstractMediaItemDao {
 		log.debug(String.format("Found %s cached and %s uncached microPosts", cached.size(), nonCached.size()));
 		
 		return ImmutableList.<MicroPostBean>builder()
-				.addAll(cleanCached(cached.values())).addAll(nonCached.values())
+				.addAll(cleanMediaItems(cached.values())).addAll(nonCached.values())
 				.build();
 	}
 
@@ -144,7 +126,7 @@ public class CachingMediaItemDao extends AbstractMediaItemDao {
 		log.debug(String.format("Found %s cached and %s uncached tvPrograms", cached.size(), nonCached.size()));
 		
 		return ImmutableList.<TVProgramBean>builder()
-				.addAll(cleanCached(cached.values()))
+				.addAll(cleanMediaItems(cached.values()))
 				.addAll(nonCached.values()) //tv programs also need cleaning 
 				.build();
 	}

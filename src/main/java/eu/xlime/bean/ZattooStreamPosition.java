@@ -2,6 +2,8 @@ package eu.xlime.bean;
 
 public class ZattooStreamPosition implements VideoSegmentPosition {
 
+	private static final long serialVersionUID = -8799747517026157434L;
+	
 	/**
 	 * Streamposition value used by xLiMe for Zattoo streams.
 	 */

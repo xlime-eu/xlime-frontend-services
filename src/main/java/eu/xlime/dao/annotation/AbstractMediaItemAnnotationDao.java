@@ -7,11 +7,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 
 import eu.xlime.bean.EntityAnnotation;
+import eu.xlime.bean.SubtitleSegment;
+import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.VideoSegment;
+import eu.xlime.bean.ZattooStreamPosition;
 import eu.xlime.dao.MediaItemAnnotationDao;
+import eu.xlime.dao.MediaItemDao;
 import eu.xlime.util.ResourceTypeResolver;
 
 public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotationDao {
@@ -32,6 +38,88 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 		else throw new RuntimeException("Cannot map url to a known xLiMe media-item type " + url);
 	}
 	
+	protected final VideoSegment newVideoSegment(String tvProgUrl) {
+		VideoSegment result = new VideoSegment();
+		result.setPartOf(retrieveTVProgramOr(tvProgUrl, emptyTVProgramBean(tvProgUrl)));
+		return result;
+	}
+
+	/**
+	 * If available, return a {@link MediaItemDao}, which will help to produce complete beans when 
+	 * annotations embed the annotated MediaItem.
+	 * 
+	 * @return
+	 */
+	protected Optional<MediaItemDao> getMediaItemDao() {
+		return Optional.absent();
+	}
+
+	private final TVProgramBean retrieveTVProgramOr(String tvProgUrl, TVProgramBean defaultVal) {
+		Optional<MediaItemDao> optMedItDao = getMediaItemDao();
+		if (optMedItDao.isPresent()) {
+			Optional<TVProgramBean> optResult = optMedItDao.get().findTVProgram(tvProgUrl);
+			return optResult.or(defaultVal);
+		} else return defaultVal;
+	}
+	
+	private TVProgramBean emptyTVProgramBean(String tvProgUrl) {
+		TVProgramBean result = new TVProgramBean();
+		result.setUrl(tvProgUrl);
+		return result;
+	}
+	
+	protected final List<SubtitleSegment> cleanSubTitleSegments(
+			List<SubtitleSegment> list) {
+		for (SubtitleSegment dirty: list){
+			cleanSubtitleSegment(dirty);
+		}
+		return list;
+	}
+	
+	private SubtitleSegment cleanSubtitleSegment(SubtitleSegment dirty) {
+		Optional<MediaItemDao> optMedItDao = getMediaItemDao();
+		if (isEmpty(dirty.getPartOf().getPartOf()) && optMedItDao.isPresent()) {
+			TVProgramBean emptyBean = dirty.getPartOf().getPartOf();
+			TVProgramBean cleanBean = retrieveTVProgramOr(emptyBean.getUrl(), emptyBean);
+			dirty.getPartOf().setPartOf(cleanBean);
+			cleanVideoSegment(dirty.getPartOf());
+		}
+		return dirty;
+	}
+
+	private boolean isEmpty(TVProgramBean partOf) {
+		return partOf.getBroadcastDate() == null || partOf.getTitle() == null;
+	}
+
+	protected final VideoSegment cleanVideoSegment(VideoSegment vidSeg) {
+		vidSeg.setUrl(calcVideoSegmentUrl(vidSeg));
+		vidSeg.setWatchUrl(calcVideoSegmentWatchUrl(vidSeg));
+		return vidSeg;
+	}
+	
+	private String calcVideoSegmentUrl(VideoSegment vidSeg) {
+		if (vidSeg.getPosition() instanceof ZattooStreamPosition) {
+			return String.format("%s/%s", vidSeg.getPartOf().getUrl(), ((ZattooStreamPosition)vidSeg.getPosition()).getValue());
+		} else throw new RuntimeException("Cannot coin url for " + vidSeg);
+	}
+
+	private String calcVideoSegmentWatchUrl(VideoSegment vidSeg) {
+		if (vidSeg.getPosition() instanceof ZattooStreamPosition) {
+			TVProgramBean tvProg = vidSeg.getPartOf();
+			if (tvProg.getWatchUrl() != null && tvProg.getBroadcastDate() != null && tvProg.getDuration() != null) {
+				final long start = tvProg.getBroadcastDate().timestamp.getTime();
+				final long end = start + (long)(tvProg.getDuration().getTotalSeconds() * 1000);
+				final double streamPosStart = 1073741823.5;
+				final long streamPosTimeStamp = 1000L * (long)(streamPosStart + (4.0 * ((ZattooStreamPosition)vidSeg.getPosition()).getValue()));
+				final long offset = streamPosTimeStamp - start;
+				return String.format("%s/%s/%s/%s", tvProg.getWatchUrl(), start, end, offset);
+			} else {
+				//cannot calculate watch Url without start and end time
+				return null;
+			}
+		} else throw new RuntimeException("Cannot coin url for " + vidSeg);
+	}
+
 	/**
 	 * Cleans the list of {@link EntityAnnotation}s by: combining duplicates (merging its positions 
 	 * and merging their confidence scores) and sorting the results to showing the annotations with

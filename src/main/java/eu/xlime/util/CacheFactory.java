@@ -5,7 +5,6 @@ import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blogspot.mydailyjava.guava.cache.overflow.FileSystemCacheBuilder;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -35,12 +34,7 @@ public class CacheFactory {
 	 * @return
 	 */
 	public <K,V> Cache<K,V> buildCache(String cacheName) {
-		try {
-			return buildPersistingCache(cacheName);
-		} catch (Exception e) {
-			log.error("Error creating persisting cache. Using in-memory instead.", e);
-			return buildInMemoryCache(cacheName);
-		}
+		return buildInMemoryCache(cacheName);
 	}
 
 	private <K,V> Cache<K, V> buildInMemoryCache(String cacheName) {
@@ -52,15 +46,17 @@ public class CacheFactory {
 				.build();
 	}
 
+	@Deprecated
 	private <K,V> Cache<K, V> buildPersistingCache(String cacheName) {
 		Config cfg = new Config();
 		long maxSize = cfg.getLong(Config.Opt.CacheMaxSize);
 		File baseCacheDir = new File(cfg.get(Config.Opt.CacheDir));
 		File cacheDir = new File(baseCacheDir, cacheName);
-		return FileSystemCacheBuilder.newBuilder()
-				.maximumSize(maxSize) // In-memory, rest goes to disk
-				.persistenceDirectory(cacheDir)
-				.softValues()
-				.build();		
+//		return FileSystemCacheBuilder.newBuilder()
+//				.maximumSize(maxSize) // In-memory, rest goes to disk
+//				.persistenceDirectory(cacheDir)
+//				.softValues()
+//				.build();
+		throw new RuntimeException("No longer supported");
 	}
 }

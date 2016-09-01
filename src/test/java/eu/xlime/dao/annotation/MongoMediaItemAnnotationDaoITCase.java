@@ -16,8 +16,10 @@ import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
+import eu.xlime.dao.mediaitem.MongoMediaItemDao;
 import eu.xlime.mongo.ConfigOptions;
 import eu.xlime.summa.bean.UIEntity;
+import eu.xlime.util.ResourceTypeResolver;
 import eu.xlime.util.score.ScoredSet;
 
 public class MongoMediaItemAnnotationDaoITCase {
@@ -140,8 +142,22 @@ public class MongoMediaItemAnnotationDaoITCase {
 		String tvpUri = "http://zattoo.com/program/113843736";
 		List<SubtitleSegment> result = dao.findSubtitleSegmentsForTVProg(tvpUri);
 
-		System.out.println("Retrieved SubtitSegs " + result + " in " + (System.currentTimeMillis() - start) + "ms.");
+		System.out.println(String.format("Retrieved %s subtitSegss in %s ms: %s", result.size(), (System.currentTimeMillis() - start), result));
 		assertNotNull(result);
+		if (result.size() > 0) {
+			SubtitleSegment seg = result.get(0);
+			testSegmentWatchUrl(seg);
+		}
+	}
+
+	private void testSegmentWatchUrl(SubtitleSegment seg) {
+		System.out.println("Testing watch url for " + seg);
+		MongoMediaItemDao miDao = createTestMediaItemDao();
+		Optional<TVProgramBean> otvp = miDao.findTVProgram(seg.getPartOf().getPartOf().getUrl());
+		System.out.println("Retrieved " + otvp);
+		seg.getPartOf().setPartOf(otvp.get());
+		ResourceTypeResolver typeReso = new ResourceTypeResolver();
+		assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/bbc-one/113843736/1466420700000/1466425800000/14", typeReso.toWatchUrl(seg.getPartOf()));
 	}
 	
 	@Test
@@ -165,12 +181,23 @@ public class MongoMediaItemAnnotationDaoITCase {
 
 		System.out.println("Retrieved SubtitSegs " + result + " in " + (System.currentTimeMillis() - start) + "ms.");
 		assertNotNull(result);
+		if (result.size() > 0) {
+			SubtitleSegment seg = result.get(result.size() - 1);
+			testSegmentWatchUrl(seg);
+		}
 	}
 
 	private MongoMediaItemAnnotationDao createTestObj() {
 		Properties props = new Properties();
 		props.put(ConfigOptions.XLIME_MONGO_RESOURCE_DATABASE_NAME.getKey(), "xlimeres");
 		MongoMediaItemAnnotationDao dao = new MongoMediaItemAnnotationDao(props);
+		return dao;
+	}
+
+	private MongoMediaItemDao createTestMediaItemDao() {
+		Properties props = new Properties();
+		props.put(ConfigOptions.XLIME_MONGO_RESOURCE_DATABASE_NAME.getKey(), "xlimeres");
+		MongoMediaItemDao dao = new MongoMediaItemDao(props);
 		return dao;
 	}
 	

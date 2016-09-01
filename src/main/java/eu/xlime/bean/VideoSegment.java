@@ -14,6 +14,11 @@ public class VideoSegment implements XLiMeResource {
 
 	@Id
 	private String url;
+
+	/**
+	 * Optional Url where this video segment can be watched
+	 */
+	private String watchUrl;
 	
 	/**
 	 * Link to the original {@link TVProgramBean}
@@ -38,6 +43,14 @@ public class VideoSegment implements XLiMeResource {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getWatchUrl() {
+		return watchUrl;
+	}
+
+	public void setWatchUrl(String watchUrl) {
+		this.watchUrl = watchUrl;
 	}
 
 	public TVProgramBean getPartOf() {
@@ -66,10 +79,9 @@ public class VideoSegment implements XLiMeResource {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"VideoSegment [url=%s, partOf=%s, startTime=%s, position=%s]",
-				url, partOf, startTime, position);
+		return String
+				.format("VideoSegment [url=%s, watchUrl=%s, partOf=%s, startTime=%s, position=%s]",
+						url, watchUrl, partOf, startTime, position);
 	}
-
 
 }

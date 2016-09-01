@@ -97,7 +97,8 @@ public class MongoMediaItemDaoITCase {
 	public void test_findMediaItemUrlsByText() {
 //		String query = "Brexit";
 //		testMediaitemUrlsByText("Brexit");
-		testMediaitemUrlsByText("Farage Cameron");
+//		testMediaitemUrlsByText("Farage Cameron");
+//		testMediaitemUrlsByText("\"David Cameron\"");
 	}
 
 	private void testMediaitemUrlsByText(String query) {

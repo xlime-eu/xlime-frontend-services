@@ -54,7 +54,9 @@ public class Config {
 		AutocompleteUrl("xlime.autocomplete.url", "http://km.aifb.kit.edu/services/xlime-autocomplete"), 
 		SummaServerUrl("xlime.summa.server-url", "http://km.aifb.kit.edu/services/summa/"), 
 		SummaServerPath("xlime.summa.server-path", "summarum"),
-		SummaTopK("xlime.summa.topk", "5"), 
+		SummaTopK("xlime.summa.topk", "5"),
+		DatasetSummaSparqlCachePeriodMinutes("xlime.dataset.summa.sparql.cache.period-minutes", "360"),
+		DatasetSummaMongoCachePeriodMinutes("xlime.dataset.summa.mongo.cache.period-minutes", "60"),
 		XLiMeSearch("xlime.search.url", "http://km.aifb.kit.edu/services/xlimesearch");
 		
 		final String propKey;

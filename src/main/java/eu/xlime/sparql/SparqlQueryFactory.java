@@ -192,15 +192,10 @@ public class SparqlQueryFactory {
 	}
 	
 	public String mediaResourceOCRAnnotations(String mediaResUrl) {
-		final String encUrl = "<" + mediaResUrl + ">";
-		return "PREFIX sioc: <http://rdfs.org/sioc/ns#> " + 
-			"PREFIX ma: <http://www.w3.org/ns/ma-ont#> " + 
-
-			"SELECT ?vidTrack ?ocr { " +  
-			encUrl + " ma:hasTrack ?vidTrack. " +
-			" ?vidTrack a ma:VideoTrack. " +
-			" ?vidTrack sioc:content ?ocr. " +
-			"} LIMIT 30 ";
+		String qPattern = load("sparql/ocrAnnotations.rq");
+		String result = qPattern.replaceAll("#encUrl", bracketUrl(mediaResUrl))
+				.replaceAll("#ReplaceLimit", "LIMIT " + 30);
+		return result;
 	}
 	
 	public String entityAnnotationInMediaItem(Set<String> entUrls, double confThreshold){

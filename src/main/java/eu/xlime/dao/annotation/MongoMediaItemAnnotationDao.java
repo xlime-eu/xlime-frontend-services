@@ -18,12 +18,13 @@ import com.mongodb.DBObject;
 
 import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.EntityAnnotation;
-import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.XLiMeResource;
+import eu.xlime.dao.MediaItemDao;
 import eu.xlime.dao.MongoXLiMeResourceStorer;
+import eu.xlime.dao.mediaitem.MongoMediaItemDao;
 import eu.xlime.mongo.DBCollectionProvider;
 import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.ResourceTypeResolver;
@@ -42,6 +43,7 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	private static final Logger log = LoggerFactory.getLogger(MongoMediaItemAnnotationDao.class);
 	
 	private final MongoXLiMeResourceStorer mongoStorer;
+	private final MongoMediaItemDao miDao;
 	private final DBCollectionProvider collectionProvider;
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
 	private static final ScoreFactory scoref = ScoreFactory.instance;
@@ -51,8 +53,14 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	public MongoMediaItemAnnotationDao(Properties props) {
 		collectionProvider = new DBCollectionProvider(props);
 		mongoStorer = new MongoXLiMeResourceStorer(collectionProvider);
+		miDao = new MongoMediaItemDao(props);
 	}
 	
+	@Override
+	protected Optional<MediaItemDao> getMediaItemDao() {
+		return Optional.<MediaItemDao>of(miDao);
+	}
+
 	public List<EntityAnnotation> findEntityAnnotations(int limit) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find();
 		log.debug(String.format("Found %s EntAnns", cursor.count()));
@@ -149,12 +157,13 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		if (tvProgUri == null) return ImmutableList.of();
 		if (typeResolver.isTVProgram(tvProgUri)) {
 			DBCursor<SubtitleSegment> cursor = mongoStorer.getDBCollection(SubtitleSegment.class).find().in("partOf.partOf._id", ImmutableList.of(tvProgUri));
-			return cursor.toArray(defaultMax);
+			return cleanSubTitleSegments(cursor.toArray(defaultMax));
 		} else {
 			log.warn(String.format("Cannot find subtitle segments for uri %s of type %s", tvProgUri, typeResolver.resolveType(tvProgUri)));
 			return ImmutableList.of();
 		}
 	}
+
 
 	@Override
 	public List<SubtitleSegment> findSubtitleSegmentsByText(String textQuery) {
@@ -170,7 +179,7 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		long start = System.currentTimeMillis();
 		DBCursor<SubtitleSegment> tvc = mongoStorer.getDBCollection(SubtitleSegment.class).find(textQ, projection).sort(sorting);
 		log.debug(String.format("Created cursor with %s results for '%s' in %s ms. ", tvc.count(), textQuery, (System.currentTimeMillis() - start)));
-		return mongoStorer.toScoredSet(tvc, defaultMax, "Found via text search", "score").asList();
+		return cleanSubTitleSegments(mongoStorer.toScoredSet(tvc, defaultMax, "Found via text search", "score").asList());
 	}
 
 	@Override
@@ -178,8 +187,8 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		DBCursor<SubtitleSegment> cursor = mongoStorer.getDBCollection(SubtitleSegment.class).find();
 		log.debug(String.format("Found %s SubtitleSegs", cursor.count()));
 		if (cursor.count() > limit) 
-			return cursor.skip(cursor.count() - limit).toArray(limit);
-		return cursor.toArray(limit);
+			return cleanSubTitleSegments(cursor.skip(cursor.count() - limit).toArray(limit));
+		return cleanSubTitleSegments(cursor.toArray(limit));
 	}
 
 	@Override
@@ -191,7 +200,7 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		Query q = DBQuery.lessThan(timeStampBeanPath, to).greaterThanEquals(timeStampBeanPath, from);
 		DBCursor<SubtitleSegment> cursor = mongoStorer.getDBCollection(SubtitleSegment.class).find(q);
 		log.debug(String.format("Found %s SubtitleSegs between %s and %s", cursor.count(), from, to));
-		return cursor.toArray(limit);
+		return cleanSubTitleSegments(cursor.toArray(limit));
 	}
 
 	public <T extends XLiMeResource> Optional<T> findResource(

@@ -1,13 +1,11 @@
 package eu.xlime.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableMap;
 
 import eu.xlime.Config;
 import eu.xlime.bean.MediaItem;
@@ -75,22 +73,6 @@ public class MediaItemDaoImpl extends AbstractMediaItemDao {
 	@Override
 	public Optional<VideoSegment> findVideoSegment(String uri) {
 		return delegate.findVideoSegment(uri);
-	}
-
-	@Deprecated 
-	private Map<String, Map<String, String>> mockMediaResourceResult(String url) {
-		ImmutableMap.Builder<String, String> builder = ImmutableMap.builder(); 
-		Map<String, String> result = builder
-				.put("broadcastDate", "2016-03-16T21:30:00Z")
-				.put("title", "BBC World News America")
-				.put("description", "In-depth reports on the major international and US news of the day with Katty Kay.")
-				.put("duration", "1800.0")
-				.put("publisher", "BBC World News")
-				.put("relImage", "http://images.zattic.com/system/images/fba8/c599/ebad/6852/c496/format_480x360.jpg")
-				.put("source", "http://zattoo.com/program/bbc-world-service/111277860")
-				.put("geoname", "GB")
-				.build();
-		return ImmutableMap.of("0", result);
 	}
 
 	@Override

@@ -171,7 +171,7 @@ public class OpenRDFSparqlClientImpl implements SparqlClient {
 		
 		return results; 
 	}
-
+		
 	@Override
 	public Map<String, Map<String, String>> executeSPARQLOrEmpty(String query,
 			long timeout) {

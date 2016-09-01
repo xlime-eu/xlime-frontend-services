@@ -10,7 +10,7 @@ import com.google.common.base.Optional;
 
 import eu.xlime.util.KBEntityMapperImpl;
 
-public class SparqlKBEntityMapperITCase {
+public class KBEntityMapperImplITCase {
 
 	@Test
 	public void testToCanonicalEntity() {
@@ -26,6 +26,22 @@ public class SparqlKBEntityMapperITCase {
 		Optional<String> optResult = testObj.toCanonicalEntityUrl("http://es.dbpedia.org/resource/Alemania");
 		assertTrue(optResult.isPresent());
 		assertEquals("http://dbpedia.org/resource/Germany", optResult.get());
+	}
+
+	@Test
+	public void testToCanonicalEntity3() {
+		KBEntityMapper testObj = new KBEntityMapperImpl();
+		Optional<String> optResult = testObj.toCanonicalEntityUrl("http://dbpedia.org/resource/L%C3%BAcia_Santos");
+		assertTrue(optResult.isPresent());
+		assertEquals("http://dbpedia.org/resource/Lúcia_Santos", optResult.get());
+	}
+
+	@Test
+	public void testToCanonicalEntity4() {
+		KBEntityMapper testObj = new KBEntityMapperImpl();
+		Optional<String> optResult = testObj.toCanonicalEntityUrl("http://dbpedia.org/resource/Silver%28band%29");
+		assertTrue(optResult.isPresent());
+		assertEquals("http://dbpedia.org/resource/Silver(band)", optResult.get());
 	}
 	
 	@Test

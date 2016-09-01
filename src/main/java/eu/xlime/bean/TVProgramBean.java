@@ -28,6 +28,11 @@ public class TVProgramBean implements MediaItem {
 	
 	private GeoLocation relatedLocation;
 	
+	/**
+	 * Optional url where this TV program can be watched
+	 */
+	private String watchUrl;
+	
 	public final String type = "http://www.w3.org/ns/ma-ont#MediaResource";
 
 	public String getUrl() {
@@ -36,6 +41,14 @@ public class TVProgramBean implements MediaItem {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getWatchUrl() {
+		return watchUrl;
+	}
+
+	public void setWatchUrl(String watchUrl) {
+		this.watchUrl = watchUrl;
 	}
 
 	public String getTitle() {
@@ -61,7 +74,6 @@ public class TVProgramBean implements MediaItem {
 	public void setDescription(Content description) {
 		this.description = description;
 	}
-
 
 	public Duration getDuration() {
 		return duration;
@@ -109,12 +121,11 @@ public class TVProgramBean implements MediaItem {
 
 	@Override
 	public String toString() {
-		return "TVProgramBean [url=" + url + ", title=" + title
-				+ ", broadcastDate=" + broadcastDate + ", description="
-				+ description + ", duration=" + duration + ", source=" + source
-				+ ", relatedImage=" + relatedImage + ", publisher=" + publisher
-				+ ", relatedLocation=" + relatedLocation + ", type=" + type
-				+ "]";
+		return String
+				.format("TVProgramBean [url=%s, title=%s, broadcastDate=%s, description=%s, duration=%s, source=%s, relatedImage=%s, publisher=%s, relatedLocation=%s, watchUrl=%s, type=%s]",
+						url, title, broadcastDate, description, duration,
+						source, relatedImage, publisher, relatedLocation,
+						watchUrl, type);
 	}
 
 	

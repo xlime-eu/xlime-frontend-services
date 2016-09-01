@@ -1,7 +1,6 @@
 package eu.xlime.dao.mediaitem;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +18,7 @@ import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.dao.MediaItemDao;
 import eu.xlime.dao.MediaItemDaoImpl;
+import eu.xlime.util.ResourceTypeResolver;
 
 public class MediaItemDaoImplITCase {
 
@@ -70,10 +70,16 @@ public class MediaItemDaoImplITCase {
 	@Test
 	public void testFindTVProgram() {
 		MediaItemDao testObj = new MediaItemDaoImpl();
-		String url = "http://zattoo.com/program/111364500";
+//		String url = "http://zattoo.com/program/111364500";
+//		String url = "http://zattoo.com/program/114078287";		
+//		String url = "http://zattoo.com/program/113684648";
+		String url = "http://zattoo.com/program/114199830";
 		Optional<TVProgramBean> bean = testObj.findTVProgram(url);
 		System.out.println("Found tv-prog" + bean);
+		ResourceTypeResolver resourceUri = new ResourceTypeResolver();
+		System.out.println("Watch url: " + resourceUri.toWatchUrl(bean.get()));
 		assertTrue(bean.isPresent());
+		assertNotNull(bean.get().getWatchUrl());
 	}
 
 	@Test

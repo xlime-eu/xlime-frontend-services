@@ -30,7 +30,6 @@ import eu.xlime.sparql.SparqlClient;
 import eu.xlime.sparql.SparqlQueryFactory;
 import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.KBEntityMapper;
-import eu.xlime.util.KBEntityMapperImpl;
 import eu.xlime.util.SparqlToBeanConverter;
 import eu.xlime.util.score.ScoreFactory;
 import eu.xlime.util.score.ScoredSet;
@@ -42,7 +41,6 @@ public abstract class SparqlMediaItemAnnotationDao extends
 	private static final Logger log = LoggerFactory.getLogger(SparqlMediaItemAnnotationDao.class);
 	
 	private static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
-//	private static final KBEntityMapper kbEntityMapper = new KBEntityMapperImpl();
 	private static final SparqlToBeanConverter s2b = new SparqlToBeanConverter();
 	private static final ScoreFactory scoref = ScoreFactory.instance;
 	
@@ -305,8 +303,7 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		if (!tuple.containsKey("s")) return Optional.absent();
 		String subtitleTrackUrl = tuple.get("s");
 		String tvProgUrl = tvProgUrlFromsubtitleTrackUrl(subtitleTrackUrl);
-		VideoSegment result = new VideoSegment();
-		result.setPartOf(emptyTVProgramBean(tvProgUrl));
+		VideoSegment result = newVideoSegment(tvProgUrl);
 		if (tuple.containsKey("startTime")) {
 			String startTime = tuple.get("startTime");
 			result.setStartTime(s2b.asUIDate(s2b.extractISODate(startTime)));
@@ -318,22 +315,9 @@ public abstract class SparqlMediaItemAnnotationDao extends
 			pos.setValue(d.longValue());
 			result.setPosition(pos);
 		}
-		result.setUrl(calcVideoSegmentUrl(result));
-		return Optional.of(result);
+		return Optional.of(cleanVideoSegment(result));
 	}
 	
-	private String calcVideoSegmentUrl(VideoSegment vidSeg) {
-		if (vidSeg.getPosition() instanceof ZattooStreamPosition) {
-			return String.format("%s/%s", vidSeg.getPartOf().getUrl(), ((ZattooStreamPosition)vidSeg.getPosition()).getValue());
-		} else throw new RuntimeException("Cannot coin url for " + vidSeg);
-	}
-
-	private TVProgramBean emptyTVProgramBean(String tvProgUrl) {
-		TVProgramBean result = new TVProgramBean();
-		result.setUrl(tvProgUrl);
-		return result;
-	}
-
 
 	private String tvProgUrlFromsubtitleTrackUrl(String subtitleTrackUrl) {
 		//TODO: move methods for converting zattoo uris back and from other urls and beans to their own class..
@@ -368,7 +352,8 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		OCRAnnotation result = new OCRAnnotation();
 		if (tuple.containsKey("ocr") && tuple.containsKey("vidTrack")) {
 			OCRContent ocrContent = new OCRContent(tuple.get("ocr"));
-			result.setInSegment(toVideoSegment(tvProg, ocrContent.timestamp));
+			
+			result.setInSegment(toVideoSegment(tvProg, ocrContent.streamPosition));
 			result.setRecognizedText(ocrContent.recognizedText);
 		} else {
 			log.warn("No OCR content found for " + tvProg.getUrl());
@@ -377,20 +362,23 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		return Optional.of(result);
 	}
 	
-	private VideoSegment toVideoSegment(TVProgramBean tvProg, double timestamp) {
+	private VideoSegment toVideoSegment(TVProgramBean tvProg, double streamPosition) {
 		VideoSegment result = new VideoSegment();
 		result.setPartOf(tvProg);
-		return result;
+		ZattooStreamPosition pos = new ZattooStreamPosition();
+		pos.setValue((long)streamPosition);
+		result.setPosition(pos);
+		return cleanVideoSegment(result);
 	}
 
 	public static class OCRContent {
 		final String literal;
-		final double timestamp;
+		final double streamPosition;
 		final String recognizedText;
 		
 		public OCRContent(String literalOCRContent) {
 			literal = literalOCRContent;
-			timestamp = extractTimeStamp(literalOCRContent);
+			streamPosition = extractTimeStamp(literalOCRContent);
 			recognizedText = extractRecognizedText(literalOCRContent);
 		}
 		

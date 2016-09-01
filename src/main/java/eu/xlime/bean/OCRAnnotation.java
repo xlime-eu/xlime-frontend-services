@@ -15,7 +15,12 @@ public class OCRAnnotation implements XLiMeResource {
 	private String url;
 	private VideoSegment inSegment;
 	private String recognizedText;
-	
+	/**
+	 * The Url of the activity that recognised the {@link #entity} in the annotated 
+	 * {@link #resourceUrl}. Optional, but when available it is useful for looking 
+	 * up the context in which the annotation was created. 
+	 */
+	private String activityUrl;
 	
 	public String getUrl() {
 		return url;
@@ -36,5 +41,16 @@ public class OCRAnnotation implements XLiMeResource {
 		this.recognizedText = recognizedText;
 	}
 	
-	
+	public String getActivityUrl() {
+		return activityUrl;
+	}
+	public void setActivityUrl(String activityUrl) {
+		this.activityUrl = activityUrl;
+	}
+	@Override
+	public String toString() {
+		return String
+				.format("OCRAnnotation [url=%s, inSegment=%s, recognizedText=%s, activityUrl=%s]",
+						url, inSegment, recognizedText, activityUrl);
+	}
 }

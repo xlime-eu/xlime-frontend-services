@@ -36,6 +36,16 @@ Web-service layer for the [xLiMe project](http://xlime.eu) that facilitates buil
  ** **url**: one or more URLs of xLiMe media-items for which you want to get annotations.
  * output: json object describing the xLiMe annotations of the media-items.
  
+## `dataset-summary`
+
+ Returns a UI friendly representation of a dataset(s) used by this web application. 
+ 
+ This service helps to put the responses to the other web-services into context. Also, this helps to check what are the boundaries and properties of the data being used. Example information included in the response include: number of news articles, number of microposts, etc. 
+ 
+ * input parameters:
+ ** **ds**: either `mongo` or `sparql`
+ * output: json object summarising the xLiMe dataset
+ 
 ## `spheres`
 
  Returns a set of recommendations given a context of xLiMe resources.
@@ -53,9 +63,6 @@ Until we provide releases, you can run a local instance of this project by execu
 ##Notes
 Currently this project requires:
 * access to credentials to non-public back-end xLiMe services such as the `xLiMe` Sparql endpoint
-
-Furthermore, to work correctly, a custom version of [`guava-cache-overflow-extension`](http://github.com/rdenaux/guava-cache-overflow-extension) 
-needs to be used (it fixes caching of values based on URL keys, which fail on windows due to invalid characters in filenames). 
 
 
 Licensed under the Apache Software License, Version 2.0

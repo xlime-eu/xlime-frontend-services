@@ -21,7 +21,6 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.DuplicateKeyException;
 
-import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.XLiMeResource;
 import eu.xlime.mongo.DBCollectionProvider;
 import eu.xlime.util.XLiMeResourceTyper;
