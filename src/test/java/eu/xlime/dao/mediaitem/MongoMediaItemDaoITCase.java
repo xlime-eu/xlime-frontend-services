@@ -2,6 +2,7 @@ package eu.xlime.dao.mediaitem;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -11,6 +12,7 @@ import java.util.Properties;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
+import com.google.common.base.Optional;
 
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
@@ -20,6 +22,17 @@ import eu.xlime.util.score.ScoredSet;
 
 public class MongoMediaItemDaoITCase {
 
+	@Test
+	public void testFindMediaItemByUrl() throws Exception {
+		Properties props = new Properties();
+		props.put(ConfigOptions.XLIME_MONGO_RESOURCE_DATABASE_NAME.getKey(), "brexit-xlimeress");
+		MongoMediaItemDao dao = new MongoMediaItemDao(props);
+		
+		String url = "http://vico-research.com/social/000ce183-5642-326f-8803-e51069211aac";
+		Optional<?> optMi = dao.findMediaItem(url);
+		System.out.println(optMi);
+		assertTrue(optMi.isPresent());
+	}
 
 	@Test
 	public void testFindMicroPostsByDate() throws ParseException {

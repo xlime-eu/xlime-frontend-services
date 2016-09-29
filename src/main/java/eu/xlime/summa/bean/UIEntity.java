@@ -77,6 +77,15 @@ public class UIEntity implements XLiMeResource {
 		this.types = types;
 	}
 
+	/**
+	 * Returns true if some of the user-facing information is missing.
+	 * @return
+	 */
+	public boolean isBadUIEnt() {
+		return getLabel() == null ||
+				getDepictions() == null || getTypes() == null;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

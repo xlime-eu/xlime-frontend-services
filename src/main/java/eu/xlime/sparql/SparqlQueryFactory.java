@@ -194,7 +194,18 @@ public class SparqlQueryFactory {
 	public String mediaResourceOCRAnnotations(String mediaResUrl) {
 		String qPattern = load("sparql/ocrAnnotations.rq");
 		String result = qPattern.replaceAll("#encUrl", bracketUrl(mediaResUrl))
+				.replaceAll("#replaceByUrlVal", "")
+				.replaceAll("#ReplaceByFilter", "")
 				.replaceAll("#ReplaceLimit", "LIMIT " + 30);
+		return result;
+	}
+	
+	public String allOCRAnnotations(int limit) {
+		String qPattern = load("sparql/ocrAnnotations.rq");
+		String result = qPattern.replaceAll("#encUrl", "?url")
+				.replaceAll("#replaceByUrlVal", "?url")
+				.replaceAll("#ReplaceByFilter", "")
+				.replaceAll("#ReplaceLimit", "LIMIT " + limit);
 		return result;
 	}
 	
@@ -233,7 +244,7 @@ public class SparqlQueryFactory {
 		String limitStr = String.format(" LIMIT %s", limit);
 		return qPattern.replaceAll("#ReplaceLimit", limitStr);
 	}
-	
+		
 	private String filterOneOfUrls(String var, Collection<String> entUrls) {
 		return filterOneOf(var, bracketUrl(entUrls));
 	}

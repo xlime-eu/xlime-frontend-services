@@ -20,6 +20,7 @@ import eu.xlime.bean.VideoSegment;
 import eu.xlime.bean.XLiMeResource;
 import eu.xlime.bean.ZattooStreamPosition;
 import eu.xlime.dao.SearchStringFactory;
+import eu.xlime.prov.bean.ProvActivity;
 import eu.xlime.summa.bean.UIEntity;
 
 /**
@@ -43,9 +44,14 @@ public class ResourceTypeResolver {
 		if (isVideoSegment(uri)) return VideoSegment.class;
 		if (isSearchString(uri)) return SearchString.class;
 		if (isSubtitleSegment(uri)) return SubtitleSegment.class;
+		if (isProvActivity(uri)) return ProvActivity.class;
 		throw new RuntimeException("Could not determine xLiMe Resource type for " + uri);
 	}
 	
+	private boolean isProvActivity(String uri) {
+		return uri.matches("http://xlime.eu/activity/*");
+	}
+
 	private boolean isSubtitleSegment(String uri) {
 		// subtitles for zattoo program with start offset and an end offset
 		return uri.matches("http://zattoo.com/program/\\d+/subtitles/\\d+/\\d+"); 

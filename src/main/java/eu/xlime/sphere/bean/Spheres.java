@@ -63,5 +63,24 @@ public class Spheres implements Serializable {
 	public void setOuter(List<Recommendation> outer) {
 		this.outer = outer;
 	}
+	@Override
+	public String toString() {
+		final int maxLen = 5;
+		return String
+				.format("Spheres [name=%s, type=%s, uri=%s, inner(%s)=%s, inter(%s)=%s, outer(%s)=%s]",
+						name,
+						type,
+						uri,
+						inner != null ? inner.size() : 0,
+						inner != null ? inner.subList(0,
+								Math.min(inner.size(), maxLen)) : null,
+						inter != null ? inter.size() : 0,
+						inter != null ? inter.subList(0,
+								Math.min(inter.size(), maxLen)) : null,
+						outer != null ? outer.size() : 0,
+						outer != null ? outer.subList(0,
+								Math.min(outer.size(), maxLen)) : null);
+	}
+	
 	
 }

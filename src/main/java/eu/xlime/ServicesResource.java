@@ -78,7 +78,7 @@ public class ServicesResource {
 	@Path("/mediaItem")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response mediaItem(@QueryParam("url") List<String> urls) {
-		log.info("Received " + urls);
+		log.info("Received /mediaItems?url=" + urls);
 		MediaItemListBean milb = lookupMediaItems(urls);
 		if (milb.getMediaItems().isEmpty() && !milb.getErrors().isEmpty()) {
 			log.info("returning errors" + milb.getErrors());

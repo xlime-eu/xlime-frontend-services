@@ -62,6 +62,22 @@ public class MongoMediaItemAnnotationDaoITCase {
 	}
 
 	@Test
+	public void testFindNewsArticleEntityAnnotations2() throws Exception {
+		MongoMediaItemAnnotationDao dao = createTestObj();
+		long start = System.currentTimeMillis();
+
+		String miUrl = "http://ijs.si/article/458264093";
+		List<EntityAnnotation> result = dao.findNewsArticleEntityAnnotations(miUrl);
+
+		System.out.println("Retrieved newsEntAnns " + result + " in " + (System.currentTimeMillis() - start) + "ms.");
+		assertNotNull(result);
+		for (EntityAnnotation entann: result) {
+//			assertFalse("" + entann.getEntity() + " is bad for UI", entann.getEntity().isBadUIEnt());
+			//ignore, some can be 'bad' but it's up to the clients to clean them
+		}
+	}
+	
+	@Test
 	public void testFindSubtitleTrackEntityAnnotations() throws Exception {
 		MongoMediaItemAnnotationDao dao = createTestObj();
 		long start = System.currentTimeMillis();

@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.mongojack.DBCursor;
+import org.mongojack.DBSort;
 import org.mongojack.JacksonDBCollection;
 import org.mongojack.WriteResult;
 import org.slf4j.Logger;
@@ -19,8 +20,13 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.mongodb.DBObject;
 import com.mongodb.DuplicateKeyException;
 
+import eu.xlime.bean.MediaItem;
+import eu.xlime.bean.MicroPostBean;
+import eu.xlime.bean.NewsArticleBean;
+import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.XLiMeResource;
 import eu.xlime.mongo.DBCollectionProvider;
 import eu.xlime.util.XLiMeResourceTyper;
@@ -126,9 +132,13 @@ public class MongoXLiMeResourceStorer implements XLiMeResourceStorer {
 	}
 	
 	public <T extends XLiMeResource> ScoredSet<T> toScoredSet(DBCursor<T> cursor, int limit, String justif, String scoreField) {
+		return toScoredSet(cursor, limit, justif, scoreField, 2000L); //TODO: read value from configuration properties in constructor
+	}
+
+	public <T extends XLiMeResource> ScoredSet<T> toScoredSet(DBCursor<T> cursor, int limit, String justif, String scoreField, long timeout) {
 		ScoredSet.Builder<T> builder = ScoredSetImpl.builder();
 		long start = System.currentTimeMillis();
-		List<T> list = execute(cursor, limit, 2000);
+		List<T> list = execute(cursor, limit, timeout);
 		log.debug("Executed query in " + (System.currentTimeMillis() - start) + "ms.");
 		for (T bean: list) {
 			builder.add(bean, toScore(bean, justif));
@@ -143,7 +153,7 @@ public class MongoXLiMeResourceStorer implements XLiMeResourceStorer {
 		else return scoref.newScore(1.0);
 	}
 
-	private <T> List<T> execute(
+	public <T> List<T> execute(
 			DBCursor<T> cursor, int limit, long timeOut) {
 		Future<List<T>> task = exec.submit(callableExecute(cursor, limit));
 		try {
@@ -165,6 +175,24 @@ public class MongoXLiMeResourceStorer implements XLiMeResourceStorer {
 		}
 	}
 
+	public <T extends MediaItem> List<T> getSortedByDate(Class<T> miCls, boolean ascending, int limit) {
+		String dateField = createdTimestampField(miCls);
+		DBObject orderBy = ascending ? DBSort.asc(dateField) : DBSort.desc(dateField);
+		DBCursor<T> mpcn = getDBCollection(miCls).find().sort(orderBy);
+		long timeout = 10000; //TODO: add configuration parameter for sorting collection by date
+		return execute(mpcn, limit, timeout);
+	}
+	
+	private <T extends MediaItem> String createdTimestampField(Class<T> miCls) {
+		if (miCls.isAssignableFrom(MicroPostBean.class)) {
+			return "created.timestamp";
+		} if (miCls.isAssignableFrom(NewsArticleBean.class)) {
+			return "created.timestamp";
+		} if (miCls.isAssignableFrom(TVProgramBean.class)) {
+			return "broadcastDate.timestamp";
+		} else throw new IllegalArgumentException("miCls: " + miCls);
+	}
+	
 	private <T> Callable<List<T>> callableExecute(final DBCursor<T> cursor, final int limit) {
 		return new Callable<List<T>>() {
 

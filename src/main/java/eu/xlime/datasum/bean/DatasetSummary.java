@@ -78,11 +78,32 @@ public class DatasetSummary implements Serializable {
 	 * The number of news articles in the dataset
 	 */
 	private Long newsarticles;
+
+	/**
+	 * The date of the oldest news article in this dataset 
+	 */
+	private UIDate oldestNewsarticleDate;
+	
+	/**
+	 * The date of the newest news article in this dataset
+	 */
+	private UIDate newestNewsarticleDate;
+	
 	/**
 	 * The number of media resources (i.e. tv-programs) in the dataset
 	 */
 	private Long mediaresources;
 
+	/**
+	 * The date of the oldest mediaresource in this dataset 
+	 */
+	private UIDate oldestMediaresourceDate;
+	
+	/**
+	 * The date of the newest mediaresource in this dataset
+	 */
+	private UIDate newestMediaresourceDate;
+	
 	/**
 	 * The number of RDF triples required to represent the data (when the dataset is in RDF)
 	 */
@@ -156,6 +177,25 @@ public class DatasetSummary implements Serializable {
 	public void setMicroposts(Long microposts) {
 		this.microposts = microposts;
 	}	
+	
+	public List<HistogramItem> getMicropostsByDay() {
+		return micropostsByDay;
+	}
+	public void setMicropostsByDay(List<HistogramItem> micropostsByDay) {
+		this.micropostsByDay = micropostsByDay;
+	}
+	public UIDate getOldestMicropostDate() {
+		return oldestMicropostDate;
+	}
+	public void setOldestMicropostDate(UIDate oldestMicropostDate) {
+		this.oldestMicropostDate = oldestMicropostDate;
+	}
+	public UIDate getNewestMicropostDate() {
+		return newestMicropostDate;
+	}
+	public void setNewestMicropostDate(UIDate newestMicropostDate) {
+		this.newestMicropostDate = newestMicropostDate;
+	}
 	public List<HistogramItem> getMicroposts_filter() {
 		return microposts_filter;
 	}
@@ -168,6 +208,19 @@ public class DatasetSummary implements Serializable {
 	public void setNewsarticles(Long newsarticles) {
 		this.newsarticles = newsarticles;
 	}
+	
+	public UIDate getOldestNewsarticleDate() {
+		return oldestNewsarticleDate;
+	}
+	public void setOldestNewsarticleDate(UIDate oldestNewsarticleDate) {
+		this.oldestNewsarticleDate = oldestNewsarticleDate;
+	}
+	public UIDate getNewestNewsarticleDate() {
+		return newestNewsarticleDate;
+	}
+	public void setNewestNewsarticleDate(UIDate newestNewsarticleDate) {
+		this.newestNewsarticleDate = newestNewsarticleDate;
+	}
 	public Long getMediaresources() {
 		return mediaresources;
 	}
@@ -175,6 +228,18 @@ public class DatasetSummary implements Serializable {
 		this.mediaresources = mediaresources;
 	}
 
+	public UIDate getOldestMediaresourceDate() {
+		return oldestMediaresourceDate;
+	}
+	public void setOldestMediaresourceDate(UIDate oldestMediaresourceDate) {
+		this.oldestMediaresourceDate = oldestMediaresourceDate;
+	}
+	public UIDate getNewestMediaresourceDate() {
+		return newestMediaresourceDate;
+	}
+	public void setNewestMediaresourceDate(UIDate newestMediaresourceDate) {
+		this.newestMediaresourceDate = newestMediaresourceDate;
+	}
 	public Long getTriples() {
 		return triples;
 	}
@@ -218,14 +283,18 @@ public class DatasetSummary implements Serializable {
 	public void setTripesPerProperty(List<HistogramItem> tripesPerProperty) {
 		this.tripesPerProperty = tripesPerProperty;
 	}
+	
 	@Override
 	public String toString() {
 		return String
-				.format("DatasetSummary [name=%s, description=%s, summaryDate=%s, errors=%s, messages=%s, activities=%s, microposts=%s, microposts_filter=%s, newsarticles=%s, mediaresources=%s, triples=%s, entities=%s, subjects=%s, predicates=%s, objects=%s, instancesPerClass=%s, tripesPerProperty=%s]",
+				.format("DatasetSummary [name=%s, description=%s, summaryDate=%s, errors=%s, messages=%s, activities=%s, microposts=%s, oldestMicropostDate=%s, newestMicropostDate=%s, micropostsByDay=%s, microposts_filter=%s, newsarticles=%s, oldestNewsarticleDate=%s, newestNewsarticleDate=%s, mediaresources=%s, oldestMediaresourceDate=%s, newestMediaresourceDate=%s, triples=%s, entities=%s, subjects=%s, predicates=%s, objects=%s, instancesPerClass=%s, tripesPerProperty=%s]",
 						name, description, summaryDate, errors, messages,
-						activities, microposts, microposts_filter,
-						newsarticles, mediaresources, triples, entities,
-						subjects, predicates, objects, instancesPerClass,
-						tripesPerProperty);
+						activities, microposts, oldestMicropostDate,
+						newestMicropostDate, micropostsByDay,
+						microposts_filter, newsarticles, oldestNewsarticleDate,
+						newestNewsarticleDate, mediaresources,
+						oldestMediaresourceDate, newestMediaresourceDate,
+						triples, entities, subjects, predicates, objects,
+						instancesPerClass, tripesPerProperty);
 	}
 }

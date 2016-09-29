@@ -4,17 +4,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.mongojack.DBCursor;
+import org.mongojack.DBSort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mongodb.DBObject;
+
 import eu.xlime.Config;
+import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.UIDate;
 import eu.xlime.dao.MongoXLiMeResourceStorer;
 import eu.xlime.datasum.bean.DatasetSummary;
 import eu.xlime.datasum.bean.HistogramItem;
 import eu.xlime.summa.bean.UIEntity;
+import eu.xlime.util.score.ScoredSet;
 
 public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 
@@ -119,12 +126,46 @@ public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 		result.setMicroposts(resStorer.count(MicroPostBean.class));
 		result.setNewsarticles(resStorer.count(NewsArticleBean.class));
 		result.setMediaresources(resStorer.count(TVProgramBean.class));
-		
+
+		if (result.getMicroposts() > 0) {
+			UIDate mpnd = getNewest(resStorer, MicroPostBean.class, 1).get(0).getCreated();
+			result.setNewestMicropostDate(mpnd);
+			
+			UIDate mpod = getOldest(resStorer, MicroPostBean.class, 1).get(0).getCreated();
+			result.setOldestMicropostDate(mpod);
+		}
+
+		if (result.getNewsarticles() > 0) {
+			UIDate nand = getNewest(resStorer, NewsArticleBean.class, 1).get(0).getCreated();
+			result.setNewestNewsarticleDate(nand);
+			
+			UIDate naod = getOldest(resStorer, NewsArticleBean.class, 1).get(0).getCreated();
+			result.setOldestNewsarticleDate(naod);
+		}
+
+		if (result.getMediaresources() > 0) {
+			UIDate mrnd = getNewest(resStorer, TVProgramBean.class, 1).get(0).getBroadcastDate();
+			result.setNewestMediaresourceDate(mrnd);
+			
+			UIDate mrod = getOldest(resStorer, TVProgramBean.class, 1).get(0).getBroadcastDate();
+			result.setOldestMediaresourceDate(mrod);
+			
+		}
 		result.setEntities(resStorer.count(UIEntity.class));
 		
 		result.setErrors(errors);
 		result.setMessages(msgs);
 		result.setSummaryDate(new Date());
 		return result;
-	}	
+	}
+	
+	private <T extends MediaItem> List<T> getNewest(MongoXLiMeResourceStorer resStorer, Class<T> miCls, int limit) {
+		boolean ascending = true;
+		return resStorer.getSortedByDate(miCls, !ascending, limit);
+	}
+
+	private <T extends MediaItem> List<T> getOldest(MongoXLiMeResourceStorer resStorer, Class<T> miCls, int limit) {
+		boolean ascending = true;
+		return resStorer.getSortedByDate(miCls, ascending, limit);
+	}
 }

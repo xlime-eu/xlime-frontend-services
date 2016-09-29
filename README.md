@@ -1,5 +1,19 @@
 Web-service layer for the [xLiMe project](http://xlime.eu) that facilitates building user interfaces.
 
+# Motivation and Design considerations
+
+The xLiMe project has has produced many back-end services, many of which expose low-level APIs intended for integration within other 
+components within the project. Using those services often requires knowledge about the xLiMe datamodel and architecture, as well
+as access to private components like the message bus and databases used internally. This makes it hard to build applications and 
+user interfaces. This web-application aims to define and provide a set of services which make it easier to build user interfaces.
+
+The main design considerations are:
+ * define REST services at a level of abstraction that is amenable for end-user intefaces: orchestrate several low-level services in order to
+ compose and return meaningful data that can be shown and inspected by end-users.     
+ * provide JSON objects for the main data that can be found in xLiMe and that balance the amount of information that can be 
+ queried in 'real-time' and presented to users. I.e. not only provide URIs for the data, but provide enough information that end-users 
+ can make sense of the information and explore the xLiMe dataset and the platform's capabilities.
+
 # Services
 
 ## `mediaItem`
@@ -56,14 +70,22 @@ Web-service layer for the [xLiMe project](http://xlime.eu) that facilitates buil
 
 # Running
 
+A development version of these services is available [here](http://expertsystemlab.com/frontend-services). For example:
+  
+  [latestMediaItems](http://expertsystemlab.com/frontend-services/latestMediaItems)
+  
 Until we provide releases, you can run a local instance of this project by executing
 
   mvn jetty:run
 
 ##Notes
 Currently this project requires:
-* access to credentials to non-public back-end xLiMe services such as the `xLiMe` Sparql endpoint
-
+* Access to credentials to non-public back-end xLiMe services such as the `xLiMe` Sparql endpoint. You need to provide a configuration file
+	`xlime-ui-services.properties` which configures how to access those protected services. Contact one of the developers to request 
+	these information.
+* From version 0.0.6 you will also need to provide a MongoDB instance loaded with xLiMe data as this speeds up many of the operations (instead 
+	of relying on the xLiMe sparql endpoint). In the future, we may publish mongoDB data dumps to facilitate this process.  
+ 
 
 Licensed under the Apache Software License, Version 2.0
 

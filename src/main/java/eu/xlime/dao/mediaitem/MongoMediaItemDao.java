@@ -24,11 +24,13 @@ import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.UIDate;
 import eu.xlime.bean.VideoSegment;
 import eu.xlime.bean.XLiMeResource;
 import eu.xlime.dao.MediaItemDao;
 import eu.xlime.dao.MongoXLiMeResourceStorer;
 import eu.xlime.dao.XLiMeResourceStorer;
+import eu.xlime.datasum.bean.DatasetSummary;
 import eu.xlime.mongo.DBCollectionProvider;
 import eu.xlime.util.ListUtil;
 import eu.xlime.util.score.ScoredSet;
@@ -46,6 +48,7 @@ public class MongoMediaItemDao extends AbstractMediaItemDao implements XLiMeReso
 	
 	private final MongoXLiMeResourceStorer mongoStorer;
 	private final DBCollectionProvider collectionProvider;
+	private final static boolean ascending = true;
 	
 	public MongoMediaItemDao(Properties props) {
 		collectionProvider = new DBCollectionProvider(props);
@@ -160,8 +163,49 @@ public class MongoMediaItemDao extends AbstractMediaItemDao implements XLiMeReso
 	}
 
 	@Override
+	public List<String> findMostRecentMediaItemUrls(int nMinutes, int limit) {
+		List<String> result = new ListUtil().weave(
+				findMostRecentTVProgramUrls(limit/2),
+				findMostRecentNewsArticleUrls(limit/2),
+				findMostRecentMicroPostUrls(limit/2));
+		if (result.size() > limit) 
+			return ImmutableList.copyOf(result.subList(0, limit));
+		else return result;
+	}
+	
+	private List<? extends String> findMostRecentMicroPostUrls(int limit) {
+		return mapUrl(mongoStorer.getSortedByDate(MicroPostBean.class, !ascending, limit));
+	}
+
+	private List<? extends String> findMostRecentNewsArticleUrls(int limit) {
+		return mapUrl(mongoStorer.getSortedByDate(NewsArticleBean.class, !ascending, limit));
+	}
+
+	private List<? extends String> findMostRecentTVProgramUrls(int limit) {
+		return mapUrl(mongoStorer.getSortedByDate(TVProgramBean.class, !ascending, limit));
+	}
+
+	@Override
 	public List<String> findAllMediaItemUrls(int limit) {
 		throw new NotImplementedException("");
+	}
+	
+	@Override
+	public boolean hasMediaItemsAfter(long timestampFrom) {
+		DatasetSummary sum = dsSummaFactory.createXLiMeMongoSummary();
+		if (sum == null) return true;
+		UIDate mpd = sum.getNewestMicropostDate();
+		UIDate nad = sum.getNewestNewsarticleDate();
+		UIDate tvd = sum.getNewestMediaresourceDate();
+		final boolean hasMicroPostAfter = mpd != null && mpd.timestamp.getTime() > timestampFrom;
+		final boolean hasNewsAfter = nad != null && mpd.timestamp.getTime() > timestampFrom;
+		final boolean hasTVAfter = tvd != null && tvd.timestamp.getTime() > timestampFrom;
+		log.debug(String.format("hasMicroPostAfter %s: %s", timestampFrom, hasMicroPostAfter));
+		log.debug(String.format("hasNewsAfter %s: %s", timestampFrom, hasNewsAfter));
+		log.debug(String.format("hasTVAfter %s: %s", timestampFrom, hasTVAfter));
+		return (hasMicroPostAfter) ||
+				(hasNewsAfter) ||
+				(hasTVAfter);
 	}
 
 	List<TVProgramBean> findTVProgramsByDate(long dateFrom, long dateTo, int limit) {
@@ -207,6 +251,7 @@ public class MongoMediaItemDao extends AbstractMediaItemDao implements XLiMeReso
 		return result;
 	}
 
+	
 	<T extends MediaItem> List<String> findMediaItemUrlsByDate(Class<T> clazz, String timeStampBeanPath, long dateFrom, long dateTo, int limit) {
 		List<T> mits = findMediaItemByDate(clazz,  timeStampBeanPath,  dateFrom, dateTo, limit,
 				Optional.<DBObject>absent() // TODO: only return the "url" field... is resulting in some exception... Optional.<DBObject>of(DBProjection.include("_id")

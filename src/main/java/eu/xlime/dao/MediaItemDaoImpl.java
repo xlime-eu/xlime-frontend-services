@@ -92,5 +92,14 @@ public class MediaItemDaoImpl extends AbstractMediaItemDao {
 		return delegate.findMediaItemsByDate(dateFrom, dateTo, limit);
 	}
 
+	@Override
+	public List<String> findMostRecentMediaItemUrls(int nMinutes, int limit) {
+		return delegate.findMostRecentMediaItemUrls(nMinutes, limit);
+	}
+
+	@Override
+	public boolean hasMediaItemsAfter(long timestampFrom) {
+		return delegate.hasMediaItemsAfter(timestampFrom);
+	}
 	
 }

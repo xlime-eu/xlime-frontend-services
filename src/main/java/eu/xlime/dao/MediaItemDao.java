@@ -61,7 +61,11 @@ public interface MediaItemDao {
 	Optional<VideoSegment> findVideoSegment(String uri);
 
 	/**
-	 * Returns a list of recent media item urls, where recent means in the last <code>nMinutes</code>.
+	 * Returns a list of recent media item urls relative to the current time. 
+	 * I.e. in this case recent means in the last <code>nMinutes</code>.
+	 * 
+	 * Note that if the underlying dataset has not been updated recently, this method may return an empty 
+	 * list.
 	 *  
 	 * @param nMinutes a positive number of minutes. Used to retrieve the list of 'recent' mediaItems.
 	 * @param limit a positive number which imposes a hard-coded limit on the number of results to return.
@@ -70,6 +74,30 @@ public interface MediaItemDao {
 	 */
 	List<String> findLatestMediaItemUrls(int nMinutes, int limit);
 
+	/**
+	 * Returns a list of "recent" media items urls, where recent is relative to the newest media items of
+	 * each type. I.e. if the most recent tv program is from yesterday at 18h, it finds tv programs between 18h - nMinutes.
+	 * If the most recent {@link MicroPostBean} is from a week ago at 12h, it finds {@link MicroPostBean}s between 
+	 * a week ago at 12h - nMinutes, etc.
+	 * 
+	 * Note that, as long as the underlying dataset contains {@link MediaItem}s (even if they are from a long while ago),
+	 * this method should return a list of {@link MediaItem}s.
+	 * 
+	 * @param nMinutes
+	 * @param limit
+	 * @return
+	 */
+	List<String> findMostRecentMediaItemUrls(int nMinutes, int limit);
+	
+	/**
+	 * Returns <code>true</code> if the underlying dataset contains {@link MediaItem}s after the 
+	 * specified timestampFrom
+	 *  
+	 * @param timestampFrom
+	 * @return
+	 */
+	boolean hasMediaItemsAfter(long timestampFrom);
+	
 	/**
 	 * Returns a list of all the media item urls available to this {@link MediaItemDao}. 
 	 * Note that this may be a huge number, depending on the back-end being used. So,
@@ -82,6 +110,7 @@ public interface MediaItemDao {
 	
 	List<String> findMediaItemsByDate(long dateFrom, long dateTo,
 			int limit);
+	
 	
 	
 }

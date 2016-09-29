@@ -151,6 +151,33 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		log.warn("findOCRAnnotation() not implemented yet"); 
 		return Optional.absent();
 	}
+	
+	@Override
+	public List<OCRAnnotation> findAllOCRAnnotations(int limit) {
+		DBCursor<OCRAnnotation> cursor = mongoStorer.getDBCollection(OCRAnnotation.class).find();
+		log.debug(String.format("Found %s OCRAnnotations", cursor.count()));
+		if (cursor.count() > limit) 
+			return cleanOCRAnnotations(cursor.skip(cursor.count() - limit).toArray(limit));
+		return cleanOCRAnnotations(cursor.toArray(limit));
+
+	}
+
+	@Override
+	public List<OCRAnnotation> findOCRAnnotationsByText(String textQuery) {
+		DBObject textQ = new BasicDBObject(
+			    "$text", new BasicDBObject("$search", textQuery)
+				);
+		DBObject projection = new BasicDBObject(
+				"score", new BasicDBObject("$meta", "textScore")
+				);
+		DBObject sorting = new BasicDBObject(
+				"score", new BasicDBObject("$meta", "textScore")
+				); 
+		long start = System.currentTimeMillis();
+		DBCursor<OCRAnnotation> tvc = mongoStorer.getDBCollection(OCRAnnotation.class).find(textQ, projection).sort(sorting);
+		log.debug(String.format("Created cursor with %s results for '%s' in %s ms. ", tvc.count(), textQuery, (System.currentTimeMillis() - start)));
+		return cleanOCRAnnotations(mongoStorer.toScoredSet(tvc, defaultMax, "Found via text search", "score").asList());
+	}
 
 	@Override
 	public List<SubtitleSegment> findSubtitleSegmentsForTVProg(String tvProgUri) {

@@ -106,7 +106,7 @@ public class CachedDatasetSummaryFactory implements DatasetSummaryFactory {
 				storeToDisk(dsName, cachedSparqlSumma);
 			} catch (Exception e) {
 				//ensure we keep the old value?
-				log.error("Failed to refresh cached summary for " + dsName, e);
+				log.trace("Failed to refresh cached summary for " + dsName, e);
 			}
 		} else if ("mongo".equalsIgnoreCase(dsName)) {
 			try {

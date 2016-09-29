@@ -15,7 +15,11 @@ import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.UIDate;
 import eu.xlime.dao.MediaItemDao;
+import eu.xlime.datasum.CachedDatasetSummaryFactory;
+import eu.xlime.datasum.DatasetSummaryFactory;
+import eu.xlime.datasum.bean.DatasetSummary;
 import eu.xlime.util.ListUtil;
 import eu.xlime.util.ResourceTypeResolver;
 
@@ -32,6 +36,7 @@ public abstract class AbstractMediaItemDao implements MediaItemDao {
 
 	private static final Logger log = LoggerFactory.getLogger(AbstractMediaItemDao.class);
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
+	protected static final DatasetSummaryFactory dsSummaFactory = CachedDatasetSummaryFactory.instance;
 	
 	
 	/* (non-Javadoc)
@@ -109,9 +114,16 @@ public abstract class AbstractMediaItemDao implements MediaItemDao {
 		Date now = new Date();
 		long dateFrom = now.getTime() - (nMinutes * 60 * 1000);
 		long dateTo = now.getTime();
-		List<String> result = findMediaItemsByDate(dateFrom, dateTo, limit);
-		log.debug(String.format("Found %s media items between %s and %s", result.size(), now, "" + nMinutes + " minutes ago"));
-		return result;
+		if (hasMediaItemsAfter(dateFrom)) {
+			List<String> result = findMediaItemsByDate(dateFrom, dateTo, limit);
+			log.debug(String.format("Found %s media items between %s and %s", result.size(), now, "" + nMinutes + " minutes ago"));
+			return result;
+		} else {
+			//instead of returning an empty result, return the latest of each type
+			List<String> result = findMostRecentMediaItemUrls(nMinutes, limit);
+			log.debug(String.format("Found %s most recent media items", result.size()));
+			return result;
+		}
 	}
 
 	private List<String> filterTV(List<String> urls) {

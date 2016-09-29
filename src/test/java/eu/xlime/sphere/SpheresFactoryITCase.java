@@ -28,4 +28,18 @@ public class SpheresFactoryITCase {
 		System.out.println("Found spheres in (" + time + "ms.) : " + s);
 		assertNotNull(s);
 	}
+	
+	@Test
+	public void testBuildSpheres2() {
+		SpheresFactory testObj = new SpheresFactory();
+		List<String> context = ImmutableList.of("http://ijs.si/article/458264093"
+				);
+		long start = System.currentTimeMillis();
+		Spheres s = testObj.buildSpheres(context);
+		long end = System.currentTimeMillis();
+		long time = (end - start);
+		System.out.println("Found spheres in (" + time + "ms.) : " + s);
+		assertNotNull(s);
+	}
+	
 }

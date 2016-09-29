@@ -31,6 +31,11 @@ public class Recommendation {
 	public void setConfidence(double confidence) {
 		this.confidence = confidence;
 	}
-	
+
+	@Override
+	public String toString() {
+		return String.format("Recommendation [recommended=%s, confidence=%s]",
+				recommended, confidence);
+	}
 	
 }

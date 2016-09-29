@@ -91,4 +91,18 @@ public interface MediaItemAnnotationDao {
 	 */
 	List<SubtitleSegment> findAllSubtitleSegmentsByDate(long dateFrom, long dateTo, int limit);
 	
+	/**
+	 * Finds a number of available {@link OCRAnnotation}s
+	 * @param limit
+	 * @return
+	 */
+	List<OCRAnnotation> findAllOCRAnnotations(int limit);
+	
+	/**
+	 * Finds {@link OCRAnnotation}s for a given keyword text query
+	 * @param textQuery
+	 * @return
+	 */
+	List<OCRAnnotation> findOCRAnnotationsByText(String textQuery);
+	
 }

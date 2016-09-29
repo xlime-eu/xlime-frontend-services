@@ -107,7 +107,16 @@ public class MediaItemAnnotationDaoFromDatasetTest {
 		System.out.println(String.format("Found %s ocr annots %s", oas.size(), oas));
 		assertEquals(4, oas.size());
 	}
-		
+
+	@Test
+	public void test_allOCRAnnotations() throws Exception {
+		MediaItemAnnotationDaoFromDataset inst = createTestMediaItemDaoFromDataset("src/test/resources/tv-ocr-example-graph.trig");
+
+		List<OCRAnnotation> oas = inst.findAllOCRAnnotations(200);
+		System.out.println(String.format("Found %s ocr annots %s", oas.size(), oas));
+		assertEquals(4, oas.size());
+	}
+	
 	private MediaItemAnnotationDaoFromDataset createTestMediaItemDaoFromDataset(String fpath) {
 		Optional<Dataset> ds = dsLoader.loadDataset(new File(fpath), Lang.TRIG);
 		assertTrue(ds.isPresent());

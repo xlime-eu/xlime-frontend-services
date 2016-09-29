@@ -12,6 +12,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 
 import eu.xlime.bean.EntityAnnotation;
+import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.VideoSegment;
@@ -67,6 +68,14 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 		result.setUrl(tvProgUrl);
 		return result;
 	}
+
+	protected final List<OCRAnnotation> cleanOCRAnnotations(
+			List<OCRAnnotation> list) {
+		for (OCRAnnotation dirty: list){
+			cleanOCRAnnotation(dirty);
+		}
+		return list;
+	}
 	
 	protected final List<SubtitleSegment> cleanSubTitleSegments(
 			List<SubtitleSegment> list) {
@@ -74,6 +83,17 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 			cleanSubtitleSegment(dirty);
 		}
 		return list;
+	}
+
+	private OCRAnnotation cleanOCRAnnotation(OCRAnnotation dirty) {
+		Optional<MediaItemDao> optMedItDao = getMediaItemDao();
+		if (isEmpty(dirty.getInSegment().getPartOf()) && optMedItDao.isPresent()) {
+			TVProgramBean emptyBean = dirty.getInSegment().getPartOf();
+			TVProgramBean cleanBean = retrieveTVProgramOr(emptyBean.getUrl(), emptyBean);
+			dirty.getInSegment().setPartOf(cleanBean);
+			cleanVideoSegment(dirty.getInSegment());
+		}
+		return dirty;
 	}
 	
 	private SubtitleSegment cleanSubtitleSegment(SubtitleSegment dirty) {

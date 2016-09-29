@@ -141,6 +141,14 @@ public class SparqlQueryFactoryTest {
 	@Test
 	public void testMediaResourceOCRAnnotations() throws Exception {
 		String q = qFactory.mediaResourceOCRAnnotations("http://example.com");
+		System.out.println("" + q);
+		assertIsValidSelect(q);
+	}
+	
+	@Test
+	public void testAllOCRAnnotations() throws Exception {
+		String q = qFactory.allOCRAnnotations(200);
+		System.out.println("" + q);
 		assertIsValidSelect(q);
 	}
 	

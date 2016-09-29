@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
+import eu.xlime.prov.bean.ProvActivity;
 import eu.xlime.summa.bean.UIEntity;
 
 @JsonTypeInfo(  
@@ -25,7 +26,8 @@ import eu.xlime.summa.bean.UIEntity;
 	    @Type(value = EREvent.class, name = "http://rdfs.org/sioc/ns#MicroPost"),
 	    @Type(value = UIEntity.class, name = "http://xlime.eu/vocab/kbEntity"),
 	    @Type(value = SearchString.class, name = "http://xlime.eu/vocab/searchString"),
-	    @Type(value = EntityAnnotation.class, name = "http://xlime.eu/vocab/EntityAnnotation")
+	    @Type(value = EntityAnnotation.class, name = "http://xlime.eu/vocab/EntityAnnotation"),
+	    @Type(value = ProvActivity.class, name = "http://www.w3.org/ns/prov#Activity")
 	    }) 
 @XmlSeeAlso({MicroPostBean.class, NewsArticleBean.class, TVProgramBean.class})
 //@XmlDiscriminatorNode("@type")

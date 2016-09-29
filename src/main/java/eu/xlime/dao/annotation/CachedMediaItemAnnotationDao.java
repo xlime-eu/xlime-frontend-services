@@ -91,6 +91,16 @@ public class CachedMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao
 	}
 
 	@Override
+	public List<OCRAnnotation> findAllOCRAnnotations(int limit) {
+		return delegate.findAllOCRAnnotations(limit);
+	}
+
+	@Override
+	public List<OCRAnnotation> findOCRAnnotationsByText(String textQuery) {
+		return delegate.findOCRAnnotationsByText(textQuery);
+	}
+
+	@Override
 	public List<SubtitleSegment> findSubtitleSegmentsForTVProg(String tvProgUri) {
 		return delegate.findSubtitleSegmentsForTVProg(tvProgUri);
 	}

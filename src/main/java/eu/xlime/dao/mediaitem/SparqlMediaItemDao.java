@@ -104,6 +104,17 @@ public abstract class SparqlMediaItemDao extends AbstractMediaItemDao {
 		return toUrlList(result);
 	}
 	
+	
+	@Override
+	public List<String> findMostRecentMediaItemUrls(int nMinutes, int limit) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public boolean hasMediaItemsAfter(long timestampFrom) {
+		return false; //don't know really :)
+	}
+
 	@Override
 	public ScoredSet<String> findMediaItemUrlsByText(String text) {
 		log.warn("Search by text not supported as this is slow in default SPARQL and not standardised (triplestore dependent).");

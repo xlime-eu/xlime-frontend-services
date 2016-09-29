@@ -229,6 +229,20 @@ public abstract class SparqlMediaItemAnnotationDao extends
 	}
 
 	@Override
+	public List<OCRAnnotation> findOCRAnnotationsByText(String textQuery) {
+		throw new UnsupportedOperationException("Finding OCR from text is not supported agains Sparql endpoints since they do not have a standard way to index and retrieve text in an efficient way");
+	}
+
+	@Override
+	public List<OCRAnnotation> findAllOCRAnnotations(int limit) {
+		Config cfg = new Config();
+		final SparqlClient sparqler = getXliMeSparqlClient();
+		String q = qFactory.allOCRAnnotations(limit);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(q, cfg.getLong(Opt.SparqlTimeout));
+		return toOCRAnnotations(result);
+	}
+
+	@Override
 	public List<SubtitleSegment> findAllSubtitleSegments(int limit) {
 		Config cfg = new Config();
 		final SparqlClient sparqler = getXliMeSparqlClient();
@@ -297,6 +311,14 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		} else throw new RuntimeException("Cannot coin url for " + stSeg);
 	}
 
+	private String calcUrl(OCRAnnotation ocrAnn, String videoTrackUrl) {
+		if (ocrAnn.getInSegment().getPosition() instanceof ZattooStreamPosition) {
+			long startTime = ((ZattooStreamPosition)ocrAnn.getInSegment().getPosition()).getValue();
+			long endTime = startTime + 40000;
+			//result should be something like http://zattoo.com/program/116804985/video/ocr/100290988/100330988
+			return String.format("%s/ocr/%s/%s", videoTrackUrl, startTime, endTime);
+		} else throw new RuntimeException("Cannot coin url for " + ocrAnn);
+	}
 
 	private Optional<VideoSegment> videoSegmentFromSubtitleResult(
 			Map<String, String> tuple) {
@@ -347,6 +369,18 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		return result;
 	}
 
+	final Optional<OCRAnnotation> toOCRAnnotation(Map<String, String> tuple) {
+		OCRAnnotation result = new OCRAnnotation();
+		if (tuple.containsKey("url")) {
+			TVProgramBean basicTVProg = new TVProgramBean();
+			basicTVProg.setUrl(tuple.get("url"));
+			return toOCRAnnotation(tuple, basicTVProg);
+		} else {
+			log.warn("No URL found for a tvProgram " + tuple);
+			return Optional.absent();
+		}
+	}
+	
 	final Optional<OCRAnnotation> toOCRAnnotation(Map<String, String> tuple,
 			TVProgramBean tvProg) {
 		OCRAnnotation result = new OCRAnnotation();
@@ -355,11 +389,28 @@ public abstract class SparqlMediaItemAnnotationDao extends
 			
 			result.setInSegment(toVideoSegment(tvProg, ocrContent.streamPosition));
 			result.setRecognizedText(ocrContent.recognizedText);
+			result.setUrl(calcUrl(result, tuple.get("vidTrack")));
 		} else {
 			log.warn("No OCR content found for " + tvProg.getUrl());
 			return Optional.absent();
 		}
 		return Optional.of(result);
+	}
+	
+	private List<OCRAnnotation> toOCRAnnotations(
+			Map<String, Map<String, String>> resultSet) {
+		if (resultSet == null || resultSet.keySet().isEmpty()) {
+			log.debug("No ocr annotations in resultSet");
+			return ImmutableList.of();
+		}		
+		log.debug("Creating OCRAnnotation from resultset with " + resultSet.size() + " tuples.");
+		List<OCRAnnotation> result = new ArrayList<>();
+		for (String id: resultSet.keySet()) {
+			Map<String, String> tuple = resultSet.get(id);
+			Optional<OCRAnnotation> optAnn = toOCRAnnotation(tuple);
+			if (optAnn.isPresent()) result.add(optAnn.get());
+		}		
+		return result;
 	}
 	
 	private VideoSegment toVideoSegment(TVProgramBean tvProg, double streamPosition) {

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -197,7 +198,55 @@ public class SpheresFactory {
 				// other resources -> entities
 			}
 		}
+		return cleanBad(builder.build());
+	}
+
+	private ScoredSet<UIEntity> cleanBad(ScoredSet<UIEntity> uiEnts) {
+		log.debug(String.format("Cleaning any bad UIEntities (from %s)", uiEnts.size()));
+		long start = System.currentTimeMillis();
+		final ScoredSet.Builder<UIEntity> builder = ScoredSetImpl.builder();
+		List<UIEntity> needCleaning = filterBad(uiEnts.unscored());
+		log.trace(String.format("Found %s UIEntities that need cleaning", needCleaning.size()));
+		List<String> uris = mapUIEntUrls(needCleaning);
+		List<UIEntity> clean = uiEntityFactory.retrieveFromUris(uris);
+		for (UIEntity uiEnt: uiEnts.unscored()) {
+			UIEntity cleanVersion = uiEnt.isBadUIEnt() ? findClean(uiEnt.getUrl(), clean) : uiEnt;
+			if (cleanVersion == null) {
+				log.debug("Couldn't clean " + uiEnt);
+				cleanVersion = uiEnt;
+			}
+			builder.add(cleanVersion, uiEnts.getScore(uiEnt));
+		}
+		log.debug(String.format("Cleaned bad UIEntities in %s ms.", (System.currentTimeMillis() - start)));
 		return builder.build();
+	}
+
+
+	private UIEntity findClean(String url, List<UIEntity> clean) {
+		for (UIEntity ent: clean) {
+			if (ent.getUrl().equals(url)) return ent;
+		}
+		return null;
+	}
+
+
+	private List<String> mapUIEntUrls(List<UIEntity> uiEnt) {
+		List<String> result = new ArrayList<>();
+		for (UIEntity ent: uiEnt) {
+			result.add(ent.getUrl());
+		}
+		return result;
+	}
+
+
+	private List<UIEntity> filterBad(Set<UIEntity> uiEnts) {
+		List<UIEntity> result = new ArrayList<>();
+		for (UIEntity ent: uiEnts) {
+			if (ent.isBadUIEnt()) {
+				result.add(ent);
+			}
+		}
+		return result;
 	}
 
 	private List<String> mapUrls(List<UrlLabel> urlLabels) {
