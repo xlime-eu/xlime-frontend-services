@@ -200,6 +200,21 @@ public class SparqlQueryFactory {
 		return result;
 	}
 	
+	public String allASRAnnotations(int limit) {
+		String qPattern = load("sparql/asrAnnotations.rq");
+		String result = qPattern
+				.replaceAll("#ReplaceByFilter", "")
+				.replaceAll("#ReplaceLimit", "LIMIT " + limit);
+		return result;
+	}
+	
+	public String asrAnnotationsFromAudioTrackUri(String audioTrackUri) {
+		String qPattern = load("sparql/asrAnnotations.rq");
+		String uriFilter = filterOneOfUrls("?audTrack", ImmutableList.of(audioTrackUri));
+		qPattern = qPattern.replaceAll("#ReplaceByFilter", uriFilter);
+		return qPattern.replaceAll("#ReplaceLimit", "");
+	}
+	
 	public String allOCRAnnotations(int limit) {
 		String qPattern = load("sparql/ocrAnnotations.rq");
 		String result = qPattern.replaceAll("#encUrl", "?url")

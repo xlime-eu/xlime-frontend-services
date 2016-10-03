@@ -141,15 +141,76 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	}
 
 	@Override
+	public List<ASRAnnotation> findAllASRAnnotations(int limit) {
+		DBCursor<ASRAnnotation> cursor = mongoStorer.getDBCollection(ASRAnnotation.class).find();
+		log.debug(String.format("Found %s ASRAnnotations", cursor.count()));
+		if (cursor.count() > limit) 
+			return cleanASRAnnotations(cursor.skip(cursor.count() - limit).toArray(limit));
+		return cleanASRAnnotations(cursor.toArray(limit));
+	}
+
+	@Override
+	public List<ASRAnnotation> findASRAnnotationsByText(String textQuery) {
+		DBObject textQ = new BasicDBObject(
+			    "$text", new BasicDBObject("$search", textQuery)
+				);
+		DBObject projection = new BasicDBObject(
+				"score", new BasicDBObject("$meta", "textScore")
+				);
+		DBObject sorting = new BasicDBObject(
+				"score", new BasicDBObject("$meta", "textScore")
+				); 
+		long start = System.currentTimeMillis();
+		DBCursor<ASRAnnotation> tvc = mongoStorer.getDBCollection(ASRAnnotation.class).find(textQ, projection).sort(sorting);
+		log.debug(String.format("Created cursor with %s results for '%s' in %s ms. ", tvc.count(), textQuery, (System.currentTimeMillis() - start)));
+		return cleanASRAnnotations(mongoStorer.toScoredSet(tvc, defaultMax, "Found via text search", "score").asList());
+	}
+
+	@Override
+	public List<ASRAnnotation> findASRAnnotationsForTVProg(String tvProgUri) {
+		if (tvProgUri == null) return ImmutableList.of();
+		if (typeResolver.isTVProgram(tvProgUri)) {
+			DBCursor<ASRAnnotation> cursor = mongoStorer.getDBCollection(ASRAnnotation.class).find().in("inSegment.partOf._id", ImmutableList.of(tvProgUri));
+			return cleanASRAnnotations(cursor.toArray(defaultMax));
+		} else {
+			log.warn(String.format("Cannot find ASRAnnotations for uri %s of type %s", tvProgUri, typeResolver.resolveType(tvProgUri)));
+			return ImmutableList.of();
+		}
+	}
+
+	@Override
 	public List<OCRAnnotation> findOCRAnnotationsFor(TVProgramBean mediaResource) {
-		log.warn("findOCRAnnotationsFor() not implemented yet"); 
-		return ImmutableList.of();
+		if (mediaResource == null) return ImmutableList.of();
+		final String tvProgUri = mediaResource.getUrl();
+		if (tvProgUri == null) {
+			log.warn("Cannot retrieve OCR annotations for tvProgramBean with null uri " + mediaResource);
+			return ImmutableList.of();
+		}
+		if (typeResolver.isTVProgram(tvProgUri)) {
+			DBCursor<OCRAnnotation> cursor = mongoStorer.getDBCollection(OCRAnnotation.class).find().in("inSegment.partOf._id", ImmutableList.of(tvProgUri));
+			return cleanOCRAnnotations(cursor.toArray(defaultMax));
+		} else {
+			log.warn(String.format("Cannot find OCRAnnotations for uri %s of type %s", tvProgUri, typeResolver.resolveType(tvProgUri)));
+			return ImmutableList.of();
+		}
 	}
 
 	@Override
 	public Optional<OCRAnnotation> findOCRAnnotation(String ocrAnnotUri) {
-		log.warn("findOCRAnnotation() not implemented yet"); 
-		return Optional.absent();
+		if (ocrAnnotUri == null) {
+			log.warn("Cannot retrieve OCR annotations for null uri ");
+			return Optional.absent();
+		}
+		if (typeResolver.isOCRAnnotation(ocrAnnotUri)) {
+			DBCursor<OCRAnnotation> cursor = mongoStorer.getDBCollection(OCRAnnotation.class).find().in("_id", ImmutableList.of(ocrAnnotUri));
+			List<OCRAnnotation> list = cleanOCRAnnotations(cursor.toArray(defaultMax));
+			if (!list.isEmpty()) {
+				return Optional.fromNullable(list.get(0));
+			} else return Optional.absent();
+		} else {
+			log.warn(String.format("Cannot find OCRAnnotations for uri %s of type %s", ocrAnnotUri, typeResolver.resolveType(ocrAnnotUri)));
+			return Optional.absent();
+		}
 	}
 	
 	@Override
@@ -159,7 +220,6 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		if (cursor.count() > limit) 
 			return cleanOCRAnnotations(cursor.skip(cursor.count() - limit).toArray(limit));
 		return cleanOCRAnnotations(cursor.toArray(limit));
-
 	}
 
 	@Override

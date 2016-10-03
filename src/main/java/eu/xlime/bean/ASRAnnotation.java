@@ -18,6 +18,10 @@ public class ASRAnnotation implements XLiMeResource {
 	private VideoSegment inSegment;
 	
 	private String recognizedText;
+	
+	private String asrEngine;
+	
+	private String lang;
 
 	public String getUrl() {
 		return url;
@@ -43,11 +47,27 @@ public class ASRAnnotation implements XLiMeResource {
 		this.recognizedText = recognizedText;
 	}
 
+	public String getAsrEngine() {
+		return asrEngine;
+	}
+
+	public void setAsrEngine(String asrEngine) {
+		this.asrEngine = asrEngine;
+	}
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
 	@Override
 	public String toString() {
-		return String.format(
-				"ASRAnnotation [url=%s, inSegment=%s, recognizedText=%s]", url,
-				inSegment, recognizedText);
+		return String
+				.format("ASRAnnotation [url=%s, inSegment=%s, recognizedText=%s, asrEngine=%s, lang=%s]",
+						url, inSegment, recognizedText, asrEngine, lang);
 	}
 
 }

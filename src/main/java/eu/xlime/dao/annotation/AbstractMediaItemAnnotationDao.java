@@ -11,6 +11,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 
+import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
@@ -77,6 +78,13 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 		return list;
 	}
 	
+	protected final List<ASRAnnotation> cleanASRAnnotations(List<ASRAnnotation> list) {
+		for (ASRAnnotation dirty: list){
+			cleanASRAnnotation(dirty);
+		}
+		return list;
+	}
+	
 	protected final List<SubtitleSegment> cleanSubTitleSegments(
 			List<SubtitleSegment> list) {
 		for (SubtitleSegment dirty: list){
@@ -86,6 +94,17 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 	}
 
 	private OCRAnnotation cleanOCRAnnotation(OCRAnnotation dirty) {
+		Optional<MediaItemDao> optMedItDao = getMediaItemDao();
+		if (isEmpty(dirty.getInSegment().getPartOf()) && optMedItDao.isPresent()) {
+			TVProgramBean emptyBean = dirty.getInSegment().getPartOf();
+			TVProgramBean cleanBean = retrieveTVProgramOr(emptyBean.getUrl(), emptyBean);
+			dirty.getInSegment().setPartOf(cleanBean);
+			cleanVideoSegment(dirty.getInSegment());
+		}
+		return dirty;
+	}
+
+	private ASRAnnotation cleanASRAnnotation(ASRAnnotation dirty) {
 		Optional<MediaItemDao> optMedItDao = getMediaItemDao();
 		if (isEmpty(dirty.getInSegment().getPartOf()) && optMedItDao.isPresent()) {
 			TVProgramBean emptyBean = dirty.getInSegment().getPartOf();
@@ -124,6 +143,18 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 	}
 
 	private String calcVideoSegmentWatchUrl(VideoSegment vidSeg) {
+		try {
+			return typeResolver.toWatchUrl(vidSeg);
+		} catch (NullPointerException npe) {
+			//cannot calculate watch url without missing information (recalculate when returning objects to front-end) 
+			return null;
+		}
+	}
+	
+	/**
+	 * @deprecated Use {@link #calcVideoSegmentUrl(VideoSegment)}
+	 */
+	private String oldCalcVideoSegmentWatchUrl(VideoSegment vidSeg) {
 		if (vidSeg.getPosition() instanceof ZattooStreamPosition) {
 			TVProgramBean tvProg = vidSeg.getPartOf();
 			if (tvProg.getWatchUrl() != null && tvProg.getBroadcastDate() != null && tvProg.getDuration() != null) {

@@ -54,6 +54,12 @@ public interface MediaItemAnnotationDao {
 	ScoredSet<String> findMediaItemUrlsByKBEntity(final String entityUrl);
 
 	Optional<ASRAnnotation> findASRAnnotation(String mediaItemUri);
+	
+	List<ASRAnnotation> findAllASRAnnotations(int limit);
+	
+	List<ASRAnnotation> findASRAnnotationsByText(String text);
+	
+	List<ASRAnnotation> findASRAnnotationsForTVProg(String tvProgUri);
 
 	List<OCRAnnotation> findOCRAnnotationsFor(TVProgramBean mediaResource);
 

@@ -101,8 +101,8 @@ public class SparqlKBEntityMapper extends BaseEnDBpedKBEntityMapper implements K
 	}
 
 	private SparqlClient getDBpediaSparqlClient() {
-//		return new SparqlClientFactory().getDBpediaSparqlClient();
-		return new SparqlClientFactory().getXliMeSparqlClient(); // relevant sameAs triples already in xLiMe endpoint
+		return new SparqlClientFactory().getDBpediaSparqlClient();
+//		return new SparqlClientFactory().getXliMeSparqlClient(); // relevant sameAs triples already in xLiMe endpoint
 	}
 
 }

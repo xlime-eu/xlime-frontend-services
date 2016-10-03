@@ -15,10 +15,12 @@ import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.google.common.base.Optional;
 import com.hp.hpl.jena.query.Dataset;
 
+import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.ZattooStreamPosition;
 import eu.xlime.testkit.DatasetLoader;
 import eu.xlime.util.KBEntityMapper;
 import eu.xlime.util.NullEnDBpediaKBEntityMapper;
@@ -115,6 +117,34 @@ public class MediaItemAnnotationDaoFromDatasetTest {
 		List<OCRAnnotation> oas = inst.findAllOCRAnnotations(200);
 		System.out.println(String.format("Found %s ocr annots %s", oas.size(), oas));
 		assertEquals(4, oas.size());
+	}
+	
+	@Test
+	public void test_findAllASRAnnotations() throws Exception {
+		MediaItemAnnotationDaoFromDataset inst = createTestMediaItemDaoFromDataset("src/test/resources/zattoo-asr-example-graph.trig");
+
+		List<ASRAnnotation> aas = inst.findAllASRAnnotations(200);
+		System.out.println(String.format("Found %s asr annots %s", aas.size(), aas));
+		assertEquals(1, aas.size());
+		ASRAnnotation asr = aas.get(0);
+		assertEquals("http://zattoo.com/program/-2/audio/asr/100436947/100476947", asr.getUrl());
+		assertEquals("http://zattoo.com/program/-2/100436947", asr.getInSegment().getUrl());
+		assertEquals("http://zattoo.com/program/-2", asr.getInSegment().getPartOf().getUrl());
+		assertEquals("03/10/2016 12:13:31", asr.getInSegment().getStartTime().getFormatted());
+		assertEquals(ZattooStreamPosition.class, asr.getInSegment().getPosition().getClass());
+		assertEquals(100436947L, ((ZattooStreamPosition)asr.getInSegment().getPosition()).getValue());
+		assertTrue(asr.getRecognizedText().startsWith("undisclosed assets"));
+	}
+	
+	@Test
+	public void test_findASRAnnotationsForTVProg() throws Exception {
+		MediaItemAnnotationDaoFromDataset inst = createTestMediaItemDaoFromDataset("src/test/resources/zattoo-asr-example-graph.trig");
+
+		List<ASRAnnotation> aas = inst.findASRAnnotationsForTVProg("http://zattoo.com/program/-2");
+		assertEquals(1, aas.size());
+		
+		List<ASRAnnotation> aas2 = inst.findASRAnnotationsForTVProg("http://zattoo.com/program/3");
+		assertEquals(0, aas2.size());
 	}
 	
 	private MediaItemAnnotationDaoFromDataset createTestMediaItemDaoFromDataset(String fpath) {

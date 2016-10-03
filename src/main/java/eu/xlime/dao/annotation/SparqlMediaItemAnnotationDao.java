@@ -30,6 +30,7 @@ import eu.xlime.sparql.SparqlClient;
 import eu.xlime.sparql.SparqlQueryFactory;
 import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.KBEntityMapper;
+import eu.xlime.util.ResourceTypeResolver;
 import eu.xlime.util.SparqlToBeanConverter;
 import eu.xlime.util.score.ScoreFactory;
 import eu.xlime.util.score.ScoredSet;
@@ -39,6 +40,8 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		AbstractMediaItemAnnotationDao {
 
 	private static final Logger log = LoggerFactory.getLogger(SparqlMediaItemAnnotationDao.class);
+	
+	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
 	
 	private static final SparqlQueryFactory qFactory = new SparqlQueryFactory();
 	private static final SparqlToBeanConverter s2b = new SparqlToBeanConverter();
@@ -224,6 +227,15 @@ public abstract class SparqlMediaItemAnnotationDao extends
 	}
 	
 	@Override
+	public List<ASRAnnotation> findASRAnnotationsForTVProg(String tvProgUri) {
+		Config cfg = new Config();
+		final SparqlClient sparqler = getXliMeSparqlClient();
+		String q = qFactory.asrAnnotationsFromAudioTrackUri(tvProgUrlToAudioTrackUrl(tvProgUri));
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(q, cfg.getLong(Opt.SparqlTimeout));
+		return toASRAnnotations(result);
+	}
+
+	@Override
 	public List<SubtitleSegment> findSubtitleSegmentsByText(String textQuery) {
 		throw new UnsupportedOperationException("Finding subtitles from text is not supported agains Sparql endpoints since they do not have a standard way to index and retrieve text in an efficient way");
 	}
@@ -233,6 +245,21 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		throw new UnsupportedOperationException("Finding OCR from text is not supported agains Sparql endpoints since they do not have a standard way to index and retrieve text in an efficient way");
 	}
 
+	@Override
+	public List<ASRAnnotation> findASRAnnotationsByText(String text) {
+		throw new UnsupportedOperationException("Finding ASR from text is not supported agains Sparql endpoints since they do not have a standard way to index and retrieve text in an efficient way");
+	}
+
+	@Override
+	public List<ASRAnnotation> findAllASRAnnotations(int limit) {
+		Config cfg = new Config();
+		final SparqlClient sparqler = getXliMeSparqlClient();
+		String q = qFactory.allASRAnnotations(limit);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(q, cfg.getLong(Opt.SparqlTimeout));
+		return toASRAnnotations(result);
+	}
+
+	
 	@Override
 	public List<OCRAnnotation> findAllOCRAnnotations(int limit) {
 		Config cfg = new Config();
@@ -264,7 +291,45 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		return toSubtitleSegments(result);
 	}
 
+	
 
+	private List<ASRAnnotation> toASRAnnotations(Map<String, Map<String, String>> resultSet) {
+		if (resultSet == null || resultSet.keySet().isEmpty()) {
+			log.debug("No ASR results found");
+			return ImmutableList.of();
+		}
+		log.debug("Creating ASRAnnotations from resultset with " + resultSet.size() + " tuples.");
+		List<ASRAnnotation> result = new ArrayList<>();
+		for (String id: resultSet.keySet()) {
+			Map<String, String> tuple = resultSet.get(id);
+			Optional<ASRAnnotation> optAnn = toASRAnnotation(tuple);
+			if (optAnn.isPresent()) result.add(optAnn.get());
+		}		
+		return result;
+	}
+	
+	private Optional<ASRAnnotation> toASRAnnotation(Map<String, String> tuple) {
+		ASRAnnotation result = new ASRAnnotation();
+		Optional<VideoSegment> partOf = videoSegmentFromASRResult(tuple); 
+		if (partOf.isPresent()) {
+			result.setInSegment(partOf.get());
+		} else {
+			log.debug("Failed to extract a video segment for " + tuple);
+			return Optional.absent();
+		}
+		if (tuple.containsKey("asrText")) {
+			result.setRecognizedText(tuple.get("asrText"));
+		}
+		if (tuple.containsKey("langLabel")) {
+			result.setLang(tuple.get("langLabel"));
+		}
+		if (tuple.containsKey("asrEngUri")) {
+			result.setAsrEngine(tuple.get("asrEngUri"));
+		}
+		result.setUrl(calcUrl(result, tuple.get("audTrack")));
+		return Optional.of(result);
+		
+	}
 	private List<SubtitleSegment> toSubtitleSegments(
 			Map<String, Map<String, String>> resultSet) {
 		if (resultSet == null || resultSet.keySet().isEmpty()) {
@@ -304,22 +369,36 @@ public abstract class SparqlMediaItemAnnotationDao extends
 
 
 	private String calcUrl(SubtitleSegment stSeg, String subtitleTrackUrl) {
-		if (stSeg.getPartOf().getPosition() instanceof ZattooStreamPosition) {
-			long startTime = ((ZattooStreamPosition)stSeg.getPartOf().getPosition()).getValue();
-			long endTime = startTime + 40000;
-			return String.format("%s/%s/%s", subtitleTrackUrl, startTime, endTime);
-		} else throw new RuntimeException("Cannot coin url for " + stSeg);
+		return typeResolver.calcUrl(stSeg, subtitleTrackUrl);
+	}
+	
+	private String calcUrl(ASRAnnotation asrAnn, String audioTrackUrl) {
+		return typeResolver.calcUrl(asrAnn, audioTrackUrl);
 	}
 
 	private String calcUrl(OCRAnnotation ocrAnn, String videoTrackUrl) {
-		if (ocrAnn.getInSegment().getPosition() instanceof ZattooStreamPosition) {
-			long startTime = ((ZattooStreamPosition)ocrAnn.getInSegment().getPosition()).getValue();
-			long endTime = startTime + 40000;
-			//result should be something like http://zattoo.com/program/116804985/video/ocr/100290988/100330988
-			return String.format("%s/ocr/%s/%s", videoTrackUrl, startTime, endTime);
-		} else throw new RuntimeException("Cannot coin url for " + ocrAnn);
+		return typeResolver.calcUrl(ocrAnn, videoTrackUrl);
 	}
 
+	private Optional<VideoSegment> videoSegmentFromASRResult(Map<String, String> tuple) {
+		if (!tuple.containsKey("audTrack")) return Optional.absent();
+		String audTrackUrl = tuple.get("audTrack");
+		String tvProgUrl = tvProgUrlFromAudioTrackUrl(audTrackUrl);
+		VideoSegment result = newVideoSegment(tvProgUrl);
+		if (tuple.containsKey("startTime")) {
+			String startTime = tuple.get("startTime");
+			result.setStartTime(s2b.asUIDate(s2b.extractISODate(startTime)));
+		}
+		if (tuple.containsKey("streamPos")) {
+			String streamPos = tuple.get("streamPos");
+			Double d = Double.parseDouble(streamPos);
+			ZattooStreamPosition pos = new ZattooStreamPosition();
+			pos.setValue(d.longValue());
+			result.setPosition(pos);
+		}
+		return Optional.of(cleanVideoSegment(result));
+	}
+	
 	private Optional<VideoSegment> videoSegmentFromSubtitleResult(
 			Map<String, String> tuple) {
 		if (!tuple.containsKey("s")) return Optional.absent();
@@ -349,10 +428,22 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		else throw new IllegalArgumentException("Not a subtitle track url: " + subtitleTrackUrl);
 	}
 	
+	private String tvProgUrlFromAudioTrackUrl(String audioTrackUrl) {
+		//TODO: move methods for converting zattoo uris back and from other urls and beans to their own class..
+		String suffix = "/audio";
+		if (audioTrackUrl.endsWith(suffix))
+			return audioTrackUrl.substring(0, audioTrackUrl.length() - suffix.length());
+		else throw new IllegalArgumentException("Not a audio track url: " + audioTrackUrl);
+	}
+	
 	private String tvProgUrlToSubtitleTrackUrl(String tvProgUrl) {
 		return tvProgUrl + "/subtitles";
 	}
 
+	private String tvProgUrlToAudioTrackUrl(String tvProgUrl) {
+		return tvProgUrl + "/audio";
+	}
+	
 	private List<OCRAnnotation> toMediaResourceOCRAnnotations(
 			Map<String, Map<String, String>> resultSet, TVProgramBean tvProg) {
 		if (resultSet == null || resultSet.keySet().isEmpty()) {

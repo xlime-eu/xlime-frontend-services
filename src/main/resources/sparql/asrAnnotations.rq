@@ -1,0 +1,23 @@
+PREFIX xlime: <http://xlime-project.org/vocab/> 
+PREFIX sioc: <http://rdfs.org/sioc/ns#>
+PREFIX ma: <http://www.w3.org/ns/ma-ont#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+
+SELECT DISTINCT ?g 
+?audTrack ?langLabel ?asrText ?asrEngUri ?startTime ?streamPos ?cid {
+GRAPH ?g { 
+	?audTrack a ma:AudioTrack.
+	?audTrack xlime:hasRecognisedSpeech ?asr.
+	OPTIONAL {
+		?audTrack ma:hasLanguage ?lang.
+		?lang rdfs:label ?langLabel.
+	}
+	?asr xlime:hasASREngine ?asrEngUri.
+	?asr xlime:hasASRText ?asrText.
+	?asr xlime:hasStartTime ?startTime.
+	?asr xlime:hasStreamPosition ?streamPos.
+	?asr xlime:hasZattooCID ?cid.
+	#ReplaceByFilter
+} #end of Graph ?g
+} #ReplaceLimit
+

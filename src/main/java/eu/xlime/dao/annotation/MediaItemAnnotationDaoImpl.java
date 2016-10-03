@@ -69,6 +69,21 @@ public class MediaItemAnnotationDaoImpl extends AbstractMediaItemAnnotationDao {
 		return delegate.findASRAnnotation(uri);
 	}
 
+	@Override
+	public List<ASRAnnotation> findAllASRAnnotations(int limit) {
+		return delegate.findAllASRAnnotations(limit);
+	}
+
+	@Override
+	public List<ASRAnnotation> findASRAnnotationsByText(String text) {
+		return delegate.findASRAnnotationsByText(text);
+	}
+
+	@Override
+	public List<ASRAnnotation> findASRAnnotationsForTVProg(String tvProgUri) {
+		return delegate.findASRAnnotationsForTVProg(tvProgUri);
+	}
+
 	/* (non-Javadoc)
 	 * @see eu.xlime.dao.MediaItemAnnotationDao#findOCRAnnotationsFor(eu.xlime.bean.TVProgramBean)
 	 */

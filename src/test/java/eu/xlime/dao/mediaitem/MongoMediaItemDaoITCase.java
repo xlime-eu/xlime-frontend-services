@@ -9,6 +9,7 @@ import java.text.ParsePosition;
 import java.util.List;
 import java.util.Properties;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
@@ -23,6 +24,7 @@ import eu.xlime.util.score.ScoredSet;
 public class MongoMediaItemDaoITCase {
 
 	@Test
+	@Ignore("set up mongodb correctly")
 	public void testFindMediaItemByUrl() throws Exception {
 		Properties props = new Properties();
 		props.put(ConfigOptions.XLIME_MONGO_RESOURCE_DATABASE_NAME.getKey(), "brexit-xlimeress");

@@ -22,7 +22,10 @@ import eu.xlime.util.ResourceTypeResolver;
 
 public class MediaItemDaoImplITCase {
 
+	//TODO: create MongoDB that can be loaded during test setup and rewrite tests with values in this test db
+	
 	@Test
+	@Ignore("setup mongodb test")
 	public void testFindMediaItem() {
 		List<String> toFind = ImmutableList.of(
 				"http://ijs.si/article/367691329", "http://ijs.si/article/367691523", "http://ijs.si/article/367691685",
@@ -38,6 +41,7 @@ public class MediaItemDaoImplITCase {
 	}
 	
 	@Test
+	@Ignore("setup mongodb test")
 	public void testFindMediaItems() {
 		List<String> toFind = ImmutableList.of(
 				"http://ijs.si/article/367691329", "http://ijs.si/article/367691523", "http://ijs.si/article/367691685",
@@ -50,6 +54,7 @@ public class MediaItemDaoImplITCase {
 		assertEquals(9, mis.size());
 	}
 	@Test
+	@Ignore("setup mongodb test")
 	public void testFindNewsArticle() {
 		MediaItemDao testObj = new MediaItemDaoImpl();
 		Optional<NewsArticleBean> bean = testObj.findNewsArticle("http://ijs.si/article/367691732");
@@ -58,7 +63,8 @@ public class MediaItemDaoImplITCase {
 	}
 
 	@Test
-	public void testFindNewsArticles() {
+	@Ignore("setup mongodb test")
+		public void testFindNewsArticles() {
 		MediaItemDao testObj = new MediaItemDaoImpl();
 		List<String> uris = ImmutableList.of(
 				"http://ijs.si/article/367691329", "http://ijs.si/article/367691523", "http://ijs.si/article/367691685");
@@ -83,6 +89,7 @@ public class MediaItemDaoImplITCase {
 	}
 
 	@Test
+	@Ignore("setup mongodb test")
 	public void testFindTVPrograms() {
 		MediaItemDao testObj = new MediaItemDaoImpl();
 		List<String> urls = ImmutableList.of("http://zattoo.com/program/111364500", "http://zattoo.com/program/111364459", "http://zattoo.com/program/111604630");

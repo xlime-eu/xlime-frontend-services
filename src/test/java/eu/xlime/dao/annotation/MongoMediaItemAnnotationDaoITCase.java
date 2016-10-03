@@ -143,7 +143,7 @@ public class MongoMediaItemAnnotationDaoITCase {
 		MongoMediaItemAnnotationDao dao = createTestObj();
 		long start = System.currentTimeMillis();
 
-		String ocraUri = "";
+		String ocraUri = "http://zattoo.com/program/113843736/video/ocr/1/2";
 		Optional<OCRAnnotation> result = dao.findOCRAnnotation(ocraUri);
 
 		System.out.println("Retrieved OCRAnns " + result + " in " + (System.currentTimeMillis() - start) + "ms.");
@@ -162,7 +162,7 @@ public class MongoMediaItemAnnotationDaoITCase {
 		assertNotNull(result);
 		if (result.size() > 0) {
 			SubtitleSegment seg = result.get(0);
-			testSegmentWatchUrl(seg);
+//			testSegmentWatchUrl(seg);
 		}
 	}
 
@@ -199,7 +199,7 @@ public class MongoMediaItemAnnotationDaoITCase {
 		assertNotNull(result);
 		if (result.size() > 0) {
 			SubtitleSegment seg = result.get(result.size() - 1);
-			testSegmentWatchUrl(seg);
+//			testSegmentWatchUrl(seg);
 		}
 	}
 

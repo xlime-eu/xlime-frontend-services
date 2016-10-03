@@ -57,6 +57,14 @@ public class ResourceTypeResolver {
 		return uri.matches("http://zattoo.com/program/\\d+/subtitles/\\d+/\\d+"); 
 	}
 	
+	public String calcUrl(SubtitleSegment stSeg, String subtitleTrackUrl) {
+		if (stSeg.getPartOf().getPosition() instanceof ZattooStreamPosition) {
+			long startTime = ((ZattooStreamPosition)stSeg.getPartOf().getPosition()).getValue();
+			long endTime = startTime + 40000;
+			return String.format("%s/%s/%s", subtitleTrackUrl, startTime, endTime);
+		} else throw new RuntimeException("Cannot coin url for " + stSeg);
+	}
+	
 	public boolean isMediaItem(String uri) {
 		return (isMicroPost(uri) || isNewsArticle(uri) || isTVProgram(uri));
 	}
@@ -94,11 +102,29 @@ public class ResourceTypeResolver {
 	}
 	
 	public boolean isASRAnnotation(String uri) {
-		return false; //TODO: implement
+		return uri.matches("http://zattoo.com/program/\\d+/audio/asr/\\d+/\\d+"); 
 	}
 	
+	public String calcUrl(ASRAnnotation asrAnn, String audioTrackUrl) {
+		if (asrAnn.getInSegment().getPosition() instanceof ZattooStreamPosition) {
+			long startTime = ((ZattooStreamPosition)asrAnn.getInSegment().getPosition()).getValue();
+			long endTime = startTime + 40000;
+			//result should be something like http://zattoo.com/program/116804985/audio/asr/100290988/100330988
+			return String.format("%s/asr/%s/%s", audioTrackUrl, startTime, endTime);
+		} else throw new RuntimeException("Cannot coin url for " + asrAnn);
+	}
+
 	public boolean isOCRAnnotation(String uri) {
-		return false; //TODO: implement
+		return uri.matches("http://zattoo.com/program/\\d+/video/ocr/\\d+/\\d+"); 
+	}
+	
+	public String calcUrl(OCRAnnotation ocrAnn, String videoTrackUrl) {
+		if (ocrAnn.getInSegment().getPosition() instanceof ZattooStreamPosition) {
+			long startTime = ((ZattooStreamPosition)ocrAnn.getInSegment().getPosition()).getValue();
+			long endTime = startTime + 40000;
+			//result should be something like http://zattoo.com/program/116804985/video/ocr/100290988/100330988
+			return String.format("%s/ocr/%s/%s", videoTrackUrl, startTime, endTime);
+		} else throw new RuntimeException("Cannot coin url for " + ocrAnn);
 	}
 	
 	public boolean isVideoSegment(String uri) {
@@ -124,7 +150,15 @@ public class ResourceTypeResolver {
 
 		public ZattooTVProg(TVProgramBean bean) {
 			super();
+			validate(bean);
 			this.bean = bean;
+		}
+
+		private void validate(TVProgramBean aBean) {
+			if (aBean == null) throw new NullPointerException("Need valid " + TVProgramBean.class.getSimpleName());
+			if (aBean.getUrl() == null) throw new NullPointerException("Invalid (null URL) " + aBean);
+			if (aBean.getBroadcastDate() == null) throw new NullPointerException("Invalid (null broadcastDate): " + aBean);
+			if (aBean.getDuration() == null) throw new NullPointerException("Invalid (null duration): " + aBean);
 		}
 
 		String getZattooHost() {

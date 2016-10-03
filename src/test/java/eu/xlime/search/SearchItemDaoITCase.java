@@ -14,10 +14,10 @@ import eu.xlime.util.score.ScoredSet;
  * @email ngarcia@expertsystem.com
  *
  */
-
 public class SearchItemDaoITCase {
 
-	@Test
+	@Test 
+	@Ignore("Deprecated class")
 	public void testFindMediaItemFromText() {
 		SearchItemDao search = new SearchItemDao();
 		ScoredSet<String> bean = search.findMediaItemUrlsByText("refugee");
@@ -26,6 +26,7 @@ public class SearchItemDaoITCase {
 	}
 
 	@Test
+	@Ignore("Deprecated class")
 	public void testFindMediaItemFromText2() {
 		SearchItemDao search = new SearchItemDao();
 		ScoredSet<String> bean = search.findMediaItemUrlsByText("Brexit");
@@ -39,6 +40,7 @@ public class SearchItemDaoITCase {
 	}
 	
 	@Test
+	@Ignore("Deprecated class")
 	public void testFindMediaItemFromEntity() {
 		SearchItemDao search = new SearchItemDao();
 		ScoredSet<String> itUrl = search.findMediaItemUrlsByKBEntity("http://dbpedia.org/resource/Refugee");
@@ -47,6 +49,7 @@ public class SearchItemDaoITCase {
 	}
 	
 	@Test
+	@Ignore("Deprecated class")
 	public void testRetrieveMediaItemUrlsFromFreeText() {
 		SearchItemDao search = new SearchItemDao();
 		ScoredSet<String> itUrl = search.retrieveMediaItemUrlsFromFreeText("refugee Greece");
@@ -55,6 +58,7 @@ public class SearchItemDaoITCase {
 	}
 	
 	@Test
+	@Ignore("Deprecated class")
 	public void testRetrieveMediaItemFromEntity() {
 		SearchItemDao search = new SearchItemDao();
 		ScoredSet<String> itUrl = search.retrieveMediaItemUrlsFromEntity("http://dbpedia.org/resource/Refugee");
@@ -63,6 +67,7 @@ public class SearchItemDaoITCase {
 	}
 	
 	@Test
+	@Ignore("Deprecated class")
 	public void testRetrieveMediaItemFromSpanishEntity() {
 		SearchItemDao search = new SearchItemDao();
 		ScoredSet<String> itUrl = search.retrieveMediaItemUrlsFromEntity("http://es.dbpedia.org/resource/Refugiado");

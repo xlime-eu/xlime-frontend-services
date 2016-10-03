@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Properties;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.base.Optional;
@@ -14,7 +15,10 @@ import eu.xlime.summa.bean.UIEntity;
 
 public class MongoUIEntityDaoITCase {
 
+	//TODO: make sure test mongo db is set-up for this test
+	
 	@Test
+	@Ignore("Setup mongodb test")
 	public void test_retrieveFromUri() throws Exception {
 		MongoUIEntityDao dao = createTestObj();
 		Optional<UIEntity> ent = dao.retrieveFromUri("http://dbpedia.org/resource/Lúcia_Santos");

@@ -81,6 +81,21 @@ public class CachedMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao
 	}
 
 	@Override
+	public List<ASRAnnotation> findAllASRAnnotations(int limit) {
+		return delegate.findAllASRAnnotations(limit);
+	}
+
+	@Override
+	public List<ASRAnnotation> findASRAnnotationsByText(String text) {
+		return delegate.findASRAnnotationsByText(text);
+	}
+
+	@Override
+	public List<ASRAnnotation> findASRAnnotationsForTVProg(String tvProgUri) {
+		return delegate.findASRAnnotationsForTVProg(tvProgUri);
+	}
+
+	@Override
 	public List<OCRAnnotation> findOCRAnnotationsFor(TVProgramBean mediaResource) {
 		return delegate.findOCRAnnotationsFor(mediaResource);
 	}
