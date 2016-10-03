@@ -3,7 +3,7 @@
   <groupId>eu.xlime</groupId>
   <artifactId>frontend-services</artifactId>
   <packaging>war</packaging>
-  <version>0.0.6-SNAPSHOT</version>
+  <version>0.0.6</version>
   <name>xLiMe Public Front-end Services webapp</name>
   <url>http://xlime-eu.github.io/</url>
   <prerequisites>
@@ -332,8 +332,8 @@
   </scm>
 
   <issueManagement>
-  	<url>https://bugs.isoco.net</url>
-  	<system>Bugzilla</system>
+	<url>https://github.com/xlime-eu/xlime-frontend-services/issues</url>
+	<system>GitHub Issues</system>  
   </issueManagement>
 
 
