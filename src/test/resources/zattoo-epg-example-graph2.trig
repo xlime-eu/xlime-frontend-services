@@ -1,0 +1,42 @@
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix freebase: <http://rdf.freebase.com/ns/> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix kdo: <http://kdo.render-project.eu/kdo#> .
+@prefix ma: <http://www.w3.org/ns/ma-ont#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix wikide: <http://de.wikipedia.org/wiki/> .
+@prefix wikien: <http://en.wikipedia.org/wiki/> .
+@prefix wikies: <http://es.wikipedia.org/wiki/> .
+@prefix wikisl: <http://sl.wikipedia.org/wiki/> .
+@prefix xlime: <http://xlime-project.org/vocab/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+{
+    <http://zattoo.com/processed/117082419> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-10-06T07:56:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-10-06T07:56:33.854168+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/117082419> {
+    <http://zattoo.com/program/117082419> a ma:MediaResource ;
+        ma:date "2016-10-06T07:58:00+00:00"^^xsd:dateTime ;
+        ma:description "Une météo mondiale tout en images comprenant les prévisions sur 5 jours." ;
+        ma:duration 1.2e+02 ;
+        ma:hasGenre "Information" ;
+        ma:hasPublisher [ rdfs:label "France 24 [fr]" ] ;
+        ma:hasRelatedImage <http://cms-staging.zattoo.com/system/images/ed61/4d87/e84e/6b4c/9e29/format_480x360.jpg> ;
+        ma:hasRelatedLocation [ rdfs:label "F" ] ;
+        ma:hasTrack <http://zattoo.com/program/117082419/audio>,
+            <http://zattoo.com/program/117082419/subtitle>,
+            <http://zattoo.com/program/117082419/video> ;
+        ma:title "Météo" ;
+        xlime:hasProductionPID 117713255 .
+}

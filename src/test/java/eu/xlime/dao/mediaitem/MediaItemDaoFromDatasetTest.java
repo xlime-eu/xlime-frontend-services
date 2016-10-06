@@ -1,8 +1,6 @@
 package eu.xlime.dao.mediaitem;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.List;
@@ -74,6 +72,44 @@ public class MediaItemDaoFromDatasetTest {
 		MediaItemDaoFromDataset testObj = inst.createTestMediaItemDaoFromDataset("src/test/resources/zattoo-epg-example-graph.trig");
 		List<String> urls = testObj.findAllMediaItemUrls(100);
 		return testObj.findTVPrograms(urls);
+	}
+	
+	@Test
+	public void testLoadTVProgram01() {
+		MediaItemDaoFromDatasetTest inst = new MediaItemDaoFromDatasetTest();
+		MediaItemDaoFromDataset testObj = inst.createTestMediaItemDaoFromDataset("src/test/resources/zattoo-epg-example-graph.trig");
+		List<String> urls = testObj.findAllMediaItemUrls(100);
+		List<TVProgramBean> beans = testObj.findTVPrograms(urls);
+		assertEquals(1, beans.size());
+		TVProgramBean tvb = beans.get(0);
+		System.out.println("found " + tvb);
+		assertEquals("http://zattoo.com/program/113962660", tvb.getUrl());
+		final double delta = 0.05;
+		assertEquals(360.0, tvb.getDuration().getTotalSeconds(), delta);
+		assertEquals("France 24 [en]", tvb.getPublisher().getLabel());
+		assertNull(tvb.getPublisher().getUrl());
+		assertNull(tvb.getRelatedImage());
+		assertEquals("SPORTS", tvb.getTitle());
+		//assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/TODO/113962660/1465563060000/1465563420000", tvb.getWatchUrl());		
+	}
+
+	@Test
+	public void testLoadTVProgram02() {
+		MediaItemDaoFromDatasetTest inst = new MediaItemDaoFromDatasetTest();
+		MediaItemDaoFromDataset testObj = inst.createTestMediaItemDaoFromDataset("src/test/resources/zattoo-epg-example-graph2.trig");
+		List<String> urls = testObj.findAllMediaItemUrls(100);
+		List<TVProgramBean> beans = testObj.findTVPrograms(urls);
+		assertEquals(1, beans.size());
+		TVProgramBean tvb = beans.get(0);
+		System.out.println("found " + tvb);
+		assertEquals("http://zattoo.com/program/117082419", tvb.getUrl());
+		final double delta = 0.05;
+		assertEquals(120.0, tvb.getDuration().getTotalSeconds(), delta);
+		assertEquals("France 24 [fr]", tvb.getPublisher().getLabel());
+		assertNull(tvb.getPublisher().getUrl());
+		assertNull(tvb.getRelatedImage());
+		assertEquals("Météo", tvb.getTitle());
+		//assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/TODO/117082419/1475740680000/1475740800000", tvb.getWatchUrl());		
 	}
 	
 	@Test
