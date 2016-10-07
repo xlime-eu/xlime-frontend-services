@@ -1,14 +1,21 @@
 package eu.xlime.util;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+
+import jersey.repackaged.com.google.common.collect.ImmutableMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+
+import eu.xlime.bean.StatMetrics;
 
 /**
  * Provides a base implementation for a {@link KBEntityMapper} that uses English DBpedia as its 
@@ -35,16 +42,51 @@ public abstract class BaseEnDBpedKBEntityMapper implements KBEntityMapper {
 		public long convertedFromWikiEnts;
 		public long failedFromWikiEnts;
 		public long fromWikiEntsTimeMs;
+		
 		public String toString() {
-			return String.format("Canonicalisations=%s, time=%s, unknownEnts=%s, mainDBpediaEnts=%s, encodedMainDBpediaEnts=%s, fromLangDBpedia=[total=%s, converted=%s, failed=%s, time=%sms], fromWiki=[total=%s, converted=%s, failed=%s, time=%sms]",
+			return String.format("Canonicalisations=%s, timeMs=%s, unknownEnts=%s, mainDBpediaEnts=%s, encodedMainDBpediaEnts=%s, fromLangDBpedia=[total=%s, converted=%s, failed=%s, time=%sms], fromWiki=[total=%s, converted=%s, failed=%s, time=%sms]",
 					canonicalisations, timeMs, unknownKBEnts, mainDBpediaEnts, encodedMainDBpediaEnts, fromLangDBpEnts, convertedFromLangDBpEnts, failedFromLangDBpEnts, fromLangDBpEntsTimeMs, fromWikiEnts, convertedFromWikiEnts, failedFromWikiEnts, fromWikiEntsTimeMs);
+		}
+		public Map<String, Long> toCounterMap() {
+			Map<String, Long> result = new HashMap<String, Long>();
+			result.put("canonicalisations", canonicalisations);
+			result.put("timeMs", timeMs);
+			result.put("unknownKBEnts", unknownKBEnts);
+			result.put("mainDBpediaEnts", mainDBpediaEnts);
+			result.put("encodedMainDBpediaEnts", encodedMainDBpediaEnts);
+			result.put("fromLangDBpEnts", fromLangDBpEnts);
+			result.put("convertedFromLangDBpEnts", convertedFromLangDBpEnts);
+			result.put("failedFromLangDBpEnts", failedFromLangDBpEnts);
+			result.put("fromLangDBpEntsTimeMs", fromLangDBpEntsTimeMs);
+			result.put("fromWikiEnts", fromWikiEnts);
+			result.put("convertedFromWikiEnts", convertedFromWikiEnts);
+			result.put("failedFromWikiEnts", failedFromWikiEnts);
+			result.put("fromWikiEntsTimeMs", fromWikiEntsTimeMs);
+				
+			return ImmutableMap.copyOf(result);
 		}
 	}
 	
 	private static MappingStats stats = new MappingStats();
+	
+	private static final Date statsStartDate = new Date();
 
 	private static Set<String> langWhitelist = ImmutableSet.of("en", "de", "es", "fr", "zh", "it");
 
+	/**
+	 * Returns a {@link StatMetrics} instance for the mapping tasks performed by this instances of 
+	 * this base class.
+	 * 
+	 * @return
+	 */
+	public final static StatMetrics getStatMetrics() {
+		StatMetrics result = new StatMetrics();
+		result.setMeterId(BaseEnDBpedKBEntityMapper.class.getSimpleName());
+		result.setMeterStartDate(statsStartDate);
+		result.addCounters(stats.toCounterMap());
+		return result;
+	}
+	
 	/**
 	 * Returns the <code>owl:sameAs</code> closure for a given entityUri.
 	 *  
@@ -84,8 +126,8 @@ public abstract class BaseEnDBpedKBEntityMapper implements KBEntityMapper {
 	 */
 	@Override
 	public final Optional<String> toCanonicalEntityUrl(String entUrl) {
-		summariseStats();
 		stats.canonicalisations++;
+		summariseStats();
 		final long canonStart = System.currentTimeMillis();
 		final KBEntityUri eUri = new KBEntityUri(entUrl);
 		try {
@@ -194,9 +236,9 @@ public abstract class BaseEnDBpedKBEntityMapper implements KBEntityMapper {
 	}
 		
 	private void summariseStats() {
-		if (stats.canonicalisations % 100 == 0) {
+		if (stats.canonicalisations % 10000 == 0) {
 			log.info(stats.toString());
 		}
 	}
-	
+		
 }

@@ -65,6 +65,7 @@ public class ResourceTypeResolverTest {
 		progBean.setUrl("http://zattoo.com/program/113684648");
 		vs.setPartOf(progBean);
 		
+//		assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/bbc-one/113684648/1451925000000/1451928600000/1443963727500", testObj.toWatchUrl(vs));
 		assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/bbc-one/113684648/1451925000000/1451928600000/1443920527500", testObj.toWatchUrl(vs));
 	}
 }

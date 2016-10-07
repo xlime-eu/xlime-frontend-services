@@ -54,6 +54,12 @@ public class CachedMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao
 	}
 
 	@Override
+	public List<EntityAnnotation> findAudioTrackEntityAnnotations(
+			String audioTrackUrl) {
+		return delegate.findAudioTrackEntityAnnotations(audioTrackUrl);
+	}
+
+	@Override
 	public List<EntityAnnotation> findEntityAnnotationsFor(UIEntity kbEntity) {
 		return delegate.findEntityAnnotationsFor(kbEntity);
 	}

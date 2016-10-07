@@ -3,13 +3,9 @@ package eu.xlime.dao.mediaitem;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.joda.time.format.DateTimeFormat;
@@ -22,6 +18,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.hp.hpl.jena.query.QueryParseException;
 
 import eu.xlime.bean.Content;
 import eu.xlime.bean.Duration;
@@ -30,7 +27,6 @@ import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.TVProgramBean;
-import eu.xlime.bean.UIDate;
 import eu.xlime.bean.UrlLabel;
 import eu.xlime.dao.MediaItemDao;
 import eu.xlime.sparql.QueryExecutionException;
@@ -405,9 +401,26 @@ public abstract class SparqlMediaItemDao extends AbstractMediaItemDao {
 	
 	Optional<String> findMicroPostCreatorLabel(final String creatorUrl) {
 		String query = qFactory.labelOf(creatorUrl);
-		Map<String, Map<String, String>> result = getXLiMeSparqlClient().executeSPARQLQuery(query);
+		try {
+			Map<String, Map<String, String>> result = getXLiMeSparqlClient().executeSPARQLQuery(query);
 
-		return optValue(result, "label", creatorUrl).or(Optional.of(creatorUrlToLabel(creatorUrl)));
+			return optValue(result, "label", creatorUrl).or(Optional.of(creatorUrlToLabel(creatorUrl)));
+		} catch (QueryParseException e) {
+			return ignoreQueryParseEx(creatorUrl, e);
+		} catch (RuntimeException e) {
+			if (e.getCause() instanceof QueryParseException) {
+				return ignoreQueryParseEx(creatorUrl, (QueryParseException)e.getCause());
+			} else throw e;
+		}
+	}
+
+	private Optional<String> ignoreQueryParseEx(final String creatorUrl,
+			QueryParseException e) {
+		if (log.isTraceEnabled()) {
+			log.error("Error getting label for creatorUrl " + creatorUrl, e);
+		}
+		//ignore this type of errors as they are relatively frequent
+		return Optional.of(creatorUrlToLabel(creatorUrl));
 	}
 	
 	protected Optional<String> optValue(

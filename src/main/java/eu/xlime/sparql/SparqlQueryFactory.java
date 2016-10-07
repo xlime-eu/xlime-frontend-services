@@ -61,6 +61,12 @@ public class SparqlQueryFactory {
 		String qPattern = load("sparql/subtitleEntityAnnotations.rq");
 		return qPattern.replaceAll("#encUrl", encUrl);
 	}
+
+	public String audioTrackEntityAnnotations(String url) {
+		final String encUrl = bracketUrl(url);
+		String qPattern = load("sparql/audioEntityAnnotations.rq");
+		return qPattern.replaceAll("#encUrl", encUrl);
+	}
 	
 	public String sameAs(String url) {
 		final String encUrl = bracketUrl(url);
@@ -387,7 +393,9 @@ public class SparqlQueryFactory {
 		try {
 			return loadFromFile(path);
 		} catch (Exception e) {
-			log.debug("Could not retrieve query(pattern) from file" + e.getLocalizedMessage() + ". Trying from classpath."); 
+			if (log.isTraceEnabled()) {
+				log.trace("Could not retrieve query(pattern) from file" + e.getLocalizedMessage() + ". Trying from classpath.");
+			}
 			try {
 				return loadFromClassPath("/"+path);
 			} catch (IOException e1) {

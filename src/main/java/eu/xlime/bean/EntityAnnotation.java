@@ -3,6 +3,7 @@ package eu.xlime.bean;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 
 import javax.persistence.Id;
 
@@ -65,6 +66,13 @@ public class EntityAnnotation implements XLiMeResource, Serializable {
 	private AnnotationPosition position;
 	
 	/**
+	 * Date in which this {@link EntityAnnotation} was created. 
+	 * This should be a date (slightly) after the creation/publishing date of the
+	 * resource (identified by {@link #resourceUrl}). 
+	 */
+	private Date insertionDate;
+	
+	/**
 	 * A url for identifying this {@link EntityAnnotation}
 	 */
 	@Id
@@ -108,13 +116,22 @@ public class EntityAnnotation implements XLiMeResource, Serializable {
 		this.url = url;
 	}
 
+	public final Date getInsertionDate() {
+		return insertionDate;
+	}
+
+	public final void setInsertionDate(Date insertionDate) {
+		this.insertionDate = insertionDate;
+	}
+
 	@Override
 	public String toString() {
 		return String
-				.format("EntityAnnotation [%sentity=%s, activityUrl=%s, resourceUrl=%s, confidence=%s, position=%s]",
+				.format("EntityAnnotation [%sentity=%s, activityUrl=%s, resourceUrl=%s, confidence=%s, position=%s, insertionDate=%s]",
 						EntityAnnotation.coinUri(this).equals(url) ? "" : "url="+url+", ", //only print url value if non-standard
 						entity == null ? "null" : entity.getUrl(), 
-						activityUrl, resourceUrl, confidence, position
+						activityUrl, resourceUrl, confidence, position,
+						insertionDate
 						);
 	}
 

@@ -1,6 +1,7 @@
 package eu.xlime.dao.annotation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,18 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		Config cfg = new Config();
 		final SparqlClient sparqler = getXliMeSparqlClient();
 		String query = qFactory.subtitleTrackEntityAnnotations(url);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
+		
+		return toEntityAnnotations(result, url);
+	}
+
+	@Override
+	public List<EntityAnnotation> findAudioTrackEntityAnnotations(
+			String url) {
+		log.trace("Finding entity annotations for subtitleSegment " + url);
+		Config cfg = new Config();
+		final SparqlClient sparqler = getXliMeSparqlClient();
+		String query = qFactory.audioTrackEntityAnnotations(url);
 		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
 		
 		return toEntityAnnotations(result, url);
@@ -575,6 +588,7 @@ public abstract class SparqlMediaItemAnnotationDao extends
 	private Optional<EntityAnnotation> toEntityAnnotation(Map<String, String> tuple) {
 		EntityAnnotation ea = new EntityAnnotation();
 		try {
+			ea.setInsertionDate(new Date());
 			if (tuple.containsKey("ent")) {
 				String entUrl = tuple.get("ent");
 				Optional<String> canonEntUrl = getKBEntityMapper().toCanonicalEntityUrl(entUrl);

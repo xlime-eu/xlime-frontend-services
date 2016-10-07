@@ -1,7 +1,6 @@
 package eu.xlime.util;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +73,12 @@ public class ResourceTypeResolver {
 		if (i < 0) throw new RuntimeException("Unexpected subtitleSegment url" + subtitSeg);
 		return subtitSeg.getUrl().substring(0, i) + "/subtitles";
 	}
+
+	public String extractAudioTrackUri(ASRAnnotation asrAnn) {
+		int i = asrAnn.getUrl().indexOf("/audio/");
+		if (i < 0) throw new RuntimeException("Unexpected ASRAnnotation url" + asrAnn);
+		return asrAnn.getUrl().substring(0, i) + "/audio";
+	}
 	
 	public boolean isNewsArticle(String uri) {
 		return uri.startsWith("http://ijs.si/article/");
@@ -136,6 +141,24 @@ public class ResourceTypeResolver {
 		return uri.startsWith(SearchStringFactory.baseUrl);
 	}
 
+	public boolean isAudioTrack(String uri) {
+		return uri.matches("http://zattoo.com/program/\\d+/audio"); 
+	}
+
+	public Optional<String> audioTrackUrlAsTVProgUrl(String uri) {
+		if (!isAudioTrack(uri)) throw new IllegalArgumentException("Uri is not a audio track url " + uri);
+		return Optional.of(uri.replaceAll("/audio", ""));
+	}
+	
+	public boolean isVideoTrack(String uri) {
+		return uri.matches("http://zattoo.com/program/\\d+/video"); 
+	}
+
+	public Optional<String> videoTrackUrlAsTVProgUrl(String uri) {
+		if (!isVideoTrack(uri)) throw new IllegalArgumentException("Uri is not a video track url " + uri);
+		return Optional.of(uri.replaceAll("/video", ""));
+	}
+	
 	public boolean isSubtitleTrack(String uri) {
 		return uri.matches("http://zattoo.com/program/\\d+/subtitles"); 
 	}

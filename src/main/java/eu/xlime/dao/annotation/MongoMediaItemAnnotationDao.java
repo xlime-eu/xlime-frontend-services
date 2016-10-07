@@ -92,6 +92,14 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	}
 
 	@Override
+	public List<EntityAnnotation> findAudioTrackEntityAnnotations(
+			String audioTrackUrl) {
+		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("resourceUrl", ImmutableList.of(audioTrackUrl));
+		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		return cursor.toArray(defaultMax);
+	}
+
+	@Override
 	public List<EntityAnnotation> findEntityAnnotationsFor(UIEntity kbEntity) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("entity._id", ImmutableList.of(kbEntity.getUrl()));
 		log.debug(String.format("Found %s EntAnns", cursor.count()));

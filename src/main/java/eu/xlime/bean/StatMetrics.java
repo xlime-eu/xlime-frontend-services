@@ -87,11 +87,11 @@ public class StatMetrics implements XLiMeResource {
 		this.meterId = aMeterId;
 	}
 
-	protected final Date getMeterStartDate() {
+	public final Date getMeterStartDate() {
 		return meterStartDate;
 	}
 
-	protected final void setMeterStartDate(Date meterStartDate) {
+	public final void setMeterStartDate(Date meterStartDate) {
 		this.meterStartDate = meterStartDate;
 	}
 

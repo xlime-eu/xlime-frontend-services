@@ -39,6 +39,13 @@ public interface MediaItemAnnotationDao {
 	
 	/**
 	 * 
+	 * @param audioTrackUrl
+	 * @return
+	 */
+	List<EntityAnnotation> findAudioTrackEntityAnnotations(String audioTrackUrl);
+	
+	/**
+	 * 
 	 * @param kbEntity
 	 * @return
 	 */

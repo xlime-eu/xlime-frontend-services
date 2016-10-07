@@ -55,7 +55,12 @@ public class MediaItemAnnotationDaoImpl extends AbstractMediaItemAnnotationDao {
 		return delegate.findSubtitleTrackEntityAnnotations(subtitleTrackUrl);
 	}
 
-	
+	@Override
+	public List<EntityAnnotation> findAudioTrackEntityAnnotations(
+			String audioTrackUrl) {
+		return delegate.findAudioTrackEntityAnnotations(audioTrackUrl);
+	}
+
 	@Override
 	public ScoredSet<String> findMediaItemUrlsByKBEntity(String entityUrl) {
 		return delegate.findMediaItemUrlsByKBEntity(entityUrl);

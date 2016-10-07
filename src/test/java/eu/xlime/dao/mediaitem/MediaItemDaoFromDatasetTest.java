@@ -90,7 +90,7 @@ public class MediaItemDaoFromDatasetTest {
 		assertNull(tvb.getPublisher().getUrl());
 		assertNull(tvb.getRelatedImage());
 		assertEquals("SPORTS", tvb.getTitle());
-		//assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/TODO/113962660/1465563060000/1465563420000", tvb.getWatchUrl());		
+		//assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/france-24-en/113962660/1465563060000/1465563420000", tvb.getWatchUrl());		
 	}
 
 	@Test
@@ -109,7 +109,7 @@ public class MediaItemDaoFromDatasetTest {
 		assertNull(tvb.getPublisher().getUrl());
 		assertNull(tvb.getRelatedImage());
 		assertEquals("Météo", tvb.getTitle());
-		//assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/TODO/117082419/1475740680000/1475740800000", tvb.getWatchUrl());		
+		//assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/france-24-fr/117082419/1475740680000/1475740800000", tvb.getWatchUrl());		
 	}
 	
 	@Test

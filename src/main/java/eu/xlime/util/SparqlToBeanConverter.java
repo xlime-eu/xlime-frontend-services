@@ -45,7 +45,9 @@ public class SparqlToBeanConverter {
 			try {
 				return extractISODate(dateTime, simpleDateParsers);
 			} catch (Exception e1) {
-				log.warn("Found invalid ISODate " + dateTime + " Attempting failback format..");
+				if (log.isTraceEnabled()) {
+					log.warn("Found invalid ISODate " + dateTime + " Attempting failback format..");
+				}
 				return failbackDefaultTimezone(dateTime);	
 			}
 		}
