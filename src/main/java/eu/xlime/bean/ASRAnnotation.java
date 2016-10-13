@@ -2,12 +2,15 @@ package eu.xlime.bean;
 
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Represents the output of some ASR process on an audio stream.
  * 
  * @author RDENAUX
  *
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class ASRAnnotation implements XLiMeResource {
 
 	private static final long serialVersionUID = -3665559261491087237L;

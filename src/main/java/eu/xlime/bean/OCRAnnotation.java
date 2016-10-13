@@ -2,11 +2,14 @@ package eu.xlime.bean;
 
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Represents the output of some OCR annotation on a given video segment.
  * @author RDENAUX
  *
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class OCRAnnotation implements XLiMeResource {
 
 	private static final long serialVersionUID = 2519007514533234438L;

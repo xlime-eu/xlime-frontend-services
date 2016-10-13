@@ -1,12 +1,17 @@
 package eu.xlime.util;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
+
+import net.expertsystem.zapi.ZattooChannelIdMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 
+import eu.xlime.Config;
 import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.EREvent;
 import eu.xlime.bean.MicroPostBean;
@@ -171,10 +176,18 @@ public class ResourceTypeResolver {
 	class ZattooTVProg {
 		final TVProgramBean bean;
 
+		final ZattooChannelIdMapper cidMapper;
+		
 		public ZattooTVProg(TVProgramBean bean) {
 			super();
 			validate(bean);
 			this.bean = bean;
+			Config cfg = new Config();
+			try {
+				cidMapper = new ZattooChannelIdMapper(new File(cfg.get(Config.Opt.ZattooChannelTitlesToIdsFile)));
+			} catch (IOException e) {
+				throw new RuntimeException("Cannot map cids", e);
+			}
 		}
 
 		private void validate(TVProgramBean aBean) {
@@ -190,8 +203,9 @@ public class ResourceTypeResolver {
 		}
 		
 		String getChannelId() {
-			//TODO: map from bean.getPublisher
-			return "bbc-one"; 
+			Optional<String> optCid = cidMapper.getCidForTitle(bean.getPublisher().getLabel());
+			if (optCid.isPresent()) return optCid.get();
+			else return "unknown-channel"; 
 		}
 		
 		Long getProgId() {

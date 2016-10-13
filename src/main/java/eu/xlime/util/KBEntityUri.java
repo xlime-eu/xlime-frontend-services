@@ -77,5 +77,11 @@ public class KBEntityUri {
 		String entName = uri.substring(index);
 		return Optional.of(String.format("http://%swikipedia.org/wiki/%s", langDom, entName));
 	}
+
+	public String labelFromUri() {
+		int index = uri.lastIndexOf("/"); //TODO: better to extract using regular expression?
+		String labelFromUri = (index > 0) ? uri.substring(index) : uri; 
+		return labelFromUri;
+	}
 	
 }

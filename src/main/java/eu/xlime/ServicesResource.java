@@ -14,12 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MediaItemListBean;
 import eu.xlime.bean.SearchResultBean;
 import eu.xlime.bean.UrlLabel;
+import eu.xlime.bean.XLiMeResource;
 import eu.xlime.dao.MediaItemAnnotationDao;
 import eu.xlime.dao.MediaItemDao;
 import eu.xlime.dao.MediaItemDaoImpl;
@@ -34,6 +36,7 @@ import eu.xlime.sphere.bean.Spheres;
 import eu.xlime.summa.SummaClient;
 import eu.xlime.summa.bean.EntitySummary;
 import eu.xlime.summa.bean.UIEntity;
+import eu.xlime.util.ListUtil;
 import eu.xlime.util.score.ScoredSet;
 
 /**
@@ -194,21 +197,33 @@ public class ServicesResource {
 	@Path("/search")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response search(@QueryParam("q") String query) {
-		log.info("Received " + query);
+		log.info("Received /search?q" + query);
 		if (query == null || query.isEmpty()) 
 			return Response.serverError().entity("No requested query").build();
 		
 		List<String> foundMedItemUrls = findMediaItemUrls(query).asList();
 		List<UIEntity> ents = findEntities(query);
+		List<XLiMeResource> annotations = findAnnotationsByText(query);
 		
 		MediaItemListBean milb = lookupMediaItems(foundMedItemUrls);
 		
 		SearchResultBean bean = new SearchResultBean();
 		bean.getErrors().addAll(milb.getErrors());
 		bean.getMediaItems().addAll(milb.getMediaItems());
+		bean.getAnnotations().addAll(annotations);
 		bean.getEntities().addAll(ents);
 		
 		return Response.ok(bean).build();
+	}
+
+	private List<XLiMeResource> findAnnotationsByText(String query) {
+		@SuppressWarnings("unchecked")
+		List<XLiMeResource> result = new ListUtil().weave(
+				mediaItemAnnotationDao.findASRAnnotationsByText(query),
+				mediaItemAnnotationDao.findOCRAnnotationsByText(query),
+				mediaItemAnnotationDao.findSubtitleSegmentsByText(query));
+
+		return ImmutableList.copyOf(result);
 	}
 
 	private List<UIEntity> findEntities(String query) {

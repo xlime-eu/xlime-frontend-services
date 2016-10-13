@@ -7,6 +7,8 @@ components within the project. Using those services often requires knowledge abo
 as access to private components like the message bus and databases used internally. This makes it hard to build applications and 
 user interfaces. This web-application aims to define and provide a set of services which make it easier to build user interfaces.
 
+![Architecture image](src/main/doc/xlime-frontend-services-in-xlime-context.png)
+
 The main design considerations are:
  * define REST services at a level of abstraction that is amenable for end-user intefaces: orchestrate several low-level services in order to
  compose and return meaningful data that can be shown and inspected by end-users.     

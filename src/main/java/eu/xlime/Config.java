@@ -57,7 +57,8 @@ public class Config {
 		SummaTopK("xlime.summa.topk", "5"),
 		DatasetSummaSparqlCachePeriodMinutes("xlime.dataset.summa.sparql.cache.period-minutes", "360"),
 		DatasetSummaMongoCachePeriodMinutes("xlime.dataset.summa.mongo.cache.period-minutes", "60"),
-		XLiMeSearch("xlime.search.url", "http://km.aifb.kit.edu/services/xlimesearch");
+		XLiMeSearch("xlime.search.url", "http://km.aifb.kit.edu/services/xlimesearch"),
+		ZattooChannelTitlesToIdsFile("xlime.zattoo.channel.cid-mapping-file", "etc/zattooChannelTitlesToIds.csv");
 		
 		final String propKey;
 		final Optional<String> defaultValue;

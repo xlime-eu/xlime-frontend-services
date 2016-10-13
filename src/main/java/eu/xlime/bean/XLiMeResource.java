@@ -23,7 +23,7 @@ import eu.xlime.summa.bean.UIEntity;
 	    @Type(value = ASRAnnotation.class, name="http://xlime.eu/vocab/ASRAnnotation"),	    
 	    @Type(value = OCRAnnotation.class, name="http://xlime.eu/vocab/OCRAnnotation"),
 	    @Type(value = SubtitleSegment.class, name="http://xlime.eu/vocab/SubtitleSegment"),
-	    @Type(value = EREvent.class, name = "http://rdfs.org/sioc/ns#MicroPost"),
+	    @Type(value = EREvent.class, name = "http://xlime.eu/vocab/EventFromER"),
 	    @Type(value = UIEntity.class, name = "http://xlime.eu/vocab/kbEntity"),
 	    @Type(value = SearchString.class, name = "http://xlime.eu/vocab/searchString"),
 	    @Type(value = EntityAnnotation.class, name = "http://xlime.eu/vocab/EntityAnnotation"),

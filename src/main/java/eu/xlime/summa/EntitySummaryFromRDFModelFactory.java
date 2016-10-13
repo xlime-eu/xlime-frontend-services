@@ -14,12 +14,15 @@ import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 
 import eu.xlime.bean.UrlLabel;
 import eu.xlime.dao.entity.UIEntityDaoImpl;
 import eu.xlime.summa.bean.EntitySummary;
 import eu.xlime.summa.bean.SummaryStatement;
 import eu.xlime.summa.bean.UIEntity;
+import eu.xlime.util.KBEntityUri;
 
 /**
  * Converts a RDF {@link Model} following the Summa RDF model into an {@link EntitySummary}.
@@ -119,8 +122,20 @@ public class EntitySummaryFromRDFModelFactory {
 		return result;
 	}
 
-	private UIEntity retrieveUIEntity(String entUri) {
-		return UIEntityDaoImpl.instance.retrieveFromUri(entUri).get();
+	private UIEntity retrieveUIEntity(final String entUri) {
+		return UIEntityDaoImpl.instance.retrieveFromUri(entUri)
+				.or(new Supplier<UIEntity>() {
+
+					@Override
+					public UIEntity get() {
+						UIEntity result = new UIEntity();
+						String labelFromUri = KBEntityUri.of(entUri).labelFromUri();
+						result.setUrl(entUri);
+						result.setLabel(labelFromUri);
+						return result;
+					}
+					
+				});
 	}
 
 

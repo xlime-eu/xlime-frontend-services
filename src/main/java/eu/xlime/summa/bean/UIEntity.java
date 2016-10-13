@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import eu.xlime.bean.XLiMeResource;
 
 /**
@@ -12,6 +14,7 @@ import eu.xlime.bean.XLiMeResource;
  * @author RDENAUX
  *
  */
+@JsonIgnoreProperties({"badUIEnt"})
 public class UIEntity implements XLiMeResource {
 
 	private static final long serialVersionUID = 3490645737153292348L;
