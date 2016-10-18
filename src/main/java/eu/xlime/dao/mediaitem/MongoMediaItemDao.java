@@ -127,7 +127,7 @@ public class MongoMediaItemDao extends AbstractMediaItemDao implements XLiMeReso
 		DBCursor<TVProgramBean> tvc = mongoStorer.getDBCollection(TVProgramBean.class).find(textQ, projection).sort(sorting).sort(DBSort.desc("broadcastDate.timestamp"));
 		DBCursor<NewsArticleBean> nec = mongoStorer.getDBCollection(NewsArticleBean.class).find(textQ, projection).sort(sorting).sort(DBSort.desc("created.timestamp"));
 		DBCursor<MicroPostBean> mpc = mongoStorer.getDBCollection(MicroPostBean.class).find(textQ, projection).sort(sorting).sort(DBSort.desc("created.timestamp"));
-		log.debug("Created cursors in " + (System.currentTimeMillis() - start) + "ms.");
+		log.debug(String.format("Created cursors (tv=%s, news=%s, socmed=%s) results in %s ms.", tvc.count(), nec.count(), mpc.count(), (System.currentTimeMillis() - start)));
 		return ScoredSetImpl.<String>builder()
 			.addAll(toMediaItemUrlScoredSet(tvc, 10))
 			.addAll(toMediaItemUrlScoredSet(nec, 10))
@@ -194,9 +194,9 @@ public class MongoMediaItemDao extends AbstractMediaItemDao implements XLiMeReso
 	public boolean hasMediaItemsAfter(long timestampFrom) {
 		DatasetSummary sum = dsSummaFactory.createXLiMeMongoSummary();
 		if (sum == null) return true;
-		UIDate mpd = sum.getNewestMicropostDate();
-		UIDate nad = sum.getNewestNewsarticleDate();
-		UIDate tvd = sum.getNewestMediaresourceDate();
+		UIDate mpd = sum.getMicroposts().getNewestDate();
+		UIDate nad = sum.getNewsarticles().getNewestDate();
+		UIDate tvd = sum.getMediaresources().getNewestDate();
 		final boolean hasMicroPostAfter = mpd != null && mpd.timestamp.getTime() > timestampFrom;
 		final boolean hasNewsAfter = nad != null && mpd.timestamp.getTime() > timestampFrom;
 		final boolean hasTVAfter = tvd != null && tvd.timestamp.getTime() > timestampFrom;

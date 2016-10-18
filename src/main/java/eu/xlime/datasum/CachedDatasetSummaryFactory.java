@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,7 +19,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 
 import eu.xlime.Config;
+import eu.xlime.bean.UIDate;
 import eu.xlime.datasum.bean.DatasetSummary;
+import eu.xlime.datasum.bean.ResourceSummary;
 
 public class CachedDatasetSummaryFactory implements DatasetSummaryFactory {
 
@@ -77,7 +81,7 @@ public class CachedDatasetSummaryFactory implements DatasetSummaryFactory {
 	private long calcDelay(DatasetSummary summa, long period) {
 		if (summa == null) return 0;
 		Date now = new Date();
-		long age = now.getTime() - summa.getSummaryDate().getTime();
+		long age = now.getTime() - summa.getSummaryDate().getTimestamp().getTime();
 		if (age < 0) return period;
 		if (age > period) return 0;
 		return period - age;
@@ -158,13 +162,42 @@ public class CachedDatasetSummaryFactory implements DatasetSummaryFactory {
 	@Override
 	public DatasetSummary createXLiMeSparqlSummary() {
 		if (cachedSparqlSumma == null) return emptyDatasetSumma();
-		else return cachedSparqlSumma;
+		else return clean(cachedSparqlSumma);
 	}
 
 	@Override
 	public DatasetSummary createXLiMeMongoSummary() {
 		if (cachedMongoSumma == null) return emptyDatasetSumma();
-		return cachedMongoSumma;
+		return clean(cachedMongoSumma);
+	}
+
+	private DatasetSummary clean(DatasetSummary dsSum) {
+		if (dsSum == null) return dsSum;
+		clean(dsSum.getSummaryDate());
+		for (ResourceSummary resSum: getResSums(dsSum)) {
+			clean(resSum.getNewestDate());	
+			clean(resSum.getOldestDate());
+		}
+		
+		return dsSum;
+	}
+
+	private List<ResourceSummary> getResSums(DatasetSummary dsSum) {
+		List<ResourceSummary> result = new ArrayList<>();
+		if (dsSum.getNewsarticles() != null) result.add(dsSum.getNewsarticles());
+		if (dsSum.getMicroposts() != null) result.add(dsSum.getMicroposts());
+		if (dsSum.getMediaresources() != null) result.add(dsSum.getMediaresources());
+		if (dsSum.getEntityAnnotations() != null) result.add(dsSum.getEntityAnnotations());
+		if (dsSum.getAsrAnnotations() != null) result.add(dsSum.getAsrAnnotations());
+		if (dsSum.getOcrAnnotations() != null) result.add(dsSum.getOcrAnnotations());
+		if (dsSum.getSubtitles() != null) result.add(dsSum.getSubtitles());
+		
+		return result;
+	}
+
+	private void clean(UIDate uiDate) {
+		if (uiDate == null) return;
+		uiDate.resetTimeAgo();
 	}
 
 	private DatasetSummary emptyDatasetSumma() {

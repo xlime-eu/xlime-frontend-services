@@ -23,9 +23,13 @@ import com.google.common.collect.ImmutableList;
 import com.mongodb.DBObject;
 import com.mongodb.DuplicateKeyException;
 
+import eu.xlime.bean.ASRAnnotation;
+import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
+import eu.xlime.bean.OCRAnnotation;
+import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.XLiMeResource;
 import eu.xlime.mongo.DBCollectionProvider;
@@ -175,7 +179,7 @@ public class MongoXLiMeResourceStorer implements XLiMeResourceStorer {
 		}
 	}
 
-	public <T extends MediaItem> List<T> getSortedByDate(Class<T> miCls, boolean ascending, int limit) {
+	public <T extends XLiMeResource> List<T> getSortedByDate(Class<T> miCls, boolean ascending, int limit) {
 		String dateField = createdTimestampField(miCls);
 		DBObject orderBy = ascending ? DBSort.asc(dateField) : DBSort.desc(dateField);
 		DBCursor<T> mpcn = getDBCollection(miCls).find().sort(orderBy);
@@ -183,13 +187,21 @@ public class MongoXLiMeResourceStorer implements XLiMeResourceStorer {
 		return execute(mpcn, limit, timeout);
 	}
 	
-	private <T extends MediaItem> String createdTimestampField(Class<T> miCls) {
+	private <T extends XLiMeResource> String createdTimestampField(Class<T> miCls) {
 		if (miCls.isAssignableFrom(MicroPostBean.class)) {
 			return "created.timestamp";
-		} if (miCls.isAssignableFrom(NewsArticleBean.class)) {
+		} else if (miCls.isAssignableFrom(NewsArticleBean.class)) {
 			return "created.timestamp";
-		} if (miCls.isAssignableFrom(TVProgramBean.class)) {
+		} else if (miCls.isAssignableFrom(TVProgramBean.class)) {
 			return "broadcastDate.timestamp";
+		} else if (miCls.isAssignableFrom(ASRAnnotation.class)) {
+			return "inSegment.startTime.timestamp";
+		} else if (miCls.isAssignableFrom(OCRAnnotation.class)) {
+			return "inSegment.startTime.timestamp";
+		} else if (miCls.isAssignableFrom(SubtitleSegment.class)) {
+			return "partOf.startTime.timestamp";
+		} else if (miCls.isAssignableFrom(EntityAnnotation.class)) {
+			return "insertionDate";
 		} else throw new IllegalArgumentException("miCls: " + miCls);
 	}
 	

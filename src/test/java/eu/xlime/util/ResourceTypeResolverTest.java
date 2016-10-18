@@ -1,10 +1,13 @@
 package eu.xlime.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import eu.xlime.bean.Content;
 import eu.xlime.bean.Duration;
@@ -20,6 +23,50 @@ import eu.xlime.bean.ZattooStreamPosition;
 import eu.xlime.summa.bean.UIEntity;
 
 public class ResourceTypeResolverTest {
+
+	@Test
+	public void testDate() throws Exception {
+		ISO8601DateFormat format = new ISO8601DateFormat();
+		Date d = new Date();
+		final long timestamp = 1476796867500L;
+		d.setTime(timestamp);
+		
+		Date expected = format.parse("2016-10-18T13:21:07Z");
+		
+		System.out.println("Startdate " + format.format(d));
+		assertSametime(expected, d);
+		
+		long position = 100763761;
+		calcStartPosDate(format, timestamp, position);
+		
+		calcStartPosDate(format, 1476796023500L, 100763550L);
+		
+		calcStartPosDate(format, 1475611567500L, 100467436L);
+	}
+
+	private void calcStartPosDate(ISO8601DateFormat format,
+			final long expectedTimestamp, long position) throws Exception {
+//		1000*(xlime:hasStreamPosition * '4seconds' + '2004-01-10 13:37:03.5'),
+		Date blazDate = format.parse("2004-01-10T13:37:03Z");
+		long blazDateS = (blazDate.getTime() + 500L) / 1000L;
+		System.out.println("positionStartSecs " + blazDateS);
+		long positionAsTimestamp = 1000 * (position * 4 + blazDateS);
+		Date expDate = new Date();
+		expDate.setTime(positionAsTimestamp);
+		System.out.println("ExpDate: " + format.format(expDate));
+		
+		assertSametime(expectedTimestamp, positionAsTimestamp);		
+	}
+	
+	private void assertSametime(Date expected, Date d) {
+		assertSametime(expected.getTime(), d.getTime());
+	}
+	
+	private void assertSametime(long expTimestamp, long timestamp) {
+		double exp = expTimestamp / 1000.0;
+		double db = timestamp / 1000.0;
+		assertEquals(exp, db, 0.5);
+	}
 
 	@Test
 	public void testResolveType() {
@@ -66,7 +113,6 @@ public class ResourceTypeResolverTest {
 		progBean.setUrl("http://zattoo.com/program/113684648");
 		vs.setPartOf(progBean);
 		
-		assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/deutsche-welle/113684648/1451925000000/1451928600000/1443963727500", testObj.toWatchUrl(vs));
-//		assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/deutsche-welle/113684648/1451925000000/1451928600000/1443920527500", testObj.toWatchUrl(vs));
+		assertEquals("http://zattoo-production-zapi-sandbox.zattoo.com/watch/deutsche-welle/113684648/1451925000000/1451928600000/13908727000", testObj.toWatchUrl(vs));
 	}
 }

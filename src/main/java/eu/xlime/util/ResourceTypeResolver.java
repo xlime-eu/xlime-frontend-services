@@ -2,7 +2,6 @@ package eu.xlime.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
 
 import net.expertsystem.zapi.ZattooChannelIdMapper;
 
@@ -28,7 +27,8 @@ import eu.xlime.prov.bean.ProvActivity;
 import eu.xlime.summa.bean.UIEntity;
 
 /**
- * Provides methods for determining the type of an {@link XLiMeResource} based on its URI
+ * Provides methods for determining the type of an {@link XLiMeResource} based on its URI.
+ * It also provides methods for coining the URI for a given {@link XLiMeResource}.
  * 
  * @author RDENAUX
  *
@@ -237,24 +237,20 @@ public class ResourceTypeResolver {
 		}
 		
 		Long getOffset() {
+			if (bean == null || bean.getPartOf() == null || bean.getPartOf().getBroadcastDate() == null) return null;
+			final long broadcastStart = bean.getPartOf().getBroadcastDate().timestamp.getTime();
 			if (bean.getStartTime() != null) {			
-				long fix = 2L * 60L * 60L * 1000L; //startTime is 2 hours behind?
-				return (bean.getStartTime().timestamp.getTime() + fix) - bean.getPartOf().getBroadcastDate().timestamp.getTime();
+				long fix = 0L; //2L * 60L * 60L * 1000L; //startTime is 2 hours behind?
+				return (bean.getStartTime().timestamp.getTime() + fix) - broadcastStart;
 			}
 			if (bean.getPosition() instanceof ZattooStreamPosition) {
-				long seconds = ((ZattooStreamPosition)bean.getPosition()).getValue() / 4L;
-				Calendar cal = Calendar.getInstance();
-				cal.set(Calendar.DATE, 13);
-				cal.set(Calendar.MONTH, 6);
-				cal.set(Calendar.YEAR, 2016);
-				cal.set(Calendar.HOUR, 18);
-				cal.set(Calendar.MINUTE, 2);
-				cal.set(Calendar.SECOND, 7);
-				cal.set(Calendar.MILLISECOND, 500);
-				
-				cal.add(Calendar.HOUR, (int)-(seconds / 3600));
-				log.info("Start time for stream offset: " + cal + "\n\ti.e: " + cal.getTime());
-				return cal.getTime().getTime();
+				/* timestamp == 1000*(xlime:hasStreamPosition * '4seconds' + '2004-01-10 13:37:03.5') */
+				long pos = ((ZattooStreamPosition)bean.getPosition()).getValue();
+				long zeroPositionS = 1073741823; //2004-01-10T13:37:03.5Z in seconds since epoch
+				long positionAsTimestamp = 1000 * (pos * 4 + zeroPositionS);
+
+//				log.info("Start time for stream offset: " + cal + "\n\ti.e: " + cal.getTime());
+				return (positionAsTimestamp - broadcastStart);
 			}
 			throw new IllegalArgumentException("VideoSegment should have either a start-time or a stream position, but found " + bean);
 		}

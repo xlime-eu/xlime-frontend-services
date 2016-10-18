@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.mongojack.DBCursor;
-import org.mongojack.DBSort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mongodb.DBObject;
-
 import eu.xlime.Config;
-import eu.xlime.bean.MediaItem;
+import eu.xlime.bean.ASRAnnotation;
+import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
+import eu.xlime.bean.OCRAnnotation;
+import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.UIDate;
+import eu.xlime.bean.XLiMeResource;
 import eu.xlime.dao.MongoXLiMeResourceStorer;
 import eu.xlime.datasum.bean.DatasetSummary;
 import eu.xlime.datasum.bean.HistogramItem;
+import eu.xlime.datasum.bean.ResourceSummary;
 import eu.xlime.summa.bean.UIEntity;
-import eu.xlime.util.score.ScoredSet;
 
 public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 
@@ -49,7 +49,9 @@ public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 			errors.add(msg);
 		}
 		try {
-			result.setMicroposts(dao.getNumMicroposts());
+			ResourceSummary mpSum = new ResourceSummary();
+			mpSum.setCount(dao.getNumMicroposts());
+			result.setMicroposts(mpSum);
 		} catch (Exception e) {
 			final String msg = "Failed to count microposts"; 
 			log.error(msg, e);
@@ -72,14 +74,18 @@ public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 		result.setMicroposts_filter(microPostFilters);
 		
 		try {
-			result.setNewsarticles(dao.getNumNewsarticles());
+			ResourceSummary newsSum = new ResourceSummary();
+			newsSum.setCount(dao.getNumNewsarticles());
+			result.setNewsarticles(newsSum);
 		} catch (Exception e) {
 			final String msg = "Failed to count news articles"; 
 			log.error(msg, e);
 			errors.add(msg);
 		}
 		try {
-			result.setMediaresources(dao.getNumMediaresources());
+			ResourceSummary tvSum = new ResourceSummary();
+			tvSum.setCount(dao.getNumMediaresources());
+			result.setMediaresources(tvSum);
 		} catch (Exception e) {
 			final String msg = "Failed to count news media resources"; 
 			log.error(msg, e);
@@ -103,7 +109,7 @@ public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 
 		result.setErrors(errors);
 		result.setMessages(msgs);
-		result.setSummaryDate(new Date());
+		result.setSummaryDate(new UIDate(new Date()));
 		return result;
 	}
 	
@@ -123,48 +129,88 @@ public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 //		result.setActivities(activities);
 		msgs.add("Counting activities not supported yet.");
 		
-		result.setMicroposts(resStorer.count(MicroPostBean.class));
-		result.setNewsarticles(resStorer.count(NewsArticleBean.class));
-		result.setMediaresources(resStorer.count(TVProgramBean.class));
+		ResourceSummary mpSum = createResourceSummary(resStorer, MicroPostBean.class);
+		result.setMicroposts(mpSum);
+		
+		ResourceSummary newsSum = createResourceSummary(resStorer, NewsArticleBean.class);
+		result.setNewsarticles(newsSum);
+		
+		ResourceSummary tvSum = createResourceSummary(resStorer, TVProgramBean.class);
+		result.setMediaresources(tvSum);
 
-		if (result.getMicroposts() > 0) {
-			UIDate mpnd = getNewest(resStorer, MicroPostBean.class, 1).get(0).getCreated();
-			result.setNewestMicropostDate(mpnd);
-			
-			UIDate mpod = getOldest(resStorer, MicroPostBean.class, 1).get(0).getCreated();
-			result.setOldestMicropostDate(mpod);
-		}
+		ResourceSummary entAnnSum = createResourceSummary(resStorer, EntityAnnotation.class);
+		result.setEntityAnnotations(entAnnSum);
+		
+		ResourceSummary asrSum = createResourceSummary(resStorer, ASRAnnotation.class);
+		result.setAsrAnnotations(asrSum);
 
-		if (result.getNewsarticles() > 0) {
-			UIDate nand = getNewest(resStorer, NewsArticleBean.class, 1).get(0).getCreated();
-			result.setNewestNewsarticleDate(nand);
-			
-			UIDate naod = getOldest(resStorer, NewsArticleBean.class, 1).get(0).getCreated();
-			result.setOldestNewsarticleDate(naod);
-		}
+		ResourceSummary ocrSum = createResourceSummary(resStorer, OCRAnnotation.class);
+		result.setOcrAnnotations(ocrSum);
 
-		if (result.getMediaresources() > 0) {
-			UIDate mrnd = getNewest(resStorer, TVProgramBean.class, 1).get(0).getBroadcastDate();
-			result.setNewestMediaresourceDate(mrnd);
-			
-			UIDate mrod = getOldest(resStorer, TVProgramBean.class, 1).get(0).getBroadcastDate();
-			result.setOldestMediaresourceDate(mrod);
-			
-		}
+		ResourceSummary subtitSum = createResourceSummary(resStorer, SubtitleSegment.class);
+		result.setSubtitles(subtitSum);
+		
 		result.setEntities(resStorer.count(UIEntity.class));
 		
 		result.setErrors(errors);
 		result.setMessages(msgs);
-		result.setSummaryDate(new Date());
+		result.setSummaryDate(new UIDate(new Date()));
 		return result;
 	}
+
+	private <T extends XLiMeResource> ResourceSummary createResourceSummary(
+			MongoXLiMeResourceStorer resStorer, Class<T> cls) {
+		ResourceSummary mpSum = new ResourceSummary();
+		mpSum.setCount(resStorer.count(cls));
+		if (mpSum.getCount() > 0) {
+			try {
+				UIDate mpnd = clean(getDate(getNewest(resStorer, cls, 1).get(0)));
+				mpSum.setNewestDate(mpnd);
+			} catch (Exception e) {
+				log.warn(String.format("Error getting newest date for %s. %s.", cls, e.getLocalizedMessage()));
+			}
+
+			try {
+				UIDate mpod = clean(getDate(getOldest(resStorer, cls, 1).get(0)));
+				mpSum.setOldestDate(mpod);
+			} catch (Exception e) {
+				log.warn(String.format("Error getting oldest date for %s. %s.", cls, e.getLocalizedMessage()));
+			}
+		}
+		return mpSum;
+	}
 	
-	private <T extends MediaItem> List<T> getNewest(MongoXLiMeResourceStorer resStorer, Class<T> miCls, int limit) {
+	private <T extends XLiMeResource> List<T> getNewest(MongoXLiMeResourceStorer resStorer, Class<T> miCls, int limit) {
 		boolean ascending = true;
 		return resStorer.getSortedByDate(miCls, !ascending, limit);
 	}
 
-	private <T extends MediaItem> List<T> getOldest(MongoXLiMeResourceStorer resStorer, Class<T> miCls, int limit) {
+	private UIDate clean(UIDate date) {
+		if (date == null) return date;
+		date.resetTimeAgo();
+		return date;
+	}
+	
+	private <T extends XLiMeResource> UIDate getDate(T res) {
+		if (res == null) return null;
+		if (res instanceof TVProgramBean) {
+			return ((TVProgramBean)res).getBroadcastDate();
+		} else if (res instanceof NewsArticleBean) {
+			return ((NewsArticleBean)res).getCreated();
+		} else if (res instanceof MicroPostBean) {
+			return ((MicroPostBean)res).getCreated();
+		} else if (res instanceof ASRAnnotation) {
+			return ((ASRAnnotation)res).getInSegment().getStartTime();
+		} else if (res instanceof OCRAnnotation) {
+			return ((OCRAnnotation)res).getInSegment().getStartTime();
+		} else if (res instanceof SubtitleSegment) {
+			return ((SubtitleSegment)res).getPartOf().getStartTime();
+		} else if (res instanceof EntityAnnotation) {
+			return new UIDate(((EntityAnnotation)res).getInsertionDate());
+		} else throw new IllegalArgumentException("resource" + res);
+		
+	}
+	private <T extends XLiMeResource> List<T> getOldest(MongoXLiMeResourceStorer resStorer, Class<T> miCls, int limit) {
 		boolean ascending = true;
 		return resStorer.getSortedByDate(miCls, ascending, limit);
 	}

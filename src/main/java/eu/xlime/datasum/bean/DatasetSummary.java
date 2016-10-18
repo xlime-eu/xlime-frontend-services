@@ -1,7 +1,6 @@
 package eu.xlime.datasum.bean;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,7 +32,7 @@ public class DatasetSummary implements Serializable {
 	/**
 	 * The date in which this {@link DatasetSummary} was generated
 	 */
-	private Date summaryDate;
+	private UIDate summaryDate;
 	
 	/**
 	 * Provides a list of (human readable) errors which occurred when generating this {@link DatasetSummary} 
@@ -43,66 +42,40 @@ public class DatasetSummary implements Serializable {
 	 * Provides a list of (human readable) messages about the generation of this {@link DatasetSummary}.
 	 */
 	private List<String> messages;
-	
+		
 	/**
 	 * The number of activities in the dataset
 	 */
 	private Long activities;
+	
 	/**
 	 * The number of microposts in the dataset
 	 */
-	private Long microposts;
-	
-	/**
-	 * The date of the oldest micropost in this dataset 
-	 */
-	private UIDate oldestMicropostDate;
-	
-	/**
-	 * The date of the newest microposts in this dataset
-	 */
-	private UIDate newestMicropostDate;
-	
-	/**
-	 * A histogram with the number of microposts in the dataset, sorted by 
-	 * day.
-	 */
-	private List<HistogramItem> micropostsByDay;
-	
+	private ResourceSummary microposts;
+		
 	/**
 	 * The number of microposts in the dataset associated to some keyword-filters (used to filter the microposts from
 	 * the source streams like Twitter, Facebook, etc.).
 	 */
 	private List<HistogramItem> microposts_filter;
-	/**
-	 * The number of news articles in the dataset
-	 */
-	private Long newsarticles;
-
-	/**
-	 * The date of the oldest news article in this dataset 
-	 */
-	private UIDate oldestNewsarticleDate;
 	
 	/**
-	 * The date of the newest news article in this dataset
+	 * A {@link ResourceSummary} for News articles in the dataset
 	 */
-	private UIDate newestNewsarticleDate;
+	private ResourceSummary newsarticles;
 	
 	/**
-	 * The number of media resources (i.e. tv-programs) in the dataset
+	 * A {@link ResourceSummary} for the media resources (i.e. tv-programs) in the dataset
 	 */
-	private Long mediaresources;
-
-	/**
-	 * The date of the oldest mediaresource in this dataset 
-	 */
-	private UIDate oldestMediaresourceDate;
+	private ResourceSummary mediaresources;
 	
-	/**
-	 * The date of the newest mediaresource in this dataset
-	 */
-	private UIDate newestMediaresourceDate;
+	private ResourceSummary subtitles;
+	
+	private ResourceSummary asrAnnotations;
+	
+	private ResourceSummary ocrAnnotations;
+	
+	private ResourceSummary entityAnnotations;
 	
 	/**
 	 * The number of RDF triples required to represent the data (when the dataset is in RDF)
@@ -146,10 +119,10 @@ public class DatasetSummary implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getSummaryDate() {
+	public UIDate getSummaryDate() {
 		return summaryDate;
 	}
-	public void setSummaryDate(Date summaryDate) {
+	public void setSummaryDate(UIDate summaryDate) {
 		this.summaryDate = summaryDate;
 	}
 	
@@ -171,77 +144,58 @@ public class DatasetSummary implements Serializable {
 	public void setActivities(Long activities) {
 		this.activities = activities;
 	}
-	public Long getMicroposts() {
+	public ResourceSummary getMicroposts() {
 		return microposts;
 	}
-	public void setMicroposts(Long microposts) {
+	public void setMicroposts(ResourceSummary microposts) {
 		this.microposts = microposts;
 	}	
 	
-	public List<HistogramItem> getMicropostsByDay() {
-		return micropostsByDay;
-	}
-	public void setMicropostsByDay(List<HistogramItem> micropostsByDay) {
-		this.micropostsByDay = micropostsByDay;
-	}
-	public UIDate getOldestMicropostDate() {
-		return oldestMicropostDate;
-	}
-	public void setOldestMicropostDate(UIDate oldestMicropostDate) {
-		this.oldestMicropostDate = oldestMicropostDate;
-	}
-	public UIDate getNewestMicropostDate() {
-		return newestMicropostDate;
-	}
-	public void setNewestMicropostDate(UIDate newestMicropostDate) {
-		this.newestMicropostDate = newestMicropostDate;
-	}
 	public List<HistogramItem> getMicroposts_filter() {
 		return microposts_filter;
 	}
 	public void setMicroposts_filter(List<HistogramItem> microposts_filter) {
 		this.microposts_filter = microposts_filter;
 	}
-	public Long getNewsarticles() {
+	public ResourceSummary getNewsarticles() {
 		return newsarticles;
 	}
-	public void setNewsarticles(Long newsarticles) {
+	public void setNewsarticles(ResourceSummary newsarticles) {
 		this.newsarticles = newsarticles;
 	}
-	
-	public UIDate getOldestNewsarticleDate() {
-		return oldestNewsarticleDate;
-	}
-	public void setOldestNewsarticleDate(UIDate oldestNewsarticleDate) {
-		this.oldestNewsarticleDate = oldestNewsarticleDate;
-	}
-	public UIDate getNewestNewsarticleDate() {
-		return newestNewsarticleDate;
-	}
-	public void setNewestNewsarticleDate(UIDate newestNewsarticleDate) {
-		this.newestNewsarticleDate = newestNewsarticleDate;
-	}
-	public Long getMediaresources() {
+	public ResourceSummary getMediaresources() {
 		return mediaresources;
 	}
-	public void setMediaresources(Long mediaresources) {
+	public void setMediaresources(ResourceSummary mediaresources) {
 		this.mediaresources = mediaresources;
 	}
 
-	public UIDate getOldestMediaresourceDate() {
-		return oldestMediaresourceDate;
-	}
-	public void setOldestMediaresourceDate(UIDate oldestMediaresourceDate) {
-		this.oldestMediaresourceDate = oldestMediaresourceDate;
-	}
-	public UIDate getNewestMediaresourceDate() {
-		return newestMediaresourceDate;
-	}
-	public void setNewestMediaresourceDate(UIDate newestMediaresourceDate) {
-		this.newestMediaresourceDate = newestMediaresourceDate;
-	}
 	public Long getTriples() {
 		return triples;
+	}
+	public final ResourceSummary getSubtitles() {
+		return subtitles;
+	}
+	public final void setSubtitles(ResourceSummary subtitles) {
+		this.subtitles = subtitles;
+	}
+	public final ResourceSummary getAsrAnnotations() {
+		return asrAnnotations;
+	}
+	public final void setAsrAnnotations(ResourceSummary asrAnnotations) {
+		this.asrAnnotations = asrAnnotations;
+	}
+	public final ResourceSummary getOcrAnnotations() {
+		return ocrAnnotations;
+	}
+	public final void setOcrAnnotations(ResourceSummary ocrAnnotations) {
+		this.ocrAnnotations = ocrAnnotations;
+	}
+	public final ResourceSummary getEntityAnnotations() {
+		return entityAnnotations;
+	}
+	public final void setEntityAnnotations(ResourceSummary entityAnnotations) {
+		this.entityAnnotations = entityAnnotations;
 	}
 	public void setTriples(Long triples) {
 		this.triples = triples;
@@ -287,13 +241,11 @@ public class DatasetSummary implements Serializable {
 	@Override
 	public String toString() {
 		return String
-				.format("DatasetSummary [name=%s, description=%s, summaryDate=%s, errors=%s, messages=%s, activities=%s, microposts=%s, oldestMicropostDate=%s, newestMicropostDate=%s, micropostsByDay=%s, microposts_filter=%s, newsarticles=%s, oldestNewsarticleDate=%s, newestNewsarticleDate=%s, mediaresources=%s, oldestMediaresourceDate=%s, newestMediaresourceDate=%s, triples=%s, entities=%s, subjects=%s, predicates=%s, objects=%s, instancesPerClass=%s, tripesPerProperty=%s]",
+				.format("DatasetSummary [name=%s, description=%s, summaryDate=%s, errors=%s, messages=%s, activities=%s, microposts=%s, microposts_filter=%s, newsarticles=%s, mediaresources=%s, subtitles=%s, asrAnnotations=%s, ocrAnnotations=%s, entityAnnotations=%s, triples=%s, entities=%s, subjects=%s, predicates=%s, objects=%s, instancesPerClass=%s, tripesPerProperty=%s]",
 						name, description, summaryDate, errors, messages,
-						activities, microposts, oldestMicropostDate,
-						newestMicropostDate, micropostsByDay,
-						microposts_filter, newsarticles, oldestNewsarticleDate,
-						newestNewsarticleDate, mediaresources,
-						oldestMediaresourceDate, newestMediaresourceDate,
+						activities, microposts, microposts_filter,
+						newsarticles, mediaresources, subtitles,
+						asrAnnotations, ocrAnnotations, entityAnnotations,
 						triples, entities, subjects, predicates, objects,
 						instancesPerClass, tripesPerProperty);
 	}

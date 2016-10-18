@@ -197,7 +197,7 @@ public class ServicesResource {
 	@Path("/search")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response search(@QueryParam("q") String query) {
-		log.info("Received /search?q" + query);
+		log.info("Received /search?q=" + query);
 		if (query == null || query.isEmpty()) 
 			return Response.serverError().entity("No requested query").build();
 		
