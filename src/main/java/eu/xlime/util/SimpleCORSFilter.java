@@ -32,7 +32,9 @@ public class SimpleCORSFilter implements Filter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         chain.doFilter(req, res);
-		log.info("Added CORS headers, now has: " + response.getHeaderNames());
+        if (log.isTraceEnabled()) {
+        	log.trace("Added CORS headers, now has: " + response.getHeaderNames());
+        }
 	}
 
 	@Override

@@ -166,6 +166,10 @@ public class SparqlQueryFactory {
 				.replaceAll("#ReplaceByLimit", "LIMIT 30");
 	}
 
+	public String zattooPidMappings() {
+		return load("sparql/zattooProdIdMapping.rq");
+	}
+	
 	public String mediaItemUrlsByDate(long dateFrom, long dateTo, int limit, DateTimeFormatter... dateFormats) {
 		String qPattern = load("sparql/mediaItemUrlsByDate.rq");
 		String dateFilter = String.format("FILTER (%s) ",  dateFilter("?date", dateFrom, dateTo, dateFormats));
@@ -415,7 +419,6 @@ public class SparqlQueryFactory {
 		if (!f.exists()) throw new FileNotFoundException("File does not exist " + f.getAbsolutePath());
 		return Files.toString(f, Charsets.UTF_8);
 	}
-
 
 	
 }

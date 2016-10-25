@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
@@ -16,14 +19,20 @@ import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.UIDate;
 import eu.xlime.bean.VideoSegment;
+import eu.xlime.bean.XLiMeResource;
 import eu.xlime.bean.ZattooStreamPosition;
 import eu.xlime.dao.MediaItemAnnotationDao;
 import eu.xlime.dao.MediaItemDao;
+import eu.xlime.dao.UIEntityDao;
+import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.ResourceTypeResolver;
 
 public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotationDao {
 
+	private static final Logger log = LoggerFactory.getLogger(AbstractMediaItemAnnotationDao.class);
+	
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
 	
 	/* (non-Javadoc)
@@ -47,6 +56,32 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 	}
 
 	/**
+	 * Cleans a resource before sending to UI client, this will e.g. 
+	 * refresh 'timeAgo's in {@link UIDate}s, but also lookup any missing information
+	 * that may not have been previously retrieved (e.g. if we only have the url for
+	 * a part of a resource, now is the time to look it up and returns a 'full' object.
+	 * 
+	 * @param res
+	 * @return
+	 */
+	protected final XLiMeResource uiCleanResource(XLiMeResource res) {
+		if (res instanceof ASRAnnotation) {
+			return cleanASRAnnotation((ASRAnnotation)res);
+		} 
+		if (res instanceof OCRAnnotation) {
+			return cleanOCRAnnotation((OCRAnnotation)res);
+		}
+		if (res instanceof SubtitleSegment) {
+			return cleanSubtitleSegment((SubtitleSegment)res);
+		}
+		if (res instanceof EntityAnnotation) {
+			return cleanEntAnn((EntityAnnotation)res);
+		}
+		log.debug("Not cleaning " + res.getClass());
+		return res;
+	}
+	
+	/**
 	 * If available, return a {@link MediaItemDao}, which will help to produce complete beans when 
 	 * annotations embed the annotated MediaItem.
 	 * 
@@ -56,6 +91,16 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 		return Optional.absent();
 	}
 
+	/**
+	 * If available, return a {@link UIEntityDao}, which will help to produce complete beans when 
+	 * annotations embed some {@link UIEntity}.
+	 * 
+	 * @return
+	 */
+	protected Optional<UIEntityDao> getUIEntDao() {
+		return Optional.absent();
+	}
+	
 	private final TVProgramBean retrieveTVProgramOr(String tvProgUrl, TVProgramBean defaultVal) {
 		Optional<MediaItemDao> optMedItDao = getMediaItemDao();
 		if (optMedItDao.isPresent()) {
@@ -70,6 +115,7 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 		return result;
 	}
 
+	
 	protected final List<OCRAnnotation> cleanOCRAnnotations(
 			List<OCRAnnotation> list) {
 		for (OCRAnnotation dirty: list){
@@ -92,6 +138,27 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 		}
 		return list;
 	}
+
+	private EntityAnnotation cleanEntAnn(EntityAnnotation dirty) {
+		if (isEmpty(dirty.getEntity()) && getUIEntDao().isPresent()) {
+			log.info("Found empty UIEntity that needs cleaning " + dirty.getEntity().getUrl());
+			String entUrl = dirty.getEntity().getUrl();
+			if (entUrl != null) {
+				Optional<UIEntity> optEnt = getUIEntDao().get().retrieveFromUri(entUrl);
+				log.info("Retrieved UIEntity: " + optEnt);
+				if (optEnt.isPresent()) {
+					dirty.setEntity(optEnt.get());
+				}
+			}
+		}
+		if (dirty.getMentionDate() == null && dirty.getInsertionDate() != null) {
+			dirty.setMentionDate(new UIDate(dirty.getInsertionDate()));
+		} else if (dirty.getMentionDate() != null) {
+			dirty.getMentionDate().resetTimeAgo();
+		}
+		return dirty;
+	}
+	
 
 	private OCRAnnotation cleanOCRAnnotation(OCRAnnotation dirty) {
 		Optional<MediaItemDao> optMedItDao = getMediaItemDao();
@@ -126,11 +193,16 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 		return dirty;
 	}
 
+	private boolean isEmpty(UIEntity entity) {
+		return entity.getLabel() == null || entity.getLabel().isEmpty();
+	}
+	
 	private boolean isEmpty(TVProgramBean partOf) {
 		return partOf.getBroadcastDate() == null || partOf.getTitle() == null;
 	}
 
 	protected final VideoSegment cleanVideoSegment(VideoSegment vidSeg) {
+		if (vidSeg.getStartTime() != null) vidSeg.getStartTime().resetTimeAgo();
 		vidSeg.setUrl(calcVideoSegmentUrl(vidSeg));
 		vidSeg.setWatchUrl(calcVideoSegmentWatchUrl(vidSeg));
 		return vidSeg;
@@ -180,7 +252,7 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 	 * @param list
 	 * @return
 	 */
-	protected List<EntityAnnotation> cleanEntAnns(List<EntityAnnotation> list) {
+	protected List<EntityAnnotation> mergeEntAnns(List<EntityAnnotation> list) {
 		final Map<String, EntityAnnotation> merged = new HashMap<>();
 		for (EntityAnnotation unmerged : list) {
 			String entUrl = unmerged.getEntity().getUrl();

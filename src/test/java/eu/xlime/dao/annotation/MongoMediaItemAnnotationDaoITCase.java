@@ -3,6 +3,7 @@ package eu.xlime.dao.annotation;
 import static org.junit.Assert.*;
 
 import java.text.ParsePosition;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -33,6 +34,34 @@ public class MongoMediaItemAnnotationDaoITCase {
 		List<EntityAnnotation> result = dao.findEntityAnnotations(100);
 		
 		System.out.println("Retrieved EntAnns " + result + " in " + (System.currentTimeMillis() - start) + "ms.");
+		assertNotNull(result);
+		assertEquals(100, result.size());
+	}
+
+	@Test
+	public void testCanMapAllEntityAnnotationResourceUrls() throws Exception {
+		MongoMediaItemAnnotationDao dao = createTestObj();
+		long start = System.currentTimeMillis();
+
+
+		List<EntityAnnotation> result = dao.findEntityAnnotations(100);
+		System.out.println("Retrieved EntAnns " + result + " in " + (System.currentTimeMillis() - start) + "ms.");
+		final int total = result.size();
+		int miCnt = 0;
+		int miAnnCnt = 0;
+		List<String> unmapped = new ArrayList<>();
+		for (EntityAnnotation ea: result) {
+			final String resUrl = ea.getResourceUrl();
+			Optional<String> miUrl = dao.mapAnnotatedResourceUrlToMediaItemUrl(resUrl);
+			if (miUrl.isPresent()) miCnt++;
+			Optional<String> miAnnUrl = dao.mapAnnotatedResourceUrlToMediaAnnotUrl(resUrl);
+			if (miAnnUrl.isPresent()) miAnnCnt++;
+			if (!miUrl.isPresent() && !miAnnUrl.isPresent()) {
+				unmapped.add(resUrl);
+			}
+		}
+		System.out.println("Mapped resources to " + miCnt + " mediaItems and " + miAnnCnt + " mediaItemAnnots");
+		assertTrue("" + unmapped, unmapped.isEmpty());
 		assertNotNull(result);
 		assertEquals(100, result.size());
 	}

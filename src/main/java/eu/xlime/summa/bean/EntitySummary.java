@@ -2,6 +2,8 @@ package eu.xlime.summa.bean;
 
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+
 
 /**
  * Represents the summary of a given {@link #entity}, which consist of a number 
@@ -21,6 +23,14 @@ public class EntitySummary {
 	
 	private int topK;
 
+	public static EntitySummary emptyFrom(UIEntity entity) {
+		EntitySummary entSum = new EntitySummary();
+		entSum.setEntity(entity);
+		entSum.setTopK(0);
+		entSum.setStatements(ImmutableList.<SummaryStatement>of());
+		return entSum;
+	}
+	
 	public UIEntity getEntity() {
 		return entity;
 	}

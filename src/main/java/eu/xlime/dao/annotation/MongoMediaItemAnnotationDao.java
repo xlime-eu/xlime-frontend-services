@@ -1,5 +1,6 @@
 package eu.xlime.dao.annotation;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -24,9 +25,12 @@ import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.XLiMeResource;
 import eu.xlime.dao.MediaItemDao;
 import eu.xlime.dao.MongoXLiMeResourceStorer;
+import eu.xlime.dao.UIEntityDao;
+import eu.xlime.dao.entity.MongoUIEntityDao;
 import eu.xlime.dao.mediaitem.MongoMediaItemDao;
 import eu.xlime.mongo.DBCollectionProvider;
 import eu.xlime.summa.bean.UIEntity;
+import eu.xlime.util.ListUtil;
 import eu.xlime.util.ResourceTypeResolver;
 import eu.xlime.util.score.Score;
 import eu.xlime.util.score.ScoreFactory;
@@ -44,6 +48,7 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	
 	private final MongoXLiMeResourceStorer mongoStorer;
 	private final MongoMediaItemDao miDao;
+	private final MongoUIEntityDao uiEntDao;
 	private final DBCollectionProvider collectionProvider;
 	private static final ResourceTypeResolver typeResolver = new ResourceTypeResolver();
 	private static final ScoreFactory scoref = ScoreFactory.instance;
@@ -54,11 +59,41 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		collectionProvider = new DBCollectionProvider(props);
 		mongoStorer = new MongoXLiMeResourceStorer(collectionProvider);
 		miDao = new MongoMediaItemDao(props);
+		uiEntDao = new MongoUIEntityDao(props);
 	}
 	
 	@Override
+	public List<XLiMeResource> findRecentAnnotations(int minutes, int limit) {
+		final boolean ascending = true;
+		int partialLimit = (limit / 3);
+		if (partialLimit == 0) partialLimit = limit;
+		List<EntityAnnotation> entAnns = mongoStorer.getSortedByDate(EntityAnnotation.class, !ascending, partialLimit);
+		List<SubtitleSegment> subtitles = mongoStorer.getSortedByDate(SubtitleSegment.class, !ascending, partialLimit);
+		List<ASRAnnotation> asrAnns = mongoStorer.getSortedByDate(ASRAnnotation.class, !ascending, partialLimit);		
+		List<OCRAnnotation> ocrAnns = mongoStorer.getSortedByDate(OCRAnnotation.class, !ascending, partialLimit);
+		List<XLiMeResource> result = new ListUtil().weave(entAnns, subtitles, asrAnns, ocrAnns);
+		if (result.size() > limit) {
+			return ImmutableList.copyOf(uiClean(result.subList(0, limit)));
+		} else return ImmutableList.copyOf(uiClean(result));
+	}
+
+
+	private List<XLiMeResource> uiClean(List<XLiMeResource> list) {
+		List<XLiMeResource> result = new ArrayList<>();
+		for (XLiMeResource res: list) {
+			result.add(uiCleanResource(res));
+		}
+		return result;
+	}
+
+	@Override
 	protected Optional<MediaItemDao> getMediaItemDao() {
 		return Optional.<MediaItemDao>of(miDao);
+	}
+	
+	@Override
+	protected Optional<UIEntityDao> getUIEntDao() {
+		return Optional.<UIEntityDao>of(uiEntDao);
 	}
 
 	public List<EntityAnnotation> findEntityAnnotations(int limit) {
@@ -112,6 +147,38 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		log.debug(String.format("Found %s EntAnns", cursor.count()));
 		return toMediaItemUrlScoredSet(cursor);
 	}
+	
+	@Override
+	public ScoredSet<ASRAnnotation> findASRAnnotationsForKBEntity(
+			String entityUrl) {
+		//EntityAnnotation.resourceUrl only refer to the tv program track (audio indicates some ASRAnnotation was entity linked, but we don't know which one...
+		return ScoredSetImpl.empty();
+	}
+
+	@Override
+	public ScoredSet<OCRAnnotation> findOCRAnnotationForKBEntity(
+			String entityUrl) {
+		//EntityAnnotation.resourceUrl only refer to the tv program track (video indicates some OCRAnnotation was entity linked, but we don't know which one...
+		return ScoredSetImpl.empty();
+	}
+
+	@Override
+	public ScoredSet<SubtitleSegment> findSubtitleSegmentsForKBEntity(
+			String entityUrl) {
+		//EntityAnnotation.resourceUrl only refer to the tv program track (subtitle means some SubtitleSegment was entity linked, but we don't know which one...
+		return ScoredSetImpl.empty();
+	}
+
+	private ScoredSet<String> toMediaAnnotUrlScoredSet(DBCursor<EntityAnnotation> cursor) {
+		ScoredSet.Builder<String> builder = ScoredSetImpl.builder();
+		for (EntityAnnotation ea: cursor.toArray(defaultMax)) {
+			Optional<String> miUrl = mapAnnotatedResourceUrlToMediaAnnotUrl(ea.getResourceUrl());
+			if (miUrl.isPresent()) {
+				builder.add(miUrl.get(), toScore(ea));
+			}
+		}
+		return builder.build();
+	}
 
 	private ScoredSet<String> toMediaItemUrlScoredSet(
 			DBCursor<EntityAnnotation> cursor) {
@@ -125,16 +192,29 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		return builder.build();
 	}
 
-	private Optional<String> mapAnnotatedResourceUrlToMediaItemUrl(
+	protected final Optional<String> mapAnnotatedResourceUrlToMediaItemUrl(
 			String resourceUrl) {
 		if (typeResolver.isMediaItem(resourceUrl)) return Optional.of(resourceUrl);
 		try {
 			if (typeResolver.isSubtitleTrack(resourceUrl)) {
 				return typeResolver.subtitleTrackUrlAsTVProgUrl(resourceUrl);
+			} else if (typeResolver.isAudioTrack(resourceUrl)) {
+				return typeResolver.audioTrackUrlAsTVProgUrl(resourceUrl);
+			} else if (typeResolver.isVideoTrack(resourceUrl)) {
+				return typeResolver.videoTrackUrlAsTVProgUrl(resourceUrl);
 			}
 		} catch (Exception e) {
 			log.error(String.format("Error mapping annotated resource %s to a mediaItem url", resourceUrl));
 		}
+		return Optional.absent();
+	}
+	
+	protected final Optional<String> mapAnnotatedResourceUrlToMediaAnnotUrl(String entityAnnResourceUrl) {
+		if (typeResolver.isSubtitleSegmentUri(entityAnnResourceUrl) ||
+				typeResolver.isASRAnnotation(entityAnnResourceUrl) ||
+				typeResolver.isOCRAnnotation(entityAnnResourceUrl)) {
+			return Optional.of(entityAnnResourceUrl);
+		} 
 		return Optional.absent();
 	}
 

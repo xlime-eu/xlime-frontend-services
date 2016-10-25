@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableSet;
 import com.hp.hpl.jena.query.QueryParseException;
 
 import eu.xlime.bean.Content;
+import eu.xlime.bean.CustomTVInfo;
 import eu.xlime.bean.Duration;
 import eu.xlime.bean.GeoLocation;
 import eu.xlime.bean.MediaItem;
@@ -28,6 +29,7 @@ import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.UrlLabel;
+import eu.xlime.bean.ZattooCustomTVInfo;
 import eu.xlime.dao.MediaItemDao;
 import eu.xlime.sparql.QueryExecutionException;
 import eu.xlime.sparql.SparqlClient;
@@ -140,6 +142,15 @@ public abstract class SparqlMediaItemDao extends AbstractMediaItemDao {
 		log.debug("Found " + result.size() + " results ");
 		
 		return toTVProgramBeans(result, toFind);
+	}
+	
+	protected final Map<String, Long> findZattooProductionPidMappings() {
+		String query = qFactory.zattooPidMappings();
+		log.debug("Retrieving zattoo sandbox to production mappings using query: " + query);
+		Map<String, Map<String, String>> result = getXLiMeSparqlClient().executeSPARQLQuery(query);
+		log.debug("Found " + result.size() + " results ");
+		
+		return toZattooProductionPidMappings(result);
 	}
 
 	protected final Map<String, MicroPostBean> doFindMicroPosts(List<String> toFind) {
@@ -269,6 +280,27 @@ public abstract class SparqlMediaItemDao extends AbstractMediaItemDao {
 		if (optGeoLoc.isPresent()) {
 			result.setRelatedLocation(optGeoLoc.get());
 		}
+		if (tuple.containsKey("genre")) {
+			result.setGenre(tuple.get("genre"));
+		}
+		if (tuple.containsKey("prodpid")) {
+			String ppidstr = tuple.get("prodpid");
+			try {
+				long ppid = Long.valueOf(ppidstr);
+				CustomTVInfo ctvi = result.getCustomInfo();
+				ZattooCustomTVInfo ztvi = (ctvi == null) ? new ZattooCustomTVInfo() :
+					asZattooCustomTVInfo(ctvi);
+				ztvi.setProductionProgId(ppid);
+				result.setCustomInfo(ztvi);
+			} catch (Exception e) {
+				log.error("Error reading production pid for " + ppidstr, e);
+			}
+		}
+	}
+
+	private ZattooCustomTVInfo asZattooCustomTVInfo(CustomTVInfo ctvi) {
+		if (ctvi instanceof ZattooCustomTVInfo) return (ZattooCustomTVInfo)ctvi;
+		throw new RuntimeException("Not a ZattooCustomTVInfo " + ctvi);
 	}
 
 	private Content noDescriptionContent() {
@@ -494,6 +526,29 @@ public abstract class SparqlMediaItemDao extends AbstractMediaItemDao {
 		return result;
 	}
 	
+	private Map<String, Long> toZattooProductionPidMappings(
+			Map<String, Map<String, String>> resultSet) {
+		if (resultSet == null || resultSet.keySet().isEmpty()) {
+			log.debug("No zattoo mappings found");
+			return ImmutableMap.of();
+		}
+		Map<String, Long> result = new HashMap<>();
+		for (String id: resultSet.keySet()) {
+			final Map<String, String> tuple = resultSet.get(id);
+			if (tuple.containsKey("url") && tuple.containsKey("prodpid")) {
+				final String url = tuple.get("url");
+				if (result.containsKey("url")) continue;
+				final String pidStr = tuple.get("prodpid");
+				try {
+					final long prodPid = Long.valueOf(pidStr);
+					result.put(url, prodPid);
+				} catch (Exception e) {
+					log.warn("Expecting a long value, but found " + pidStr);
+				}
+			}
+		}
+		return result;
+	}
 	
 	private UrlLabel readCreator(String creatorUrl, Optional<String> optLabel) {
 		UrlLabel result = new UrlLabel();

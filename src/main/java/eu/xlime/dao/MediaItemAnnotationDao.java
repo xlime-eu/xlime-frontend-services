@@ -9,6 +9,7 @@ import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.XLiMeResource;
 import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.score.ScoredSet;
 
@@ -59,6 +60,12 @@ public interface MediaItemAnnotationDao {
 	 * @return
 	 */
 	ScoredSet<String> findMediaItemUrlsByKBEntity(final String entityUrl);
+	
+	ScoredSet<ASRAnnotation> findASRAnnotationsForKBEntity(final String entityUrl);
+	
+	ScoredSet<OCRAnnotation> findOCRAnnotationForKBEntity(final String entityUrl);
+	
+	ScoredSet<SubtitleSegment> findSubtitleSegmentsForKBEntity(final String entityUrl);
 
 	Optional<ASRAnnotation> findASRAnnotation(String mediaItemUri);
 	
@@ -117,5 +124,14 @@ public interface MediaItemAnnotationDao {
 	 * @return
 	 */
 	List<OCRAnnotation> findOCRAnnotationsByText(String textQuery);
+	
+	/**
+	 * Finds recent annotations
+	 * 
+	 * @param minutes
+	 * @param limit
+	 * @return
+	 */
+	List<XLiMeResource> findRecentAnnotations(int minutes, int limit);
 	
 }

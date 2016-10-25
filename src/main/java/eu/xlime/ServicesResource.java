@@ -83,13 +83,19 @@ public class ServicesResource {
 	public Response mediaItem(@QueryParam("url") List<String> urls) {
 		log.info("Received /mediaItems?url=" + urls);
 		MediaItemListBean milb = lookupMediaItems(urls);
+		return asResponse(urls, milb);
+	}
+
+	private Response asResponse(List<String> urls, MediaItemListBean milb) {
 		if (milb.getMediaItems().isEmpty() && !milb.getErrors().isEmpty()) {
 			log.info("returning errors" + milb.getErrors());
 			Response errorResponse = Response.serverError().entity(milb.getErrors()).build();
 			return errorResponse;
 		}
-		String msg = String.format("Returning response for %s with %s media-items and %s errors.", urls, milb.getMediaItems().size(), milb.getErrors().size()); 
-		log.info(msg);
+		if (log.isDebugEnabled()) {
+			String msg = String.format("Returning response for %s with %s media-items and %s errors.", urls, milb.getMediaItems().size(), milb.getErrors().size()); 
+			log.debug(msg);
+		}
 
 		return Response.ok(milb).build();
 	}
@@ -133,18 +139,52 @@ public class ServicesResource {
 		int limit = 50;
 		if (minutes <= 0) minutes = 5;
 		List<String> urls = mediaItemDao.findLatestMediaItemUrls(minutes, limit);
-		log.info("Found latest media items " + urls);
-		return mediaItem(urls);
+		log.info(String.format("Found %s recent media items", urls.size()));
+		if (log.isTraceEnabled()) {
+			log.trace("Found latest media items " + urls);
+		}
+		MediaItemListBean milb = lookupMediaItems(urls);
+		return asResponse(urls, milb);
 	}
+	
+	final int default_recent_minutes = 5; 
+	final int default_recent_limit = 50;
+	
+	@GET
+	@Path("/latestAnnotations")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response latestAnnotations(@QueryParam("minutes") int minutes) {
+		log.info("Received latestAnnotations?minutes=" + minutes);
+		int limit = default_recent_limit;
+		if (minutes <= 0) minutes = default_recent_minutes;
+		List<XLiMeResource> recentAnns = mediaItemAnnotationDao.findRecentAnnotations(minutes, limit);
+		log.info(String.format("Found %s recent media items", recentAnns.size()));
+		if (log.isTraceEnabled()) {
+			log.trace("Found latest annotations " + recentAnns);
+		}
+		
+		SearchResultBean bean = new SearchResultBean();
+		bean.getErrors();
+		bean.getMediaItems();
+		bean.getAnnotations().addAll(recentAnns);
+		bean.getEntities();
+		
+		return Response.ok(bean).build();
+	}
+	
 	
 	@GET
 	@Path("/entities")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response entities(@QueryParam("url") List<String> urls) {
-		log.info("Received " + urls);
+		log.info("Received /entities?url= " + urls);
 		List<EntitySummary> list = new ArrayList<EntitySummary>();
 		if (urls == null || urls.isEmpty()) 
 			return Response.serverError().entity("No requested urls").build();
+		int limit = 10;
+		if (urls.size() > limit) {
+			urls = urls.subList(0, limit);
+		}
 		for (String url: urls){
 			try {
 				Optional<? extends EntitySummary> optEntitySummary = findUIEntitySummary(url); 
@@ -198,12 +238,17 @@ public class ServicesResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response search(@QueryParam("q") String query) {
 		log.info("Received /search?q=" + query);
-		if (query == null || query.isEmpty()) 
-			return Response.serverError().entity("No requested query").build();
-		
-		List<String> foundMedItemUrls = findMediaItemUrls(query).asList();
-		List<UIEntity> ents = findEntities(query);
-		List<XLiMeResource> annotations = findAnnotationsByText(query);
+		List<String> foundMedItemUrls = ImmutableList.of();
+		List<UIEntity> ents = ImmutableList.of();
+		List<XLiMeResource> annotations = ImmutableList.of();
+		if (query == null || query.isEmpty()) {
+			foundMedItemUrls = mediaItemDao.findLatestMediaItemUrls(default_recent_minutes, default_recent_limit);
+			annotations = mediaItemAnnotationDao.findRecentAnnotations(default_recent_minutes, default_recent_limit);
+		} else {
+			foundMedItemUrls = findMediaItemUrls(query).asList();
+			ents = findEntities(query);
+			annotations = findAnnotationsByText(query);
+		}
 		
 		MediaItemListBean milb = lookupMediaItems(foundMedItemUrls);
 		
@@ -254,7 +299,15 @@ public class ServicesResource {
 	}
 
 	private Optional<? extends EntitySummary> findUIEntitySummary(String url) {
-		return summaClient.retrieveSummary(url);
+		try {
+			return summaClient.retrieveSummary(url);
+		} catch (Throwable e) {
+			log.warn("Failed to use summaClient", e);
+			Optional<UIEntity> optUiEnt = uiEntityDao.retrieveFromUri(url);
+			if (optUiEnt.isPresent()) {
+				return Optional.of(EntitySummary.emptyFrom(optUiEnt.get()));
+			} else return Optional.absent();
+		}
 	}
 
 	final Optional<? extends MediaItem> findMediaItem(String url) {

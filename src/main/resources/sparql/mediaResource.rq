@@ -7,7 +7,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?g
   	#replaceByUrlVar 
-  	?broadcastDate ?duration ?publisher ?relImage ?source ?title ?description ?geoname {
+  	?broadcastDate ?duration ?publisher ?relImage ?genre ?source ?title ?description ?geoname ?prodpid {
 GRAPH ?g {  
 	#url a ma:MediaResource.
 	#url ma:date ?broadcastDate.
@@ -24,10 +24,16 @@ GRAPH ?g {
 		#url ma:description ?description .
 	}
 	OPTIONAL {
+		#url ma:hasGenre ?genre.
+	}
+	OPTIONAL {
 		#url ma:hasRelatedImage ?relImage. }
 	OPTIONAL { 
 		#url ma:hasRelatedLocation ?geoname.
 	} 
+	OPTIONAL {
+		#url xlime:hasProductionPID ?prodpid.
+	}
 	#ReplaceByFilter
 } # end of graph g
 } #ReplaceByLimit

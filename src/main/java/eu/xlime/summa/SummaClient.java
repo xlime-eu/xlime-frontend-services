@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 
 import eu.xlime.Config;
 import eu.xlime.summa.bean.EntitySummary;
@@ -52,12 +53,17 @@ public class SummaClient {
 		Callable<? extends Model> valueLoader = new Callable<Model>() {
 			@Override
 			public Model call() throws Exception {
-				return retrieveSummaModelFromServer(entityUrl).get();
+				Optional<Model> optMod = retrieveSummaModelFromServer(entityUrl);
+				if (optMod.isPresent()) return optMod.get();
+				else throw new ExecutionException("No response from server", null);
 			}
 		};
 		
 		try {
 			return Optional.of(summaModelCache.get(entityUrl, valueLoader));
+		} catch (UncheckedExecutionException e) {
+			log.warn("Error loading summaModel for " + entityUrl, e);
+			return Optional.absent();
 		} catch (ExecutionException e) {
 			log.warn("Error loading summaModel for " + entityUrl, e);
 			return Optional.absent();

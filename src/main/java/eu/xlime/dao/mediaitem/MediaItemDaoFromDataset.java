@@ -1,12 +1,14 @@
 package eu.xlime.dao.mediaitem;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.hp.hpl.jena.query.Dataset;
 
 import eu.xlime.bean.MediaItem;
@@ -54,7 +56,7 @@ public class MediaItemDaoFromDataset extends SparqlMediaItemDao{
 	public List<TVProgramBean> findTVPrograms(List<String> uris) {
 		return ImmutableList.copyOf(doFindTVPrograms(uris).values());
 	}
-
+	
 	@Override
 	public Optional<VideoSegment> findVideoSegment(String uri) {
 		return Optional.absent();

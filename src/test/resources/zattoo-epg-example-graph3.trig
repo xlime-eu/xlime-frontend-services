@@ -1,0 +1,41 @@
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix freebase: <http://rdf.freebase.com/ns/> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix kdo: <http://kdo.render-project.eu/kdo#> .
+@prefix ma: <http://www.w3.org/ns/ma-ont#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix wikide: <http://de.wikipedia.org/wiki/> .
+@prefix wikien: <http://en.wikipedia.org/wiki/> .
+@prefix wikies: <http://es.wikipedia.org/wiki/> .
+@prefix wikisl: <http://sl.wikipedia.org/wiki/> .
+@prefix xlime: <http://xlime-project.org/vocab/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+{
+    <http://zattoo.com/processed/117497971> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-10-21T07:35:39+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-10-21T07:35:35.492053+00:00"^^xsd:dateTime ] .
+}
+
+<http://zattoo.com/processed/117497971> {
+    <http://zattoo.com/program/117497971> a ma:MediaResource ;
+        ma:date "2016-10-21T08:35:00+00:00"^^xsd:dateTime ;
+        ma:description "2013: Dopo tre anni di rifiuti, Shawn viene finalmente ammesso a partecipare al seminario di consulenti paranormali della polizia del professor Bob Stein. Recatosi sul posto assieme a Gus, il \"sensitivo\" incontra gli altri partecipanti: la consulente wicca della polizia di New Orleans Hazel Lazarus e il medium della polizia di Anchorage Garth Mathers, in costante contatto col suo spirito guida Bernie. A inizio convegno tuttavia il professore muore sul palco per avvelenamento." ;
+        ma:duration 2.7e+03 ;
+        ma:hasGenre "Series" ;
+        ma:hasPublisher [ rdfs:label "RSI La1 HD" ] ;
+        ma:hasRelatedImage <http://cms-staging.zattoo.com/system/images/aede/7b4d/5ffd/588a/1c2b/format_480x360.jpg> ;
+        ma:hasTrack <http://zattoo.com/program/117497971/audio>,
+            <http://zattoo.com/program/117497971/subtitle>,
+            <http://zattoo.com/program/117497971/video> ;
+        ma:title "Psych" ;
+        xlime:hasProductionPID 118148822 .
+}

@@ -73,6 +73,12 @@ public class EntityAnnotation implements XLiMeResource, Serializable {
 	private Date insertionDate;
 	
 	/**
+	 * Date when the resource being annotated was published. For example, if this annotates 
+	 * an ASR segment, this should be the broadcast date of the segment.
+	 */
+	private UIDate mentionDate;
+	
+	/**
 	 * A url for identifying this {@link EntityAnnotation}
 	 */
 	@Id
@@ -124,15 +130,20 @@ public class EntityAnnotation implements XLiMeResource, Serializable {
 		this.insertionDate = insertionDate;
 	}
 
+	public final UIDate getMentionDate() {
+		return mentionDate;
+	}
+
+	public final void setMentionDate(UIDate mentionDate) {
+		this.mentionDate = mentionDate;
+	}
+
 	@Override
 	public String toString() {
 		return String
-				.format("EntityAnnotation [%sentity=%s, activityUrl=%s, resourceUrl=%s, confidence=%s, position=%s, insertionDate=%s]",
-						EntityAnnotation.coinUri(this).equals(url) ? "" : "url="+url+", ", //only print url value if non-standard
-						entity == null ? "null" : entity.getUrl(), 
-						activityUrl, resourceUrl, confidence, position,
-						insertionDate
-						);
+				.format("EntityAnnotation [entity=%s, activityUrl=%s, resourceUrl=%s, confidence=%s, position=%s, insertionDate=%s, mentionDate=%s, url=%s]",
+						entity, activityUrl, resourceUrl, confidence, position,
+						insertionDate, mentionDate, url);
 	}
 
 	

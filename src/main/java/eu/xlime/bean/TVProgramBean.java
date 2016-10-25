@@ -24,9 +24,13 @@ public class TVProgramBean implements MediaItem {
 	
 	private String relatedImage;
 	
+	private String genre;
+	
 	private UrlLabel publisher;
 	
 	private GeoLocation relatedLocation;
+	
+	private CustomTVInfo customInfo;
 	
 	/**
 	 * Optional url where this TV program can be watched
@@ -99,6 +103,14 @@ public class TVProgramBean implements MediaItem {
 		this.relatedImage = relatedImage;
 	}
 
+	public final String getGenre() {
+		return genre;
+	}
+
+	public final void setGenre(String genre) {
+		this.genre = genre;
+	}
+
 	public UrlLabel getPublisher() {
 		return publisher;
 	}
@@ -115,6 +127,15 @@ public class TVProgramBean implements MediaItem {
 		this.relatedLocation = relatedLocation;
 	}
 
+	
+	public final CustomTVInfo getCustomInfo() {
+		return customInfo;
+	}
+
+	public final void setCustomInfo(CustomTVInfo customInfo) {
+		this.customInfo = customInfo;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -122,10 +143,10 @@ public class TVProgramBean implements MediaItem {
 	@Override
 	public String toString() {
 		return String
-				.format("TVProgramBean [url=%s, title=%s, broadcastDate=%s, description=%s, duration=%s, source=%s, relatedImage=%s, publisher=%s, relatedLocation=%s, watchUrl=%s, type=%s]",
+				.format("TVProgramBean [url=%s, title=%s, broadcastDate=%s, description=%s, duration=%s, source=%s, relatedImage=%s, genre=%s, publisher=%s, relatedLocation=%s, customInfo=%s, watchUrl=%s, type=%s]",
 						url, title, broadcastDate, description, duration,
-						source, relatedImage, publisher, relatedLocation,
-						watchUrl, type);
+						source, relatedImage, genre, publisher,
+						relatedLocation, customInfo, watchUrl, type);
 	}
 
 	

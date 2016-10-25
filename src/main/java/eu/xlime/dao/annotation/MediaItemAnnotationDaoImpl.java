@@ -13,6 +13,7 @@ import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
+import eu.xlime.bean.XLiMeResource;
 import eu.xlime.dao.MediaItemAnnotationDao;
 import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.score.ScoredSet;
@@ -26,6 +27,11 @@ public class MediaItemAnnotationDaoImpl extends AbstractMediaItemAnnotationDao {
 	public MediaItemAnnotationDaoImpl() {
 //		delegate = new XLiMeSparqlMediaItemAnnotationDao();
 		delegate = new MongoMediaItemAnnotationDao(new Config().getCfgProps());
+	}
+
+	@Override
+	public List<XLiMeResource> findRecentAnnotations(int minutes, int limit) {
+		return delegate.findRecentAnnotations(minutes, limit);
 	}
 
 	/* (non-Javadoc)
@@ -64,6 +70,24 @@ public class MediaItemAnnotationDaoImpl extends AbstractMediaItemAnnotationDao {
 	@Override
 	public ScoredSet<String> findMediaItemUrlsByKBEntity(String entityUrl) {
 		return delegate.findMediaItemUrlsByKBEntity(entityUrl);
+	}
+
+	@Override
+	public ScoredSet<ASRAnnotation> findASRAnnotationsForKBEntity(
+			String entityUrl) {
+		return delegate.findASRAnnotationsForKBEntity(entityUrl);
+	}
+
+	@Override
+	public ScoredSet<OCRAnnotation> findOCRAnnotationForKBEntity(
+			String entityUrl) {
+		return delegate.findOCRAnnotationForKBEntity(entityUrl);
+	}
+
+	@Override
+	public ScoredSet<SubtitleSegment> findSubtitleSegmentsForKBEntity(
+			String entityUrl) {
+		return delegate.findSubtitleSegmentsForKBEntity(entityUrl);
 	}
 
 	/* (non-Javadoc)

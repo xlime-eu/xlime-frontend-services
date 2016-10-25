@@ -1,0 +1,31 @@
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix freebase: <http://rdf.freebase.com/ns/> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix kdo: <http://kdo.render-project.eu/kdo#> .
+@prefix ma: <http://www.w3.org/ns/ma-ont#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+@prefix wikide: <http://de.wikipedia.org/wiki/> .
+@prefix wikien: <http://en.wikipedia.org/wiki/> .
+@prefix wikies: <http://es.wikipedia.org/wiki/> .
+@prefix wikisl: <http://sl.wikipedia.org/wiki/> .
+@prefix xlime: <http://xlime-project.org/vocab/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://zattoo.com/processed/117606865> {
+    <http://zattoo.com/program/117606865> xlime:hasProductionPID 118324680 .
+}
+
+{
+    <http://zattoo.com/processed/117606865> a prov:Entity ;
+        prov:wasAttributedTo <http://ijs.si> ;
+        prov:wasGeneratedBy [ a prov:Activity ;
+                prov:endedAtTime "2016-10-21T09:10:37+00:00"^^xsd:dateTime ;
+                prov:startedAtTime "2016-10-21T09:10:33.663074+00:00"^^xsd:dateTime ] .
+}
+

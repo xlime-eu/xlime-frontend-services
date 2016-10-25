@@ -2,9 +2,7 @@ package eu.xlime.sphere;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -13,16 +11,18 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Ordering;
 
+import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
+import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SearchString;
+import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.UrlLabel;
 import eu.xlime.bean.XLiMeResource;
@@ -33,11 +33,11 @@ import eu.xlime.dao.UIEntityDao;
 import eu.xlime.dao.xLiMeResourceDao;
 import eu.xlime.dao.annotation.MediaItemAnnotationDaoImpl;
 import eu.xlime.dao.entity.UIEntityDaoImpl;
-import eu.xlime.search.SearchItemDao;
 import eu.xlime.sphere.bean.Recommendation;
 import eu.xlime.sphere.bean.Spheres;
 import eu.xlime.summa.bean.UIEntity;
 import eu.xlime.util.ResourceTypeResolver;
+import eu.xlime.util.score.Score;
 import eu.xlime.util.score.ScoreFactory;
 import eu.xlime.util.score.ScoredSet;
 import eu.xlime.util.score.ScoredSetImpl;
@@ -58,6 +58,9 @@ public class SpheresFactory {
 	private static final UIEntityDao uiEntityFactory = UIEntityDaoImpl.instance;
 	private static final ScoreFactory scoref = ScoreFactory.instance;
 		
+	private final int default_recent_minutes = 5;
+	private final int default_recent_limit = 20;
+	
 	public Spheres buildSpheres(List<String> contextUrls) {
 		final long start = System.currentTimeMillis();
 		Spheres result = new Spheres();
@@ -105,9 +108,13 @@ public class SpheresFactory {
 		List<Recommendation> mediaItems = mapToRecommendation(calcRecMediaItems(context));
 		log.debug(String.format("Found %s mediaItem recs in %sms", mediaItems.size(), (System.currentTimeMillis() - startEntRec)));
 		
+		List<Recommendation> annots = mapToRecommendation(calcRecAnnots(context));
+		log.debug(String.format("Found %s annot recs in %sms", mediaItems.size(), (System.currentTimeMillis() - startEntRec)));
+		
 		log.debug(String.format("Weaving %s entities and %s media-items", entities.size(), mediaItems.size()));
 		return weave(entities, mediaItems);
 	}
+
 
 	private List<Recommendation> weave(List<Recommendation>... resLists) {
 		List<Recommendation> result = new ArrayList<Recommendation>();
@@ -141,9 +148,56 @@ public class SpheresFactory {
 		result.setRecommended(xLiMeResource);
 		return result;
 	}
+
+	private ScoredSet<XLiMeResource> calcRecAnnots(List<XLiMeResource> context) {
+		final ScoredSet.Builder<XLiMeResource> builder = ScoredSetImpl.builder();
+		if (context == null || context.isEmpty()) {
+			List<XLiMeResource> anns = mediaItemAnnotationDao.findRecentAnnotations(default_recent_minutes, default_recent_limit);
+			for (XLiMeResource res: anns) {
+				if (!typeResolver.isEntityAnnotation(res.getUrl())) {
+					builder.add(res, scoref.newScore(1.0, "Recent annotation"));
+				}
+			}
+		}
+		for (XLiMeResource res: context) {
+			if (isMediaItem(res)) {
+				// TODO: use Adityia's recommender for the supported media items
+			} else if (res instanceof SearchString) {
+				String keywords = ((SearchString)res).getValue();
+				String justif = String.format("Matches search '%s'", keywords);
+				List<XLiMeResource> anns = new ArrayList<>();
+				anns.addAll(mediaItemAnnotationDao.findASRAnnotationsByText(keywords));
+				anns.addAll(mediaItemAnnotationDao.findOCRAnnotationsByText(keywords));
+				anns.addAll(mediaItemAnnotationDao.findSubtitleSegmentsByText(keywords));
+				for (XLiMeResource ann: anns) {
+					builder.add(ann, scoref.newScore(1.0, "Matches search"));
+				}
+			} else if (res instanceof UIEntity) {
+				String entUrl = ((UIEntity) res).getUrl();
+				for (ASRAnnotation asrAnn: mediaItemAnnotationDao.findASRAnnotationsForKBEntity(entUrl)) {
+					builder.add(asrAnn, scoref.newScore(1.0, "Has entity annotation for " + entUrl));
+				}
+				for (OCRAnnotation ocrAnn: mediaItemAnnotationDao.findOCRAnnotationForKBEntity(entUrl)) {
+					builder.add(ocrAnn, scoref.newScore(1.0, "Has entity annotation for " + entUrl));
+				}
+				for (SubtitleSegment subAnn: mediaItemAnnotationDao.findSubtitleSegmentsForKBEntity(entUrl)) {
+					builder.add(subAnn, scoref.newScore(1.0, "Has entity annotation for " + entUrl));
+				}
+			} else {
+				// TODO: match other types of 
+			}
+		}
+		return builder.build();
+	}
 	
 	private ScoredSet<MediaItem> calcRecMediaItems(List<XLiMeResource> context) {
 		final ScoredSet.Builder<String> medItUrls = ScoredSetImpl.builder();
+		if (context == null || context.isEmpty()) {
+			Score score = scoref.newScore(1.0, "Recent media item");
+			for (String miUrl: mediaItemDao.findLatestMediaItemUrls(default_recent_minutes, default_recent_limit)) {
+				medItUrls.add(miUrl, score);
+			}
+		}
 		for (XLiMeResource res: context) {
 			if (isMediaItem(res)) {
 				// TODO: use Adityia's recommender for the supported media items
@@ -174,6 +228,15 @@ public class SpheresFactory {
 
 	private ScoredSet<UIEntity> calcRecEntities(List<XLiMeResource> context) {
 		final ScoredSet.Builder<UIEntity> builder = ScoredSetImpl.builder();
+		if (context == null || context.isEmpty()) {
+			List<XLiMeResource> anns = mediaItemAnnotationDao.findRecentAnnotations(default_recent_minutes, default_recent_limit);
+			for (XLiMeResource res: anns) {
+				if (typeResolver.isEntityAnnotation(res.getUrl())) {
+					EntityAnnotation ea = (EntityAnnotation)res;
+					builder.add(ea.getEntity(), scoref.newScore(1.0, "Recent annotation"));
+				}
+			}
+		}
 		//TODO: much better to only search for entUris, only convert the topN to UIEntity 
 		for (XLiMeResource res: context) {
 			if (isMediaItem(res)) {

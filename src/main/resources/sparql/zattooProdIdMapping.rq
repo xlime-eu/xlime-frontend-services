@@ -1,0 +1,14 @@
+PREFIX xlime: <http://xlime-project.org/vocab/>  
+PREFIX dcterms: <http://purl.org/dc/terms/>  
+PREFIX sioc: <http://rdfs.org/sioc/ns#>  
+PREFIX ma: <http://www.w3.org/ns/ma-ont#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+
+SELECT ?g
+  	?url ?prodpid {
+GRAPH ?g {  
+	?url xlime:hasProductionPID ?prodpid.
+	#ReplaceByFilter
+} # end of graph g
+} #ReplaceByLimit

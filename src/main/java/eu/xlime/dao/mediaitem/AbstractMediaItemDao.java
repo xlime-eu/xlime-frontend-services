@@ -11,11 +11,13 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 
+import eu.xlime.bean.CustomTVInfo;
 import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.UIDate;
+import eu.xlime.bean.ZattooCustomTVInfo;
 import eu.xlime.dao.MediaItemDao;
 import eu.xlime.datasum.CachedDatasetSummaryFactory;
 import eu.xlime.datasum.DatasetSummaryFactory;
@@ -169,9 +171,23 @@ public abstract class AbstractMediaItemDao implements MediaItemDao {
 			tvProgramBean.setRelatedImage(null);
 		}
 		tvProgramBean.setWatchUrl(typeResolver.toWatchUrl(tvProgramBean));
+		try {
+			ZattooCustomTVInfo ztvi = (tvProgramBean.getCustomInfo() == null) ? new ZattooCustomTVInfo() :
+				asZattooCustomTVInfo(tvProgramBean.getCustomInfo());
+			String channelId = typeResolver.resolveZattooChannelId(tvProgramBean);
+			ztvi.setChannelId(channelId);
+			tvProgramBean.setCustomInfo(ztvi);
+		} catch (Exception e) {
+			log.warn("Failed to set channelId information ", e);
+		}
 		return tvProgramBean;
 	}
 	
+	private ZattooCustomTVInfo asZattooCustomTVInfo(CustomTVInfo customInfo) {
+		if (customInfo instanceof ZattooCustomTVInfo) return (ZattooCustomTVInfo)customInfo;
+		throw new IllegalArgumentException("Expecting ZattooCustomTVInfo but found " + customInfo);
+	}
+
 	protected final <T extends MediaItem> Iterable<T> cleanMediaItems(
 			Collection<T> values) {
 		List<T> result = new ArrayList<T>();

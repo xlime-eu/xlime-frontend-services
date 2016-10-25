@@ -25,6 +25,7 @@ import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.VideoSegment;
+import eu.xlime.bean.XLiMeResource;
 import eu.xlime.bean.ZattooStreamPosition;
 import eu.xlime.bean.annpos.SpanInTextPosition;
 import eu.xlime.sparql.SparqlClient;
@@ -52,6 +53,12 @@ public abstract class SparqlMediaItemAnnotationDao extends
 
 	protected abstract KBEntityMapper getKBEntityMapper(); 
 	
+	@Override
+	public List<XLiMeResource> findRecentAnnotations(int minutes, int limit) {
+		log.warn("This method is not supported in sparql (yet? or ever?)");
+		return ImmutableList.of();
+	}
+
 	/* (non-Javadoc)
 	 * @see eu.xlime.dao.MediaItemAnnotationDao#findMicroPostEntityAnnotations(java.lang.String)
 	 */
@@ -137,6 +144,27 @@ public abstract class SparqlMediaItemAnnotationDao extends
 		ScoredSet<String> urls = toUrlScoredSet(result);
 		log.trace("Media Items: " + urls.toString());
 		return urls;
+	}
+
+	@Override
+	public ScoredSet<ASRAnnotation> findASRAnnotationsForKBEntity(
+			String entityUrl) {
+		log.warn("findASRAnnotationsForKBEntity not implemented in sparql");
+		return ScoredSetImpl.empty();
+	}
+
+	@Override
+	public ScoredSet<OCRAnnotation> findOCRAnnotationForKBEntity(
+			String entityUrl) {
+		log.warn("findOCRAnnotationForKBEntity not implemented in sparql");
+		return ScoredSetImpl.empty();
+	}
+
+	@Override
+	public ScoredSet<SubtitleSegment> findSubtitleSegmentsForKBEntity(
+			String entityUrl) {
+		log.warn("findSubtitleSegmentsForKBEntity not implemented in sparql");
+		return ScoredSetImpl.empty();
 	}
 
 	private ScoredSet<String> toUrlScoredSet(Map<String, Map<String, String>> resultSet) {
@@ -582,7 +610,7 @@ public abstract class SparqlMediaItemAnnotationDao extends
 				result.add(entAnn);
 			}
 		}
-		return cleanEntAnns(result);
+		return mergeEntAnns(result);
 	}
 
 	private Optional<EntityAnnotation> toEntityAnnotation(Map<String, String> tuple) {

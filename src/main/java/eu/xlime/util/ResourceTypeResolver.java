@@ -114,6 +114,10 @@ public class ResourceTypeResolver {
 	public boolean isASRAnnotation(String uri) {
 		return uri.matches("http://zattoo.com/program/\\d+/audio/asr/\\d+/\\d+"); 
 	}
+
+	public boolean isEntityAnnotation(String uri) {
+		return uri.startsWith("http://xlime.eu/vocab/EntityAnnotation");
+	}
 	
 	public String calcUrl(ASRAnnotation asrAnn, String audioTrackUrl) {
 		if (asrAnn.getInSegment().getPosition() instanceof ZattooStreamPosition) {
@@ -168,6 +172,10 @@ public class ResourceTypeResolver {
 		return uri.matches("http://zattoo.com/program/\\d+/subtitles"); 
 	}
 
+	public boolean isSubtitleSegmentUri(String uri) {
+		return uri.matches("http://zattoo.com/program/\\d+/subtitles/\\d+/\\d+"); 
+	}
+		
 	public Optional<String> subtitleTrackUrlAsTVProgUrl(String uri) {
 		if (!isSubtitleTrack(uri)) throw new IllegalArgumentException("Uri is not a subtitle track url " + uri);
 		return Optional.of(uri.replaceAll("/subtitles", ""));
@@ -267,5 +275,11 @@ public class ResourceTypeResolver {
 		return String.format("http://%s/watch/%s/%s/%s/%s",
 				prog.getZattooHost(), prog.getChannelId(), prog.getProgId(), prog.getStartEpoch(), prog.getEndEpoch());
 	}
+
+	public String resolveZattooChannelId(TVProgramBean bean) {
+		ZattooTVProg prog = new ZattooTVProg(bean);
+		return prog.getChannelId();
+	}
+
 	
 }

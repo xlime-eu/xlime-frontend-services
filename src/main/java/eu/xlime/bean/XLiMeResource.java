@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
+import eu.xlime.datasum.bean.TimelineChart;
 import eu.xlime.prov.bean.ProvActivity;
 import eu.xlime.summa.bean.UIEntity;
 
@@ -28,7 +29,8 @@ import eu.xlime.summa.bean.UIEntity;
 	    @Type(value = SearchString.class, name = "http://xlime.eu/vocab/searchString"),
 	    @Type(value = EntityAnnotation.class, name = "http://xlime.eu/vocab/EntityAnnotation"),
 	    @Type(value = ProvActivity.class, name = "http://www.w3.org/ns/prov#Activity"),
-	    @Type(value = StatMetrics.class, name = "http://xlime.eu/vocab/statMetrics")
+	    @Type(value = StatMetrics.class, name = "http://xlime.eu/vocab/statMetrics"),
+	    @Type(value = TimelineChart.class, name = "http://xlime.eu/vocab/TimelineChart")
 	    }) 
 @XmlSeeAlso({MicroPostBean.class, NewsArticleBean.class, TVProgramBean.class})
 //@XmlDiscriminatorNode("@type")
