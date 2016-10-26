@@ -44,9 +44,16 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 			return findNewsArticleEntityAnnotations(url);
 		else if (typeResolver.isMicroPost(url))
 			return findMicroPostEntityAnnotations(url);
-		else if (typeResolver.isTVProgram(url))
-			return ImmutableList.of();// TODO: implement via subtitles, ASR, OCR, annotation of EPG data.
-		else throw new RuntimeException("Cannot map url to a known xLiMe media-item type " + url);
+		else if (typeResolver.isTVProgram(url)) {
+			// TODO: implement via subtitles, ASR, OCR, annotation of EPG data.
+			List<EntityAnnotation> viaSubs = findSubtitleTrackEntityAnnotations(typeResolver.tvProgUrlToSubtitleTrackUrl(url)); 
+			List<EntityAnnotation> viaAudi = findAudioTrackEntityAnnotations(typeResolver.tvProgUrlToAudioTrackUrl(url)); 
+			List<EntityAnnotation> viaVide = findVideoTrackEntityAnnotations(typeResolver.tvProgUrlToVideoTrackUrl(url));
+			if (log.isDebugEnabled()) {
+				log.debug(String.format("Found entity annotations for video: %s via sub, %s via aud, %s via vid", viaSubs.size(), viaAudi.size(), viaVide.size()));
+			}
+			return ImmutableList.<EntityAnnotation>builder().addAll(viaSubs).addAll(viaAudi).addAll(viaVide).build(); 
+		} else throw new RuntimeException("Cannot map url to a known xLiMe media-item type " + url);
 	}
 	
 	protected final VideoSegment newVideoSegment(String tvProgUrl) {

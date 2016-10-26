@@ -8,6 +8,7 @@ import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.OCRAnnotation;
 import eu.xlime.bean.SearchString;
+import eu.xlime.bean.SubtitleSegment;
 import eu.xlime.bean.TVProgramBean;
 import eu.xlime.bean.VideoSegment;
 import eu.xlime.bean.XLiMeResource;
@@ -70,6 +71,8 @@ public class xLiMeResourceDao {
 			return (Optional<T>)mediaItemDao.findVideoSegment(uri);
 		else if (SearchString.class.equals(resType)) 
 			return (Optional<T>)Optional.of(new SearchStringFactory().fromUri(uri));
+		else if (SubtitleSegment.class.equals(resType))
+			return (Optional<T>)annotationDao.findSubtitleSegment(uri);
 		else throw new RuntimeException("Could not determine xLiMe Resource type for " + uri);
 	}
 }

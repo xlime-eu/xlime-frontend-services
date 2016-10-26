@@ -68,6 +68,12 @@ public class SparqlQueryFactory {
 		return qPattern.replaceAll("#encUrl", encUrl);
 	}
 	
+	public String videoTrackEntityAnnotations(String url) {
+		final String encUrl = bracketUrl(url);
+		String qPattern = load("sparql/videoEntityAnnotations.rq");
+		return qPattern.replaceAll("#encUrl", encUrl);
+	}
+	
 	public String sameAs(String url) {
 		final String encUrl = bracketUrl(url);
 		return 	

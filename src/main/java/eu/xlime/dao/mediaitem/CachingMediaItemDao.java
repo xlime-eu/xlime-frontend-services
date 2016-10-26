@@ -2,6 +2,7 @@ package eu.xlime.dao.mediaitem;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,6 +151,11 @@ public class CachingMediaItemDao extends AbstractMediaItemDao {
 	@Override
 	public List<String> findMostRecentMediaItemUrls(int nMinutes, int limit) {
 		return delegate.findMostRecentMediaItemUrls(nMinutes, limit);
+	}
+
+	@Override
+	public List<String> findMediaItemsBefore(Date date, int limit) {
+		return findMediaItemsBefore(date, limit);
 	}
 
 	@Override

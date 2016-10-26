@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -14,6 +19,11 @@ import javax.ws.rs.core.Response;
 
 import org.openrdf.model.Model;
 import org.openrdf.model.impl.LinkedHashModel;
+import org.openrdf.query.MalformedQueryException;
+import org.openrdf.query.QueryEvaluationException;
+import org.openrdf.query.QueryLanguage;
+import org.openrdf.query.TupleQueryResult;
+import org.openrdf.repository.RepositoryException;
 import org.openrdf.rio.RDFFormat;
 import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFParseException;
@@ -28,6 +38,7 @@ import com.google.common.cache.Cache;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 
 import eu.xlime.Config;
+import eu.xlime.sparql.QueryExecutionException;
 import eu.xlime.summa.bean.EntitySummary;
 import eu.xlime.util.CacheFactory;
 
@@ -42,6 +53,7 @@ public class SummaClient {
 	private static Logger log = LoggerFactory.getLogger(SummaClient.class);
 	
 	private static MediaType textTurtle = new MediaType("text", "turtle");
+    private static final ExecutorService exec = Executors.newFixedThreadPool(4);
 
 	/**
 	 * Cache for recently retrieved summa{@link Model}s. Avoids having to call 
@@ -103,6 +115,28 @@ public class SummaClient {
 		} else {
 			return Optional.absent();
 		}
+	}
+	
+	public Optional<EntitySummary> retrieveSummary(String entityUrl, long timeOut) throws TimeoutException {
+		Future<Optional<EntitySummary>> result = exec.submit(callableRetrieveSummary(entityUrl));
+		try {
+			return result.get(timeOut, TimeUnit.MILLISECONDS);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		} catch (ExecutionException e) {
+			throw new RuntimeException(e.getCause());
+		} 
+	}
+	
+	private Callable<Optional<EntitySummary>> callableRetrieveSummary(final String entityUrl) {
+		return new Callable<Optional<EntitySummary>>() {
+			@Override
+			public Optional<EntitySummary> call() throws Exception {
+				Optional<EntitySummary> result = Optional.absent();
+				result = retrieveSummary(entityUrl);
+				return result;
+			}
+		};
 	}
 	
 	public Optional<EntitySummary> retrieveSummary(String entityUrl) {

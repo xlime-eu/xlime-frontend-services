@@ -102,10 +102,22 @@ public abstract class SparqlMediaItemAnnotationDao extends
 	@Override
 	public List<EntityAnnotation> findAudioTrackEntityAnnotations(
 			String url) {
-		log.trace("Finding entity annotations for subtitleSegment " + url);
+		log.trace("Finding entity annotations for audioTrack " + url);
 		Config cfg = new Config();
 		final SparqlClient sparqler = getXliMeSparqlClient();
 		String query = qFactory.audioTrackEntityAnnotations(url);
+		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
+		
+		return toEntityAnnotations(result, url);
+	}
+
+	@Override
+	public List<EntityAnnotation> findVideoTrackEntityAnnotations(
+			String url) {
+		log.trace("Finding entity annotations for videoTrack " + url);
+		Config cfg = new Config();
+		final SparqlClient sparqler = getXliMeSparqlClient();
+		String query = qFactory.videoTrackEntityAnnotations(url);
 		Map<String, Map<String, String>> result = sparqler.executeSPARQLOrEmpty(query, cfg.getLong(Opt.SparqlTimeout));
 		
 		return toEntityAnnotations(result, url);
@@ -249,6 +261,20 @@ public abstract class SparqlMediaItemAnnotationDao extends
 	@Override
 	public Optional<OCRAnnotation> findOCRAnnotation(String ocrAnnotUri) {
 		log.trace("Finding the OCRAnnotation " + ocrAnnotUri);
+		/* TODO: since OCR annotations do not have uris in sparql endpoint:
+		 * 1. map to mediaResource uri via naming convention, 
+		 * 2. find mediaResource via uri (needs MediaItemDao), 
+		 * 3. find all OCR annotations via #findOCRAnnotationsFor and 
+		 * 4. return one that matches, if any... 
+		 */
+		return Optional.absent();
+	}
+
+	
+	@Override
+	public Optional<SubtitleSegment> findSubtitleSegment(
+			String subtitleSegmentUri) {
+		log.trace("Finding the SubtitleSegment " + subtitleSegmentUri);
 		/* TODO: since OCR annotations do not have uris in sparql endpoint:
 		 * 1. map to mediaResource uri via naming convention, 
 		 * 2. find mediaResource via uri (needs MediaItemDao), 

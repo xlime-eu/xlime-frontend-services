@@ -299,15 +299,17 @@ public class ServicesResource {
 	}
 
 	private Optional<? extends EntitySummary> findUIEntitySummary(String url) {
+		Optional<EntitySummary> result = Optional.absent();
 		try {
-			return summaClient.retrieveSummary(url);
+			result = summaClient.retrieveSummary(url, 2000);
 		} catch (Throwable e) {
 			log.warn("Failed to use summaClient", e);
-			Optional<UIEntity> optUiEnt = uiEntityDao.retrieveFromUri(url);
-			if (optUiEnt.isPresent()) {
-				return Optional.of(EntitySummary.emptyFrom(optUiEnt.get()));
-			} else return Optional.absent();
 		}
+		if (result.isPresent()) return result;
+		Optional<UIEntity> optUiEnt = uiEntityDao.retrieveFromUri(url);
+		if (optUiEnt.isPresent()) {
+			return Optional.of(EntitySummary.emptyFrom(optUiEnt.get()));
+		} else return Optional.absent();
 	}
 
 	final Optional<? extends MediaItem> findMediaItem(String url) {

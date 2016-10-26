@@ -1,5 +1,6 @@
 package eu.xlime.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.common.base.Optional;
@@ -110,7 +111,8 @@ public interface MediaItemDao {
 	
 	List<String> findMediaItemsByDate(long dateFrom, long dateTo,
 			int limit);
-	
+
+	List<String> findMediaItemsBefore(Date date, int limit);
 	
 	
 }

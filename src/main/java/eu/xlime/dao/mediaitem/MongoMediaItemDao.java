@@ -172,17 +172,45 @@ public class MongoMediaItemDao extends AbstractMediaItemDao implements XLiMeReso
 			return ImmutableList.copyOf(result.subList(0, limit));
 		else return result;
 	}
+
 	
+	@Override
+	public List<String> findMediaItemsBefore(Date date, int limit) {
+		List<String> result = new ListUtil().weave(
+				findMostRecentTVProgramUrls(limit/2, date),
+				findMostRecentNewsArticleUrls(limit/2, date),
+				findMostRecentMicroPostUrls(limit/2, date));
+		if (result.size() > limit) 
+			return ImmutableList.copyOf(result.subList(0, limit));
+		else return result;
+	}
+	
+
 	private List<? extends String> findMostRecentMicroPostUrls(int limit) {
 		return mapUrl(mongoStorer.getSortedByDate(MicroPostBean.class, !ascending, limit));
+	}
+	
+	private List<? extends String> findMostRecentMicroPostUrls(int limit, Date latestDate) {
+		Query q = mongoStorer.createdBefore(MicroPostBean.class, latestDate);
+		return mapUrl(mongoStorer.getSortedByDate(MicroPostBean.class, q, !ascending, limit));
 	}
 
 	private List<? extends String> findMostRecentNewsArticleUrls(int limit) {
 		return mapUrl(mongoStorer.getSortedByDate(NewsArticleBean.class, !ascending, limit));
 	}
+	
+	private List<? extends String> findMostRecentNewsArticleUrls(int limit, Date latestDate) {
+		Query q = mongoStorer.createdBefore(NewsArticleBean.class, latestDate);
+		return mapUrl(mongoStorer.getSortedByDate(NewsArticleBean.class, q, !ascending, limit));
+	}
 
 	private List<? extends String> findMostRecentTVProgramUrls(int limit) {
 		return mapUrl(mongoStorer.getSortedByDate(TVProgramBean.class, !ascending, limit));
+	}
+	
+	private List<? extends String> findMostRecentTVProgramUrls(int limit, Date latestDate) {
+		Query q = mongoStorer.createdBefore(TVProgramBean.class, latestDate);
+		return mapUrl(mongoStorer.getSortedByDate(TVProgramBean.class, q, !ascending, limit));
 	}
 
 	@Override
@@ -200,12 +228,24 @@ public class MongoMediaItemDao extends AbstractMediaItemDao implements XLiMeReso
 		final boolean hasMicroPostAfter = mpd != null && mpd.timestamp.getTime() > timestampFrom;
 		final boolean hasNewsAfter = nad != null && mpd.timestamp.getTime() > timestampFrom;
 		final boolean hasTVAfter = tvd != null && tvd.timestamp.getTime() > timestampFrom;
-		log.debug(String.format("hasMicroPostAfter %s: %s", timestampFrom, hasMicroPostAfter));
-		log.debug(String.format("hasNewsAfter %s: %s", timestampFrom, hasNewsAfter));
-		log.debug(String.format("hasTVAfter %s: %s", timestampFrom, hasTVAfter));
+		if (log.isDebugEnabled()) {
+			Date d = dateFromTimestamp(timestampFrom);
+			log.debug(String.format("microposts between %s and %s", sum.getMicroposts().getOldestDate(), sum.getMicroposts().getNewestDate()));
+			log.debug(String.format("hasMicroPostAfter %s: %s", d, hasMicroPostAfter));
+			log.debug(String.format("microposts between %s and %s", sum.getNewsarticles().getOldestDate(), sum.getNewsarticles().getNewestDate()));			
+			log.debug(String.format("hasNewsAfter %s: %s", d, hasNewsAfter));
+			log.debug(String.format("tvprogs between %s and %s", sum.getMediaresources().getOldestDate(), sum.getMediaresources().getNewestDate()));
+			log.debug(String.format("hasTVAfter %s: %s", d, hasTVAfter));
+		}
 		return (hasMicroPostAfter) ||
 				(hasNewsAfter) ||
 				(hasTVAfter);
+	}
+
+	private Date dateFromTimestamp(long timestampFrom) {
+		Date result = new Date();
+		result.setTime(timestampFrom);
+		return result;
 	}
 
 	List<TVProgramBean> findTVProgramsByDate(long dateFrom, long dateTo, int limit) {

@@ -44,6 +44,13 @@ public interface MediaItemAnnotationDao {
 	 * @return
 	 */
 	List<EntityAnnotation> findAudioTrackEntityAnnotations(String audioTrackUrl);
+
+	/**
+	 * 
+	 * @param videoTrackUrl
+	 * @return
+	 */
+	List<EntityAnnotation> findVideoTrackEntityAnnotations(String videoTrackUrl);
 	
 	/**
 	 * 
@@ -78,6 +85,8 @@ public interface MediaItemAnnotationDao {
 	List<OCRAnnotation> findOCRAnnotationsFor(TVProgramBean mediaResource);
 
 	Optional<OCRAnnotation> findOCRAnnotation(String ocrAnnotUri);
+	
+	Optional<SubtitleSegment> findSubtitleSegment(String subtitleSegmentUri);
 	
 	/**
 	 * Finds the subtitle segments for a given tvProgram 
@@ -133,5 +142,6 @@ public interface MediaItemAnnotationDao {
 	 * @return
 	 */
 	List<XLiMeResource> findRecentAnnotations(int minutes, int limit);
+
 	
 }

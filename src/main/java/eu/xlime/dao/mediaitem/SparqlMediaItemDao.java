@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,6 +106,12 @@ public abstract class SparqlMediaItemDao extends AbstractMediaItemDao {
 	
 	@Override
 	public List<String> findMostRecentMediaItemUrls(int nMinutes, int limit) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	
+	@Override
+	public List<String> findMediaItemsBefore(Date date, int limit) {
 		throw new RuntimeException("Not implemented");
 	}
 

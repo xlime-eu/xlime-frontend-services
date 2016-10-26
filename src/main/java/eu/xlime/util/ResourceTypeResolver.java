@@ -58,7 +58,7 @@ public class ResourceTypeResolver {
 
 	private boolean isSubtitleSegment(String uri) {
 		// subtitles for zattoo program with start offset and an end offset
-		return uri.matches("http://zattoo.com/program/\\d+/subtitles/\\d+/\\d+"); 
+		return uri.matches("http://zattoo.com/program/[-]?\\d+/subtitles/\\d+/\\d+"); 
 	}
 	
 	public String calcUrl(SubtitleSegment stSeg, String subtitleTrackUrl) {
@@ -94,7 +94,7 @@ public class ResourceTypeResolver {
 	}
 	
 	public boolean isTVProgram(String uri) {
-		return uri.matches("http://zattoo.com/program/\\d+");
+		return uri.matches("http://zattoo.com/program/[-]?\\d+");
 	}
 	
 	public boolean isKBEntity(String uri) {
@@ -112,7 +112,7 @@ public class ResourceTypeResolver {
 	}
 	
 	public boolean isASRAnnotation(String uri) {
-		return uri.matches("http://zattoo.com/program/\\d+/audio/asr/\\d+/\\d+"); 
+		return uri.matches("http://zattoo.com/program/[-]?\\d+/audio/asr/\\d+/\\d+"); 
 	}
 
 	public boolean isEntityAnnotation(String uri) {
@@ -129,7 +129,7 @@ public class ResourceTypeResolver {
 	}
 
 	public boolean isOCRAnnotation(String uri) {
-		return uri.matches("http://zattoo.com/program/\\d+/video/ocr/\\d+/\\d+"); 
+		return uri.matches("http://zattoo.com/program/[-]?\\d+/video/ocr/\\d+/\\d+"); 
 	}
 	
 	public String calcUrl(OCRAnnotation ocrAnn, String videoTrackUrl) {
@@ -143,7 +143,7 @@ public class ResourceTypeResolver {
 	
 	public boolean isVideoSegment(String uri) {
 		// the program with progId, startTime and endTime offsets
-		return uri.matches("http://zattoo.com/program/\\d+/\\d+/\\d+"); 
+		return uri.matches("http://zattoo.com/program/[-]?\\d+/\\d+/\\d+"); 
 	}
 	
 	public boolean isSearchString(String uri) {
@@ -151,7 +151,12 @@ public class ResourceTypeResolver {
 	}
 
 	public boolean isAudioTrack(String uri) {
-		return uri.matches("http://zattoo.com/program/\\d+/audio"); 
+		return uri.matches("http://zattoo.com/program/[-]?\\d+/audio"); 
+	}
+
+	public String tvProgUrlToAudioTrackUrl(String tvProgUri) {
+		if (!isTVProgram(tvProgUri)) throw new IllegalArgumentException("Uri is not a TV program url " + tvProgUri);;
+		return String.format("%s/%s", tvProgUri, "audio");
 	}
 
 	public Optional<String> audioTrackUrlAsTVProgUrl(String uri) {
@@ -160,22 +165,32 @@ public class ResourceTypeResolver {
 	}
 	
 	public boolean isVideoTrack(String uri) {
-		return uri.matches("http://zattoo.com/program/\\d+/video"); 
+		return uri.matches("http://zattoo.com/program/[-]?\\d+/video"); 
 	}
 
+	public String tvProgUrlToVideoTrackUrl(String tvProgUri) {
+		if (!isTVProgram(tvProgUri)) throw new IllegalArgumentException("Uri is not a TV program url " + tvProgUri);;
+		return String.format("%s/%s", tvProgUri, "video");
+	}
+	
 	public Optional<String> videoTrackUrlAsTVProgUrl(String uri) {
 		if (!isVideoTrack(uri)) throw new IllegalArgumentException("Uri is not a video track url " + uri);
 		return Optional.of(uri.replaceAll("/video", ""));
 	}
 	
 	public boolean isSubtitleTrack(String uri) {
-		return uri.matches("http://zattoo.com/program/\\d+/subtitles"); 
+		return uri.matches("http://zattoo.com/program/[-]?\\d+/subtitles"); 
 	}
 
 	public boolean isSubtitleSegmentUri(String uri) {
-		return uri.matches("http://zattoo.com/program/\\d+/subtitles/\\d+/\\d+"); 
+		return uri.matches("http://zattoo.com/program/[-]?\\d+/subtitles/\\d+/\\d+"); 
 	}
 		
+	public String tvProgUrlToSubtitleTrackUrl(String tvProgUri) {
+		if (!isTVProgram(tvProgUri)) throw new IllegalArgumentException("Uri is not a TV program url " + tvProgUri);;
+		return String.format("%s/%s", tvProgUri, "subtitles");
+	}
+	
 	public Optional<String> subtitleTrackUrlAsTVProgUrl(String uri) {
 		if (!isSubtitleTrack(uri)) throw new IllegalArgumentException("Uri is not a subtitle track url " + uri);
 		return Optional.of(uri.replaceAll("/subtitles", ""));
@@ -275,7 +290,7 @@ public class ResourceTypeResolver {
 		return String.format("http://%s/watch/%s/%s/%s/%s",
 				prog.getZattooHost(), prog.getChannelId(), prog.getProgId(), prog.getStartEpoch(), prog.getEndEpoch());
 	}
-
+	
 	public String resolveZattooChannelId(TVProgramBean bean) {
 		ZattooTVProg prog = new ZattooTVProg(bean);
 		return prog.getChannelId();

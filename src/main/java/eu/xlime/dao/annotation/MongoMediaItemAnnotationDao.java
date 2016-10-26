@@ -135,6 +135,14 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	}
 
 	@Override
+	public List<EntityAnnotation> findVideoTrackEntityAnnotations(
+			String videoTrackUrl) {
+		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("resourceUrl", ImmutableList.of(videoTrackUrl));
+		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		return cursor.toArray(defaultMax);
+	}
+
+	@Override
 	public List<EntityAnnotation> findEntityAnnotationsFor(UIEntity kbEntity) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("entity._id", ImmutableList.of(kbEntity.getUrl()));
 		log.debug(String.format("Found %s EntAnns", cursor.count()));
@@ -223,9 +231,21 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	}
 
 	@Override
-	public Optional<ASRAnnotation> findASRAnnotation(String mediaItemUri) {
-		log.warn("findASRAnnotation() not implemented yet"); 
-		return Optional.absent();
+	public Optional<ASRAnnotation> findASRAnnotation(String asrAnnotUri) {
+		if (asrAnnotUri == null) {
+			log.warn("Cannot retrieve ASR annotation for null uri ");
+			return Optional.absent();
+		}
+		if (typeResolver.isASRAnnotation(asrAnnotUri)) {
+			DBCursor<ASRAnnotation> cursor = mongoStorer.getDBCollection(ASRAnnotation.class).find().in("_id", ImmutableList.of(asrAnnotUri));
+			List<ASRAnnotation> list = cleanASRAnnotations(cursor.toArray(defaultMax));
+			if (!list.isEmpty()) {
+				return Optional.fromNullable(list.get(0));
+			} else return Optional.absent();
+		} else {
+			log.warn(String.format("Cannot find SubtitleSegments for uri %s of type %s", asrAnnotUri, typeResolver.resolveType(asrAnnotUri)));
+			return Optional.absent();
+		}
 	}
 
 	@Override
@@ -325,6 +345,25 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		DBCursor<OCRAnnotation> tvc = mongoStorer.getDBCollection(OCRAnnotation.class).find(textQ, projection).sort(sorting);
 		log.debug(String.format("Created cursor with %s results for '%s' in %s ms. ", tvc.count(), textQuery, (System.currentTimeMillis() - start)));
 		return cleanOCRAnnotations(mongoStorer.toScoredSet(tvc, defaultMax, "Found via text search", "score").asList());
+	}
+
+	@Override
+	public Optional<SubtitleSegment> findSubtitleSegment(
+			String subtitleSegmentUri) {
+		if (subtitleSegmentUri == null) {
+			log.warn("Cannot retrieve SubtitleSegment for null uri ");
+			return Optional.absent();
+		}
+		if (typeResolver.isSubtitleSegmentUri(subtitleSegmentUri)) {
+			DBCursor<SubtitleSegment> cursor = mongoStorer.getDBCollection(SubtitleSegment.class).find().in("_id", ImmutableList.of(subtitleSegmentUri));
+			List<SubtitleSegment> list = cleanSubTitleSegments(cursor.toArray(defaultMax));
+			if (!list.isEmpty()) {
+				return Optional.fromNullable(list.get(0));
+			} else return Optional.absent();
+		} else {
+			log.warn(String.format("Cannot find SubtitleSegments for uri %s of type %s", subtitleSegmentUri, typeResolver.resolveType(subtitleSegmentUri)));
+			return Optional.absent();
+		}
 	}
 
 	@Override

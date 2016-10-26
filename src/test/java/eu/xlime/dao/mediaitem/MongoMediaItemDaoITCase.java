@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -15,6 +16,7 @@ import org.junit.Test;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.google.common.base.Optional;
 
+import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.TVProgramBean;
@@ -63,6 +65,43 @@ public class MongoMediaItemDaoITCase {
 		assertFalse(tvbs.isEmpty());
 		System.out.println("Retrieved tvprogs " + tvbs.size() + " in " + (System.currentTimeMillis() - start) + "ms.");
 		assertEquals(50, tvbs.size()); //microPosts.get(0).getUrl(), optIt.get().getUrl());
+	}
+
+	@Test
+	public void test_findLatestMediaItemUrls() throws Exception {
+		Properties props = new Properties();
+		props.put(ConfigOptions.XLIME_MONGO_RESOURCE_DATABASE_NAME.getKey(), "xlimeres");
+		MongoMediaItemDao dao = new MongoMediaItemDao(props);
+
+		List<String> result = dao.findMostRecentMediaItemUrls(10, 30);
+		
+//		List<String> result = dao.findLatestMediaItemUrls(10, 30);
+		assertFalse("" + result, result.isEmpty());
+	}
+	@Test
+	public void testRecentMediaItemsBefore() throws ParseException {
+		Properties props = new Properties();
+		props.put(ConfigOptions.XLIME_MONGO_RESOURCE_DATABASE_NAME.getKey(), "xlimeres");
+		MongoMediaItemDao dao = new MongoMediaItemDao(props);
+		Date date = new Date();
+		List<String> result = dao.findMediaItemsBefore(date, 50);
+		assertFalse(result.isEmpty());
+		System.out.println("Retrieved " + result.size() + " media items before " + date);
+		List<MediaItem> mis = dao.findMediaItems(result);
+		for (MediaItem mit: mis) {
+			Date creationDate = getCreationDate(mit);
+			assertTrue("creation date " + creationDate + " is not before " + date + "\nfor " + mit, date.after(creationDate));
+		}
+	}
+	
+	private Date getCreationDate(MediaItem mit) {
+		if (mit instanceof MicroPostBean) {
+			return ((MicroPostBean) mit).getCreated().timestamp;
+		} else if (mit instanceof TVProgramBean) {
+			return ((TVProgramBean) mit).getBroadcastDate().timestamp;
+		} else if (mit instanceof NewsArticleBean) {
+			return ((NewsArticleBean) mit).getCreated().timestamp;
+		} throw new IllegalArgumentException();
 	}
 
 	@Test

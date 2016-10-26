@@ -1,5 +1,6 @@
 package eu.xlime.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -95,6 +96,11 @@ public class MediaItemDaoImpl extends AbstractMediaItemDao {
 	@Override
 	public List<String> findMostRecentMediaItemUrls(int nMinutes, int limit) {
 		return delegate.findMostRecentMediaItemUrls(nMinutes, limit);
+	}
+
+	@Override
+	public List<String> findMediaItemsBefore(Date date, int limit) {
+		return delegate.findMediaItemsBefore(date, limit);
 	}
 
 	@Override

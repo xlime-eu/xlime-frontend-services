@@ -77,8 +77,9 @@ public class ResourceTypeResolverTest {
 		assertEquals(SearchString.class, testObj.resolveType("http://xlime.eu/vocab/search?q=Refugee"));
 		assertEquals(UIEntity.class, testObj.resolveType("http://dbpedia.org/resource/Berlin"));
 		assertEquals(SubtitleSegment.class, testObj.resolveType("http://zattoo.com/program/111364459/subtitles/111364459/111364460"));
+		assertEquals(SubtitleSegment.class, testObj.resolveType("http://zattoo.com/program/-20/subtitles/100517176/100557176"));
 		assertEquals(VideoSegment.class, testObj.resolveType("http://zattoo.com/program/111364459/111364459/111364460"));		
-		//TODO: test other cases EREvent, ASR, OCR, VideoSegment, 
+		//TODO: test other cases EREvent, ASR, OCR, 
 	}
 
 

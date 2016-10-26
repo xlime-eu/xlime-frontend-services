@@ -66,6 +66,12 @@ public class CachedMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao
 	}
 
 	@Override
+	public List<EntityAnnotation> findVideoTrackEntityAnnotations(
+			String videoTrackUrl) {
+		return delegate.findVideoTrackEntityAnnotations(videoTrackUrl);
+	}
+
+	@Override
 	public List<EntityAnnotation> findEntityAnnotationsFor(UIEntity kbEntity) {
 		return delegate.findEntityAnnotationsFor(kbEntity);
 	}
@@ -143,6 +149,12 @@ public class CachedMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao
 	@Override
 	public List<OCRAnnotation> findOCRAnnotationsByText(String textQuery) {
 		return delegate.findOCRAnnotationsByText(textQuery);
+	}
+	
+	@Override
+	public Optional<SubtitleSegment> findSubtitleSegment(
+			String subtitleSegmentUri) {
+		return delegate.findSubtitleSegment(subtitleSegmentUri);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package eu.xlime.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -12,6 +13,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.mongojack.DBCursor;
+import org.mongojack.DBQuery;
+import org.mongojack.DBQuery.Query;
 import org.mongojack.DBSort;
 import org.mongojack.JacksonDBCollection;
 import org.mongojack.WriteResult;
@@ -22,6 +25,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.DBObject;
 import com.mongodb.DuplicateKeyException;
+import com.mongodb.QueryBuilder;
 
 import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.EntityAnnotation;
@@ -185,6 +189,19 @@ public class MongoXLiMeResourceStorer implements XLiMeResourceStorer {
 		DBCursor<T> mpcn = getDBCollection(miCls).find().sort(orderBy);
 		long timeout = 10000; //TODO: add configuration parameter for sorting collection by date
 		return execute(mpcn, limit, timeout);
+	}
+
+	public <T extends XLiMeResource> List<T> getSortedByDate(Class<T> miCls, Query q, boolean ascending, int limit) {
+		String dateField = createdTimestampField(miCls);
+		DBObject orderBy = ascending ? DBSort.asc(dateField) : DBSort.desc(dateField);
+		DBCursor<T> mpcn = getDBCollection(miCls).find(q).sort(orderBy);
+		long timeout = 10000; //TODO: add configuration parameter for sorting collection by date
+		return execute(mpcn, limit, timeout);
+	}
+	
+	public <T extends XLiMeResource> Query createdBefore(Class<T> miCls, Date d) {
+		DBQuery q = new DBQuery();
+		return q.lessThanEquals(createdTimestampField(miCls), d);
 	}
 	
 	private <T extends XLiMeResource> String createdTimestampField(Class<T> miCls) {

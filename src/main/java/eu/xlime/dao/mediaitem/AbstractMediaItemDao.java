@@ -116,16 +116,17 @@ public abstract class AbstractMediaItemDao implements MediaItemDao {
 		Date now = new Date();
 		long dateFrom = now.getTime() - (nMinutes * 60 * 1000);
 		long dateTo = now.getTime();
+		List<String> result = ImmutableList.of();
 		if (hasMediaItemsAfter(dateFrom)) {
-			List<String> result = findMediaItemsByDate(dateFrom, dateTo, limit);
+			result = findMediaItemsByDate(dateFrom, dateTo, limit);
 			log.debug(String.format("Found %s media items between %s and %s", result.size(), now, "" + nMinutes + " minutes ago"));
-			return result;
-		} else {
-			//instead of returning an empty result, return the latest of each type
-			List<String> result = findMostRecentMediaItemUrls(nMinutes, limit);
-			log.debug(String.format("Found %s most recent media items", result.size()));
-			return result;
 		}
+		if (result.isEmpty()) {
+			//instead of returning an empty result, return the latest of each type
+			result = findMostRecentMediaItemUrls(nMinutes, limit);
+			log.debug(String.format("Found %s most recent media items", result.size()));
+		}
+		return result;
 	}
 
 	private List<String> filterTV(List<String> urls) {

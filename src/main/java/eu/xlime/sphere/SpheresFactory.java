@@ -2,6 +2,8 @@ package eu.xlime.sphere;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -111,8 +113,12 @@ public class SpheresFactory {
 		List<Recommendation> annots = mapToRecommendation(calcRecAnnots(context));
 		log.debug(String.format("Found %s annot recs in %sms", mediaItems.size(), (System.currentTimeMillis() - startEntRec)));
 		
+		if (mediaItems.isEmpty() && !entities.isEmpty()) {
+			log.debug(String.format("We could do a search based on %s entities to find some media items", entities.size()));
+		}
+		
 		log.debug(String.format("Weaving %s entities and %s media-items", entities.size(), mediaItems.size()));
-		return weave(entities, mediaItems);
+		return weave(entities, mediaItems, annots);
 	}
 
 
@@ -160,62 +166,108 @@ public class SpheresFactory {
 			}
 		}
 		for (XLiMeResource res: context) {
-			if (isMediaItem(res)) {
-				// TODO: use Adityia's recommender for the supported media items
-			} else if (res instanceof SearchString) {
-				String keywords = ((SearchString)res).getValue();
-				String justif = String.format("Matches search '%s'", keywords);
-				List<XLiMeResource> anns = new ArrayList<>();
-				anns.addAll(mediaItemAnnotationDao.findASRAnnotationsByText(keywords));
-				anns.addAll(mediaItemAnnotationDao.findOCRAnnotationsByText(keywords));
-				anns.addAll(mediaItemAnnotationDao.findSubtitleSegmentsByText(keywords));
-				for (XLiMeResource ann: anns) {
-					builder.add(ann, scoref.newScore(1.0, "Matches search"));
-				}
-			} else if (res instanceof UIEntity) {
-				String entUrl = ((UIEntity) res).getUrl();
-				for (ASRAnnotation asrAnn: mediaItemAnnotationDao.findASRAnnotationsForKBEntity(entUrl)) {
-					builder.add(asrAnn, scoref.newScore(1.0, "Has entity annotation for " + entUrl));
-				}
-				for (OCRAnnotation ocrAnn: mediaItemAnnotationDao.findOCRAnnotationForKBEntity(entUrl)) {
-					builder.add(ocrAnn, scoref.newScore(1.0, "Has entity annotation for " + entUrl));
-				}
-				for (SubtitleSegment subAnn: mediaItemAnnotationDao.findSubtitleSegmentsForKBEntity(entUrl)) {
-					builder.add(subAnn, scoref.newScore(1.0, "Has entity annotation for " + entUrl));
-				}
-			} else {
-				// TODO: match other types of 
+			builder.addAll(calcRecAnnots(res));
+		}
+		return filter(builder.build(), context);
+	}
+	
+	private ScoredSet<XLiMeResource> calcRecAnnots(XLiMeResource res) {
+		final ScoredSet.Builder<XLiMeResource> builder = ScoredSetImpl.builder();
+		if (res instanceof TVProgramBean) {
+			// TODO: use Adityia's recommender for the supported media items
+			
+			List<? extends XLiMeResource> asr = mediaItemAnnotationDao.findASRAnnotationsForTVProg(res.getUrl());
+			List<? extends XLiMeResource> sub = mediaItemAnnotationDao.findSubtitleSegmentsForTVProg(res.getUrl());
+			List<? extends XLiMeResource> ocr = mediaItemAnnotationDao.findOCRAnnotationsFor((TVProgramBean)res);
+			
+			List<XLiMeResource> anns = ImmutableList.<XLiMeResource>builder().addAll(asr).addAll(sub).addAll(ocr).build();
+			for (XLiMeResource ann: anns) {
+				builder.add(ann, scoref.newScore(1.0, "Part of TV program in context"));
 			}
+		} else if (res instanceof SearchString) {
+			String keywords = ((SearchString)res).getValue();
+			String justif = String.format("Matches search '%s'", keywords);
+			List<XLiMeResource> anns = new ArrayList<>();
+			anns.addAll(mediaItemAnnotationDao.findASRAnnotationsByText(keywords));
+			anns.addAll(mediaItemAnnotationDao.findOCRAnnotationsByText(keywords));
+			anns.addAll(mediaItemAnnotationDao.findSubtitleSegmentsByText(keywords));
+			for (XLiMeResource ann: anns) {
+				builder.add(ann, scoref.newScore(1.0, "Matches search"));
+			}
+		} else if (res instanceof UIEntity) {
+			String entUrl = ((UIEntity) res).getUrl();
+			for (ASRAnnotation asrAnn: mediaItemAnnotationDao.findASRAnnotationsForKBEntity(entUrl)) {
+				builder.add(asrAnn, scoref.newScore(1.0, "Has entity annotation for " + entUrl));
+			}
+			for (OCRAnnotation ocrAnn: mediaItemAnnotationDao.findOCRAnnotationForKBEntity(entUrl)) {
+				builder.add(ocrAnn, scoref.newScore(1.0, "Has entity annotation for " + entUrl));
+			}
+			for (SubtitleSegment subAnn: mediaItemAnnotationDao.findSubtitleSegmentsForKBEntity(entUrl)) {
+				builder.add(subAnn, scoref.newScore(1.0, "Has entity annotation for " + entUrl));
+			}
+		} else {
+			// TODO: match other types of
+			// ocr, sub, asr could be matched using precalculated vectors...
 		}
 		return builder.build();
 	}
-	
+
+
 	private ScoredSet<MediaItem> calcRecMediaItems(List<XLiMeResource> context) {
 		final ScoredSet.Builder<String> medItUrls = ScoredSetImpl.builder();
 		if (context == null || context.isEmpty()) {
 			Score score = scoref.newScore(1.0, "Recent media item");
-			for (String miUrl: mediaItemDao.findLatestMediaItemUrls(default_recent_minutes, default_recent_limit)) {
+			for (String miUrl: mediaItemDao.findMediaItemsBefore(new Date(), default_recent_limit)) {
 				medItUrls.add(miUrl, score);
 			}
 		}
 		for (XLiMeResource res: context) {
-			if (isMediaItem(res)) {
-				// TODO: use Adityia's recommender for the supported media items
-			} else if (res instanceof SearchString) {
-				String keywords = ((SearchString)res).getValue();
-				String justif = String.format("Matches search '%s'", keywords);
-				ScoredSet<String> miUrls = mediaItemDao.findMediaItemUrlsByText(keywords);
-				medItUrls.addAll(miUrls);
-			} else if (res instanceof UIEntity) {
-				String entUrl = ((UIEntity) res).getUrl();
-				ScoredSet<String> matches = mediaItemAnnotationDao.findMediaItemUrlsByKBEntity(entUrl); 
-				medItUrls.addAll(matches);
-			} else {
-				// TODO: match other types of 
-			}
+			medItUrls.addAll(calcRecMediaItemUrls(res));
 		}
-		return asMediaItems(medItUrls.build()); 
+		return filter(asMediaItems(medItUrls.build()), context); 
 	}
+
+	private ScoredSet<String> calcRecMediaItemUrls(XLiMeResource res) {
+		final ScoredSet.Builder<String> builder = ScoredSetImpl.builder();
+		if (isMediaItem(res)) {
+			// TODO: use Adityia's recommender for the supported media items
+		} else if (res instanceof SearchString) {
+			String keywords = ((SearchString)res).getValue();
+			String justif = String.format("Matches search '%s'", keywords);
+			ScoredSet<String> miUrls = mediaItemDao.findMediaItemUrlsByText(keywords);
+			builder.addAll(miUrls);
+		} else if (res instanceof UIEntity) {
+			String entUrl = ((UIEntity) res).getUrl();
+			ScoredSet<String> matches = mediaItemAnnotationDao.findMediaItemUrlsByKBEntity(entUrl); 
+			builder.addAll(matches);
+		} else if (res instanceof ASRAnnotation) {
+			try {
+				String tvProgUrl = ((ASRAnnotation) res).getInSegment().getPartOf().getUrl();
+				builder.add(tvProgUrl, scoref.newScore(1.0, "Program for ASR segment"));
+			} catch (Exception e) {
+				log.warn("Could not map ASRAnnot to tvProgram", e);
+			}
+		} else if (res instanceof SubtitleSegment) {
+			try {
+				String tvProgUrl = ((SubtitleSegment) res).getPartOf().getPartOf().getUrl();
+				builder.add(tvProgUrl, scoref.newScore(1.0, "Program for subtitle segment"));
+			} catch (Exception e) {
+				log.warn("Could not map ASRAnnot to tvProgram", e);
+			}
+			
+		} else if (res instanceof OCRAnnotation) {
+			try {
+				String tvProgUrl = ((OCRAnnotation) res).getInSegment().getPartOf().getUrl();
+				builder.add(tvProgUrl, scoref.newScore(1.0, "Program for ocr segment"));
+			} catch (Exception e) {
+				log.warn("Could not map OCRAnnot to tvProgram", e);
+			}
+		} else {
+			log.warn("Cannot map resource to media items " + res);
+		}
+		return builder.build();
+	}
+
 
 	private ScoredSet<MediaItem> asMediaItems(ScoredSet<String> medItUrls) {
 		ScoredSet.Builder<MediaItem> builder = ScoredSetImpl.builder();
@@ -239,30 +291,103 @@ public class SpheresFactory {
 		}
 		//TODO: much better to only search for entUris, only convert the topN to UIEntity 
 		for (XLiMeResource res: context) {
-			if (isMediaItem(res)) {
-				MediaItem medIt = (MediaItem) res;
-				List<EntityAnnotation> entAnns = mediaItemAnnotationDao.findMediaItemEntityAnnotations(medIt.getUrl());
-				log.debug(String.format("Found %s entity annotations for %s", entAnns.size(), medIt.getUrl()));
-				for (EntityAnnotation entAnn: entAnns) {
-					builder.add(entAnn.getEntity(),
-							scoref.newScore(entAnn.getConfidence(), "Mentioned in media item in context"));
-				}
-			} else if (res instanceof SearchString){
-				//TODO: can we use http://km.aifb.kit.edu/services/xlid-lexica-ui/ instead, this would give us greater control and info on confidence for the scores
-				String keywords = ((SearchString) res).getValue();
-				String justif = String.format("Matches search '%s'", keywords);
-				List<UrlLabel> urlLabels = uiEntityFactory.autoCompleteEntities(keywords);
-				for (UIEntity uiEnt : uiEntityFactory.retrieveFromUris(mapUrls(urlLabels))) {
-					builder.add(uiEnt,
-							scoref.newScore(1.0, justif));
-				}
+			builder.addAll(calcRecEntities(res));
+		}
+		return filter(cleanBad(builder.build()), context);
+	}
+
+	private ScoredSet<UIEntity> calcRecEntities(XLiMeResource res) {
+		final ScoredSet.Builder<UIEntity> builder = ScoredSetImpl.builder();
+		if (isMediaItem(res)) {
+			MediaItem medIt = (MediaItem) res;
+			List<EntityAnnotation> entAnns = mediaItemAnnotationDao.findMediaItemEntityAnnotations(medIt.getUrl());
+			log.debug(String.format("Found %s entity annotations for %s", entAnns.size(), medIt.getUrl()));
+			for (EntityAnnotation entAnn: entAnns) {
+				builder.add(entAnn.getEntity(),
+						scoref.newScore(entAnn.getConfidence(), "Mentioned in media item in context"));
+			}
+		} else if (res instanceof SearchString){
+			//TODO: can we use http://km.aifb.kit.edu/services/xlid-lexica-ui/ instead, this would give us greater control and info on confidence for the scores
+			String keywords = ((SearchString) res).getValue();
+			String justif = String.format("Matches search '%s'", keywords);
+			List<UrlLabel> urlLabels = uiEntityFactory.autoCompleteEntities(keywords);
+			for (UIEntity uiEnt : uiEntityFactory.retrieveFromUris(mapUrls(urlLabels))) {
+				builder.add(uiEnt,
+						scoref.newScore(1.0, justif));
+			}
+		} else {
+			// ASR annotations are bound to audioTrack, so we cannot retrieve this
+			// Subtitle (same as ASR)
+			// OCR (not enough data)
+			// we could to a quick analysis to find relevant words and map them to entities?
+			
+			// TODO: recommend other entities for KBEntities?
+			// other resources -> entities
+		}
+		return builder.build();
+	}
+	
+	/**
+	 * Performs filtering of a {@link ScoredSet} of recommended {@link XLiMeResource}s for a given 
+	 * context. For example, this removes recommendations if they are already in the context, or 
+	 * it may update the score of a resource if it does not have enough links to other resources.
+	 *  
+	 * @param original
+	 * @param context
+	 * @return
+	 */
+	private <T extends XLiMeResource> ScoredSet<T> filter(ScoredSet<T> original,
+			List<XLiMeResource> context) {
+		return penaliseResourcesWithoutLinks(removeAlreadyInContext(removeEntityAnns(original), context));
+	}
+
+	private <T extends XLiMeResource> ScoredSet<T> removeEntityAnns(
+			ScoredSet<T> original) {
+		final ScoredSet.Builder<T> builder = ScoredSetImpl.builder();
+		for (T res: original) {
+			if (res instanceof EntityAnnotation) {
+				//won't add
+			} else builder.add(res, original.getScore(res));
+		}
+		return builder.build();
+	}
+	
+	private <T extends XLiMeResource> ScoredSet<T> penaliseResourcesWithoutLinks(
+			ScoredSet<T> original) {
+		final ScoredSet.Builder<T> builder = ScoredSetImpl.builder();
+		for (T res: original.unscored()) {
+			if (calcRecEntities(res).isEmpty() 
+					&& calcRecAnnots(res).isEmpty() 
+					&& calcRecMediaItemUrls(res).isEmpty()) {
+				log.debug("Penalising " + res.getUrl() + " because it has no links (would result in empty spheres)");
+				builder.add(res, scoref.newScore(0.1, "Not linked to other resources (no annotations, entities, etc."));
 			} else {
-				// TODO: recommend other entities for KBEntities?
-				// other resources -> entities
+				builder.add(res, original.getScore(res));
 			}
 		}
-		return cleanBad(builder.build());
+		return builder.build();
 	}
+	
+	private <T extends XLiMeResource> ScoredSet<T> removeAlreadyInContext(
+			ScoredSet<T> original, List<XLiMeResource> context) {
+		final ScoredSet.Builder<T> builder = ScoredSetImpl.builder();
+		Set<String> urls  = toUrls(context); 
+		for (T res: original.unscored()) {
+			if (!urls.contains(res.getUrl())) 
+				builder.add(res, original.getScore(res));
+		}
+		return builder.build();
+	}
+
+
+	private Set<String> toUrls(List<XLiMeResource> context) {
+		Set<String> result = new HashSet<>();
+		for (XLiMeResource res: context) {
+			result.add(res.getUrl());
+		}
+		return result;
+	}
+
 
 	private ScoredSet<UIEntity> cleanBad(ScoredSet<UIEntity> uiEnts) {
 		log.debug(String.format("Cleaning any bad UIEntities (from %s)", uiEnts.size()));
