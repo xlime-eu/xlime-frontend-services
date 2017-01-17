@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Ordering;
 
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.MediaItem;
@@ -30,7 +31,9 @@ import eu.xlime.dao.annotation.MediaItemAnnotationDaoImpl;
 import eu.xlime.dao.entity.UIEntityDaoImpl;
 import eu.xlime.datasum.CachedDatasetSummaryFactory;
 import eu.xlime.datasum.DatasetSummaryFactory;
+import eu.xlime.datasum.bean.ChartResponseBean;
 import eu.xlime.datasum.bean.DatasetSummary;
+import eu.xlime.datasum.bean.TimelineChart;
 import eu.xlime.sphere.SpheresFactory;
 import eu.xlime.sphere.bean.Spheres;
 import eu.xlime.summa.SummaClient;
@@ -74,6 +77,43 @@ public class ServicesResource {
 			summa = dsSummaFactory.createXLiMeMongoSummary();
 		else return Response.serverError().entity("Unsupported datasetId " + datasetId).build();
 		return Response.ok(summa).build();
+	}
+	
+	@GET
+	@Path("/timeline-chart")
+	@Produces({ MediaType.APPLICATION_JSON})
+	public Response timelineChart(
+			@QueryParam("resourceType") List<String> resTypes, 
+			@QueryParam("metric") List<String> metrics) {
+		log.info(String.format("Received /timeline-chart?resourceTypes=%s&metric=%s", resTypes, metrics));
+		ChartResponseBean resp = new ChartResponseBean();
+		if (resTypes.isEmpty() && metrics.isEmpty()) {
+//			resp.addError("available resource types: " + dsSummaFactory.retriveAvailableTimelineResourceTypes());
+			List<String> resourceTypes = dsSummaFactory.retrieveAvailableTimelineResourceTypes();
+			return Response.serverError().entity("You must specify at least a resourcetype or a metric type. Available resourceTypes: " + resourceTypes).build();
+		}
+		List<String> errors = new ArrayList<String>();
+		if (resTypes.isEmpty()) {
+			resTypes = dsSummaFactory.retrieveAvailableTimelineResourceTypes();
+		}
+		for (String resType: resTypes) {
+			if (metrics.isEmpty()) {
+				metrics = dsSummaFactory.retrieveAvailableMetricsForResourceType(resType);
+			}
+			log.info(String.format("Getting charts for %s and %s", resType, metrics));
+			for (String metric: Ordering.natural().sortedCopy(metrics)) {
+				try {
+					List<TimelineChart> charts = dsSummaFactory.retrieveTimelineCharts(resType, metric);
+					resp.addTimeline(charts);
+//				} catch (UnavailableChartException e) {
+//					errors.add(String.format("Chart with resourceType %s and metric %s is not available", resType, metric));
+//					includeAvailableTypes = true;
+				} catch (RuntimeException e) {
+					errors.add(String.format("Unexpected error retrieving %s.%s. %s", resType, metric, e.getLocalizedMessage()));
+				}
+			}
+		}
+		return Response.ok(resp).build();
 	}
 
 	

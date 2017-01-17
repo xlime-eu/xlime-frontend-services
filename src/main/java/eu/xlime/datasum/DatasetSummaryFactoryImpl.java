@@ -4,8 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.mongojack.Aggregation;
+import org.mongojack.Aggregation.Pipeline;
+import org.mongojack.Aggregation.Pipeline.Stage;
+import org.mongojack.AggregationResult;
+import org.mongojack.DBCursor;
+import org.mongojack.DBQuery;
+import org.mongojack.DBQuery.Query;
+import org.mongojack.DBSort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.ImmutableList;
+import com.mongodb.DBObject;
 
 import eu.xlime.Config;
 import eu.xlime.bean.ASRAnnotation;
@@ -21,6 +32,7 @@ import eu.xlime.dao.MongoXLiMeResourceStorer;
 import eu.xlime.datasum.bean.DatasetSummary;
 import eu.xlime.datasum.bean.HistogramItem;
 import eu.xlime.datasum.bean.ResourceSummary;
+import eu.xlime.datasum.bean.TimelineChart;
 import eu.xlime.summa.bean.UIEntity;
 
 public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
@@ -158,6 +170,40 @@ public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 		return result;
 	}
 
+	
+	@Override
+	public List<TimelineChart> retrieveTimelineCharts(String resourceType,
+			String metric) {
+		MongoXLiMeResourceStorer resStorer = new MongoXLiMeResourceStorer(new Config().getCfgProps());
+		
+		DBCursor<TimelineChart> cursor = resStorer.getDBCollection(TimelineChart.class).find()
+			.in("topic", ImmutableList.of(resourceType))
+			.in("metric", ImmutableList.of(metric))
+			.sort(DBSort.desc("date"));
+		
+		return cursor.toArray();
+	}
+
+	@Override
+	public List<String> retrieveAvailableTimelineResourceTypes() {
+		MongoXLiMeResourceStorer resStorer = new MongoXLiMeResourceStorer(new Config().getCfgProps());
+		return resStorer.getDBCollection(TimelineChart.class).distinct("topic");
+	}
+
+	public List<String> retrieveAvailableMetricsForResourceType(String resourceType) {
+		MongoXLiMeResourceStorer resStorer = new MongoXLiMeResourceStorer(new Config().getCfgProps());
+		Query q = DBQuery.in("topic", ImmutableList.of(resourceType));
+		Pipeline<?> pipeline = Aggregation.match(q).group("metric");
+
+		AggregationResult<TimelineChart> aggResult = resStorer.getDBCollection(TimelineChart.class).aggregate(pipeline, TimelineChart.class);
+		List<String> result = new ArrayList<>();
+		for (DBObject obj: aggResult.getAggregationOutput().results()) {
+			result.add(obj.get("_id").toString());
+		}
+		log.info("aggResults" + result);
+		return ImmutableList.copyOf(result);//toMetrics(aggResult.results());
+	}
+	
 	private <T extends XLiMeResource> ResourceSummary createResourceSummary(
 			MongoXLiMeResourceStorer resStorer, Class<T> cls) {
 		ResourceSummary mpSum = new ResourceSummary();

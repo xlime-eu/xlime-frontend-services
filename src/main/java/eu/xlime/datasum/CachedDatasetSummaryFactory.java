@@ -22,6 +22,7 @@ import eu.xlime.Config;
 import eu.xlime.bean.UIDate;
 import eu.xlime.datasum.bean.DatasetSummary;
 import eu.xlime.datasum.bean.ResourceSummary;
+import eu.xlime.datasum.bean.TimelineChart;
 
 public class CachedDatasetSummaryFactory implements DatasetSummaryFactory {
 
@@ -169,6 +170,23 @@ public class CachedDatasetSummaryFactory implements DatasetSummaryFactory {
 	public DatasetSummary createXLiMeMongoSummary() {
 		if (cachedMongoSumma == null) return emptyDatasetSumma();
 		return clean(cachedMongoSumma);
+	}
+	
+	@Override
+	public List<TimelineChart> retrieveTimelineCharts(String resourceType,
+			String metric) {
+		return delegate.retrieveTimelineCharts(resourceType, metric);
+	}
+
+	@Override
+	public List<String> retrieveAvailableTimelineResourceTypes() {
+		return delegate.retrieveAvailableTimelineResourceTypes();
+	}
+
+	@Override
+	public List<String> retrieveAvailableMetricsForResourceType(
+			String resourceTypeName) {
+		return delegate.retrieveAvailableMetricsForResourceType(resourceTypeName);
 	}
 
 	private DatasetSummary clean(DatasetSummary dsSum) {

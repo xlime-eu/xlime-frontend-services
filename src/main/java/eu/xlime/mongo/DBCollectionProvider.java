@@ -38,7 +38,7 @@ public class DBCollectionProvider {
 		String connectionStr = ConfigOptions.XLIME_MONGO_CONNECTION_STRING.getValue(cfgProps);
 		dbName = ConfigOptions.XLIME_MONGO_RESOURCE_DATABASE_NAME.getValue(cfgProps);
 		client = createClient(connectionStr);
-		log.info("Succesfully created connection to mongo at " + connectionStr);
+		log.info(String.format("Succesfully created connection to mongo at %s. Will connect to database %s", connectionStr, dbName));
 		if (log.isDebugEnabled() && !connectionStrsTried.contains(connectionStr)) {
 			log.debug("Available databases: " + client.getDatabaseNames());
 			log.debug(String.format("Resource database: '%s', exists? %s", dbName, client.getDatabaseNames().contains(dbName)));

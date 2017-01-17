@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.persistence.Id;
 
 import eu.xlime.bean.annpos.AnnotationPosition;
+import eu.xlime.bean.annpos.SpanInTextPosition;
 import eu.xlime.summa.bean.UIEntity;
 
 /**
@@ -21,13 +22,23 @@ public class EntityAnnotation implements XLiMeResource, Serializable {
 	
 	public static String coinUri(EntityAnnotation ea) {
 		if (ea == null) return "http://xlime.eu/vocab/EntityAnnotation/null";
+		final String posParams = positionAsParams(ea.getPosition());
 		return 
-				String.format("http://xlime-project.org/vocab/EntityAnnotation?kbentity=%s&resource=%s&activity=%s", 
+				String.format("http://xlime-project.org/vocab/EntityAnnotation?kbentity=%s&resource=%s&activity=%s%s", 
 						enc(ea.getEntity() == null ? "null" : ea.getEntity().getUrl()),
 						enc(ea.getResourceUrl()),
-						enc(ea.getActivityUrl()));
+						enc(ea.getActivityUrl()),
+						(posParams == null || posParams.equals("")) ? "" : "&" + posParams);
 	}
 		
+	private static String positionAsParams(AnnotationPosition position) {
+		if (position == null) return "";
+		if (position instanceof SpanInTextPosition) {
+			SpanInTextPosition spanPos = (SpanInTextPosition) position;
+			return String.format("text-start=%s&text-end=%s", enc("" + spanPos.getStart()), enc("" + spanPos.getEnd()));
+		} else return "";
+	}
+
 	private static String enc(String string) {
 		if (string == null) return null;
 		try {

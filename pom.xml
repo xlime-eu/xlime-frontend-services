@@ -3,7 +3,7 @@
   <groupId>eu.xlime</groupId>
   <artifactId>frontend-services</artifactId>
   <packaging>war</packaging>
-  <version>0.0.8</version>
+  <version>0.0.9-SNAPSHOT</version>
   <name>xLiMe Public Front-end Services webapp</name>
   <url>http://xlime-eu.github.io/</url>
   <prerequisites>
@@ -61,9 +61,9 @@
 		<artifactId>jena-core</artifactId>
 		<version>2.13.0</version>
 	</dependency>
-	<dependency>
-		<!-- Used for the util.fst packages (used in the FstThesaurus)
+		<!-- Used for the util.fst packages (used in the FstKBEntityMapper)
 		-->
+	<dependency>
 		<groupId>org.apache.lucene</groupId>
 		<artifactId>lucene-core</artifactId>
 		<version>4.10.4</version>

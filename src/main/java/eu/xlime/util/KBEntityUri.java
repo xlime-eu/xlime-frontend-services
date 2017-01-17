@@ -32,6 +32,11 @@ public class KBEntityUri {
 	final String decodedUrl() {
 		try {
 			return URLDecoder.decode(uri, "UTF-8");
+		} catch (IllegalArgumentException e) {
+			if (e.getMessage().contains("trailing escape")) {
+				log.warn("Seems like uri is not really encoded, returning input as it is...");
+				return uri;
+			} throw e;
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}

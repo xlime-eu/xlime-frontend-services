@@ -23,6 +23,7 @@ import eu.xlime.summa.bean.UIEntity;
 	    @Type(value = VideoSegment.class, name="http://xlime.eu/vocab/MediaResourceSegment"),
 	    @Type(value = ASRAnnotation.class, name="http://xlime.eu/vocab/ASRAnnotation"),	    
 	    @Type(value = OCRAnnotation.class, name="http://xlime.eu/vocab/OCRAnnotation"),
+	    @Type(value = VisualAnnotation.class, name="http://xlime.eu/vocab/VisualAnnotation"),
 	    @Type(value = SubtitleSegment.class, name="http://xlime.eu/vocab/SubtitleSegment"),
 	    @Type(value = EREvent.class, name = "http://xlime.eu/vocab/EventFromER"),
 	    @Type(value = UIEntity.class, name = "http://xlime.eu/vocab/kbEntity"),
