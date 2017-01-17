@@ -25,11 +25,9 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.DBObject;
 import com.mongodb.DuplicateKeyException;
-import com.mongodb.QueryBuilder;
 
 import eu.xlime.bean.ASRAnnotation;
 import eu.xlime.bean.EntityAnnotation;
-import eu.xlime.bean.MediaItem;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
 import eu.xlime.bean.OCRAnnotation;
@@ -58,7 +56,7 @@ public class MongoXLiMeResourceStorer implements XLiMeResourceStorer {
 	public MongoXLiMeResourceStorer(DBCollectionProvider aCollectionProvider){
 		collectionProvider = aCollectionProvider;
 	}
-
+	
 	@Override
 	public <T extends XLiMeResource> String insertOrUpdate(T xLiMeRes) {
 		return insertOrUpdate(xLiMeRes, Optional.<Locale>absent());

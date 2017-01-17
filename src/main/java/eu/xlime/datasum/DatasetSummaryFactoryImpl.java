@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jersey.repackaged.com.google.common.base.Optional;
+
 import org.mongojack.Aggregation;
 import org.mongojack.Aggregation.Pipeline;
 import org.mongojack.Aggregation.Pipeline.Stage;
@@ -20,6 +22,7 @@ import com.mongodb.DBObject;
 
 import eu.xlime.Config;
 import eu.xlime.bean.ASRAnnotation;
+import eu.xlime.bean.DatasetInfo;
 import eu.xlime.bean.EntityAnnotation;
 import eu.xlime.bean.MicroPostBean;
 import eu.xlime.bean.NewsArticleBean;
@@ -124,6 +127,8 @@ public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 		result.setSummaryDate(new UIDate(new Date()));
 		return result;
 	}
+
+	private final DatasetInfo defaultDatasetInfo = createDefaultDatasetInfo();
 	
 	/* (non-Javadoc)
 	 * @see eu.xlime.datasum.DatasetSummaryFactory#createXLiMeMongoSummary()
@@ -131,12 +136,15 @@ public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 	@Override
 	public DatasetSummary createXLiMeMongoSummary() {
 		DatasetSummary result = new DatasetSummary();
-		result.setName("xLiMe Mongo dataset");
-		result.setDescription("Private Mongo dataset, used to provide data for front-end services. It typically contains around a week of xLiMe data.");
 		List<String> errors = new ArrayList<String>();
 		List<String> msgs = new ArrayList<String>();		
 
 		MongoXLiMeResourceStorer resStorer = new MongoXLiMeResourceStorer(new Config().getCfgProps());
+
+		DatasetInfo dsInfo = resStorer.getDBCollection(DatasetInfo.class).findOne();
+		if (dsInfo == null) dsInfo = defaultDatasetInfo;
+		result.setName(dsInfo.getName());
+		result.setDescription(dsInfo.getDescription());
 		
 //		result.setActivities(activities);
 		msgs.add("Counting activities not supported yet.");
@@ -171,6 +179,15 @@ public class DatasetSummaryFactoryImpl implements DatasetSummaryFactory {
 	}
 
 	
+	private DatasetInfo createDefaultDatasetInfo() {
+		DatasetInfo result = new DatasetInfo();
+		result.setName("xLiMe Mongo dataset");
+		result.setDescription("Private Mongo dataset, used to provide data for front-end services. It typically contains around a week of xLiMe data.");
+		result.setUrl("http://xlime.eu/vocab/datasetinfo/default");
+		return result;
+	}
+
+
 	@Override
 	public List<TimelineChart> retrieveTimelineCharts(String resourceType,
 			String metric) {

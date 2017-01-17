@@ -31,7 +31,8 @@ import eu.xlime.summa.bean.UIEntity;
 	    @Type(value = EntityAnnotation.class, name = "http://xlime.eu/vocab/EntityAnnotation"),
 	    @Type(value = ProvActivity.class, name = "http://www.w3.org/ns/prov#Activity"),
 	    @Type(value = StatMetrics.class, name = "http://xlime.eu/vocab/statMetrics"),
-	    @Type(value = TimelineChart.class, name = "http://xlime.eu/vocab/TimelineChart")
+	    @Type(value = TimelineChart.class, name = "http://xlime.eu/vocab/TimelineChart"),
+	    @Type(value = DatasetInfo.class, name = "http://xlime.eu/vocab/DatasetInfo")
 	    }) 
 @XmlSeeAlso({MicroPostBean.class, NewsArticleBean.class, TVProgramBean.class})
 //@XmlDiscriminatorNode("@type")
