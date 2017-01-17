@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mongojack.DBCursor;
 import org.mongojack.DBSort;
@@ -52,6 +53,7 @@ public class MongoXLiMeResourceStorerTest {
 	}
 	
 	@Test
+	@Ignore("Requires TimelineChart to be available")
 	public void getTimelineChart() throws Exception {
 		Properties props = new Properties();
 		props.put(ConfigOptions.XLIME_MONGO_RESOURCE_DATABASE_NAME.getKey(), "xlimeres");
