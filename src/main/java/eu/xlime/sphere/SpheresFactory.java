@@ -315,9 +315,21 @@ public class SpheresFactory {
 				builder.add(uiEnt,
 						scoref.newScore(1.0, justif));
 			}
+		} else if (res instanceof ASRAnnotation) {
+			List<EntityAnnotation> entAnns = mediaItemAnnotationDao.findASREntityAnnotations(res.getUrl());
+			log.debug(String.format("Found %s entity annotations for %s", entAnns.size(), res.getUrl()));
+			for (EntityAnnotation entAnn: entAnns) {
+				builder.add(entAnn.getEntity(),
+						scoref.newScore(entAnn.getConfidence(), "Mentioned in ASR transcript in context"));
+			}
+		} else if (res instanceof SubtitleSegment) {
+			List<EntityAnnotation> entAnns = mediaItemAnnotationDao.findSubtitleEntityAnnotations(res.getUrl());
+			log.debug(String.format("Found %s entity annotations for %s", entAnns.size(), res.getUrl()));
+			for (EntityAnnotation entAnn: entAnns) {
+				builder.add(entAnn.getEntity(),
+						scoref.newScore(entAnn.getConfidence(), "Mentioned in Subtitle transcript in context"));
+			}
 		} else {
-			// ASR annotations are bound to audioTrack, so we cannot retrieve this
-			// Subtitle (same as ASR)
 			// OCR (not enough data)
 			// we could to a quick analysis to find relevant words and map them to entities?
 			
@@ -358,7 +370,7 @@ public class SpheresFactory {
 		for (T res: original.unscored()) {
 			if (calcRecEntities(res).isEmpty() 
 					&& calcRecAnnots(res).isEmpty() 
-					&& calcRecMediaItemUrls(res).isEmpty()) {
+					&& !calcEstimateHasMediaItems(res)) {
 				log.debug("Penalising " + res.getUrl() + " because it has no links (would result in empty spheres)");
 				builder.add(res, scoref.newScore(0.1, "Not linked to other resources (no annotations, entities, etc."));
 			} else {
@@ -366,6 +378,11 @@ public class SpheresFactory {
 			}
 		}
 		return builder.build();
+	}
+	
+	private <T extends XLiMeResource> boolean calcEstimateHasMediaItems(T res) {
+		if (res instanceof UIEntity) return true;
+		else return !calcRecMediaItemUrls(res).isEmpty();
 	}
 	
 	private <T extends XLiMeResource> ScoredSet<T> removeAlreadyInContext(

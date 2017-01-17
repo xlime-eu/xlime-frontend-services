@@ -98,7 +98,7 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 
 	public List<EntityAnnotation> findEntityAnnotations(int limit) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find();
-		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		log.debug(String.format("Found random %s EntAnns", cursor.count()));
 		return cursor.toArray(limit);
 	}
 	
@@ -106,7 +106,7 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	public List<EntityAnnotation> findMicroPostEntityAnnotations(
 			String microPostUrl) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("resourceUrl", ImmutableList.of(microPostUrl));
-		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		log.debug(String.format("Found %s EntAnns for micropost %s", cursor.count(), microPostUrl));
 		return cursor.toArray(defaultMax);
 	}
 
@@ -114,7 +114,7 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	public List<EntityAnnotation> findNewsArticleEntityAnnotations(
 			String newsArticleUrl) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("resourceUrl", ImmutableList.of(newsArticleUrl));
-		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		log.debug(String.format("Found %s EntAnns for news %s", cursor.count(), newsArticleUrl));
 		return cursor.toArray(defaultMax);
 	}
 
@@ -122,7 +122,24 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	public List<EntityAnnotation> findSubtitleTrackEntityAnnotations(
 			String subtitleTrackUrl) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("resourceUrl", ImmutableList.of(subtitleTrackUrl));
-		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		log.debug(String.format("Found %s EntAnns for subTrack %s", cursor.count(), subtitleTrackUrl));
+		return cursor.toArray(defaultMax);
+	}
+	
+	@Override
+	public List<EntityAnnotation> findTVSubtitleEntityAnnotations(
+			String tvProgUrl) {
+		List<EntityAnnotation> ents = new ArrayList<EntityAnnotation>();
+		for (SubtitleSegment sseg: findSubtitleSegmentsForTVProg(tvProgUrl)) {
+			ents.addAll(findSubtitleEntityAnnotations(sseg.getUrl()));
+		}
+		return ents;
+	}
+
+	@Override
+	public List<EntityAnnotation> findSubtitleEntityAnnotations(String subUrl) {
+		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("resourceUrl", ImmutableList.of(subUrl));
+		log.debug(String.format("Foudn %s EntAnns for sub %s", cursor.count(), subUrl));
 		return cursor.toArray(defaultMax);
 	}
 
@@ -130,7 +147,24 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	public List<EntityAnnotation> findAudioTrackEntityAnnotations(
 			String audioTrackUrl) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("resourceUrl", ImmutableList.of(audioTrackUrl));
-		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		log.debug(String.format("Found %s EntAnns for audio %s", cursor.count(), audioTrackUrl));
+		return cursor.toArray(defaultMax);
+	}
+
+	@Override
+	public List<EntityAnnotation> findTVASREntityAnnotations(String tvProgUrl) {
+		List<EntityAnnotation> ents = new ArrayList<EntityAnnotation>();
+		List<ASRAnnotation> asrAnns = findASRAnnotationsForTVProg(tvProgUrl);
+		for (ASRAnnotation asrAnn: asrAnns.subList(0, Math.min(5, asrAnns.size()))) {
+			ents.addAll(findASREntityAnnotations(asrAnn.getUrl()));
+		}
+		return ents;
+	}
+
+	@Override
+	public List<EntityAnnotation> findASREntityAnnotations(String asrUrl) {
+		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("resourceUrl", ImmutableList.of(asrUrl));
+		log.debug(String.format("Found %s EntAnns for asr %s", cursor.count(), asrUrl));
 		return cursor.toArray(defaultMax);
 	}
 
@@ -138,21 +172,21 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	public List<EntityAnnotation> findVideoTrackEntityAnnotations(
 			String videoTrackUrl) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("resourceUrl", ImmutableList.of(videoTrackUrl));
-		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		log.debug(String.format("Found %s EntAnns for vidTrack %s", cursor.count(), videoTrackUrl));
 		return cursor.toArray(defaultMax);
 	}
 
 	@Override
 	public List<EntityAnnotation> findEntityAnnotationsFor(UIEntity kbEntity) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("entity._id", ImmutableList.of(kbEntity.getUrl()));
-		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		log.debug(String.format("Found %s EntAnns for KBEnt %s", cursor.count(), kbEntity));
 		return cursor.toArray(defaultMax);
 	}
 
 	@Override
 	public ScoredSet<String> findMediaItemUrlsByKBEntity(String entityUrl) {
 		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("entity._id", ImmutableList.of(entityUrl)).sort(DBSort.desc("confidence"));
-		log.debug(String.format("Found %s EntAnns", cursor.count()));
+		log.debug(String.format("Found %s EntAnns for entity %s", cursor.count(), entityUrl));
 		return toMediaItemUrlScoredSet(cursor);
 	}
 	

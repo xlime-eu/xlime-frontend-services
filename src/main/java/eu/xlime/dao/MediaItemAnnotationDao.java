@@ -46,6 +46,25 @@ public interface MediaItemAnnotationDao {
 	List<EntityAnnotation> findAudioTrackEntityAnnotations(String audioTrackUrl);
 
 	/**
+	 * Returns the combined {@link EntityAnnotation}s for all {@link ASRAnnotation}s linked to a
+	 * given tv program Url.    
+	 * @param tvProgUrl
+	 * @return
+	 */
+	List<EntityAnnotation> findTVASREntityAnnotations(String tvProgUrl);
+	
+	List<EntityAnnotation> findTVSubtitleEntityAnnotations(String tvProgUrl);
+	
+	/**
+	 * Returns the {@link EntityAnnotation}s for a given {@link ASRAnnotation}'s url.
+	 * @param asrUrl
+	 * @return
+	 */
+	List<EntityAnnotation> findASREntityAnnotations(String asrUrl);
+	
+	List<EntityAnnotation> findSubtitleEntityAnnotations(String subUrl);
+	
+	/**
 	 * 
 	 * @param videoTrackUrl
 	 * @return

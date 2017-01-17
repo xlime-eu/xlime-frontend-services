@@ -60,9 +60,30 @@ public class CachedMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao
 	}
 
 	@Override
+	public List<EntityAnnotation> findTVSubtitleEntityAnnotations(
+			String tvProgUrl) {
+		return delegate.findTVSubtitleEntityAnnotations(tvProgUrl);
+	}
+
+	@Override
+	public List<EntityAnnotation> findSubtitleEntityAnnotations(String subUrl) {
+		return delegate.findSubtitleEntityAnnotations(subUrl);
+	}
+
+	@Override
 	public List<EntityAnnotation> findAudioTrackEntityAnnotations(
 			String audioTrackUrl) {
 		return delegate.findAudioTrackEntityAnnotations(audioTrackUrl);
+	}
+
+	@Override
+	public List<EntityAnnotation> findTVASREntityAnnotations(String tvProgUrl) {
+		return delegate.findTVASREntityAnnotations(tvProgUrl);
+	}
+
+	@Override
+	public List<EntityAnnotation> findASREntityAnnotations(String asrUrl) {
+		return delegate.findASREntityAnnotations(asrUrl);
 	}
 
 	@Override

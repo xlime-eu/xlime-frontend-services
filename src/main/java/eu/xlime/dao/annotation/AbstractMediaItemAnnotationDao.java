@@ -46,16 +46,21 @@ public abstract class AbstractMediaItemAnnotationDao implements MediaItemAnnotat
 			return findMicroPostEntityAnnotations(url);
 		else if (typeResolver.isTVProgram(url)) {
 			// TODO: implement via subtitles, ASR, OCR, annotation of EPG data.
-			List<EntityAnnotation> viaSubs = findSubtitleTrackEntityAnnotations(typeResolver.tvProgUrlToSubtitleTrackUrl(url)); 
+			List<EntityAnnotation> viaASR = findTVASREntityAnnotations(url);
+			List<EntityAnnotation> viaSubs = findTVSubtitleEntityAnnotations(url);
+			List<EntityAnnotation> viaSubTrack = findSubtitleTrackEntityAnnotations(typeResolver.tvProgUrlToSubtitleTrackUrl(url)); 
 			List<EntityAnnotation> viaAudi = findAudioTrackEntityAnnotations(typeResolver.tvProgUrlToAudioTrackUrl(url)); 
 			List<EntityAnnotation> viaVide = findVideoTrackEntityAnnotations(typeResolver.tvProgUrlToVideoTrackUrl(url));
 			if (log.isDebugEnabled()) {
-				log.debug(String.format("Found entity annotations for video: %s via sub, %s via aud, %s via vid", viaSubs.size(), viaAudi.size(), viaVide.size()));
+				log.debug(
+						String.format("Found entity annotations for video: %s via subs, %s via subtrack, %s via asr, %s via audtrack, %s via vid", 
+						viaSubs.size(), viaSubTrack.size(), viaASR.size(), viaAudi.size(), viaVide.size()));
 			}
-			return ImmutableList.<EntityAnnotation>builder().addAll(viaSubs).addAll(viaAudi).addAll(viaVide).build(); 
+			return ImmutableList.<EntityAnnotation>builder().addAll(viaSubs).addAll(viaSubTrack).
+					addAll(viaASR).addAll(viaAudi).addAll(viaVide).build(); 
 		} else throw new RuntimeException("Cannot map url to a known xLiMe media-item type " + url);
 	}
-	
+
 	protected final VideoSegment newVideoSegment(String tvProgUrl) {
 		VideoSegment result = new VideoSegment();
 		result.setPartOf(retrieveTVProgramOr(tvProgUrl, emptyTVProgramBean(tvProgUrl)));

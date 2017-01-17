@@ -112,6 +112,28 @@ public abstract class SparqlMediaItemAnnotationDao extends
 	}
 
 	@Override
+	public List<EntityAnnotation> findTVASREntityAnnotations(String tvProgUrl) {
+		return ImmutableList.of(); //TODO: implement?
+	}
+
+	@Override
+	public List<EntityAnnotation> findASREntityAnnotations(String asrUrl) {
+		return ImmutableList.of(); //TODO: implement?
+	}
+
+	
+	@Override
+	public List<EntityAnnotation> findTVSubtitleEntityAnnotations(
+			String tvProgUrl) {
+		return ImmutableList.of(); //TODO: implement?
+	}
+
+	@Override
+	public List<EntityAnnotation> findSubtitleEntityAnnotations(String subUrl) {
+		return ImmutableList.of(); //TODO: implement?
+	}
+
+	@Override
 	public List<EntityAnnotation> findVideoTrackEntityAnnotations(
 			String url) {
 		log.trace("Finding entity annotations for videoTrack " + url);
