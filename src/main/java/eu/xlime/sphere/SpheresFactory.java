@@ -238,7 +238,8 @@ public class SpheresFactory {
 			builder.addAll(miUrls);
 		} else if (res instanceof UIEntity) {
 			String entUrl = ((UIEntity) res).getUrl();
-			ScoredSet<String> matches = mediaItemAnnotationDao.findMediaItemUrlsByKBEntity(entUrl); 
+			ScoredSet<String> matches = mediaItemAnnotationDao.findMediaItemUrlsByKBEntity(entUrl);
+			log.debug(String.format("Found %s mediaItems for ent %s", matches.size(), entUrl));
 			builder.addAll(matches);
 		} else if (res instanceof ASRAnnotation) {
 			try {
@@ -271,10 +272,13 @@ public class SpheresFactory {
 
 	private ScoredSet<MediaItem> asMediaItems(ScoredSet<String> medItUrls) {
 		ScoredSet.Builder<MediaItem> builder = ScoredSetImpl.builder();
+		final long start = System.currentTimeMillis();
 		List<MediaItem> mis = mediaItemDao.findMediaItems(medItUrls.asList());
 		for (MediaItem mit: mis) {
 			builder.add(mit, medItUrls.getScore(mit.getUrl()));
 		}
+		final long ms = System.currentTimeMillis() - start;
+		log.debug(String.format("Retrieved %s mediaItems in %s ms", medItUrls.size(), ms));
 		return builder.build();
 	}
 

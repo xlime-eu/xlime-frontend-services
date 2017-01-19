@@ -2,6 +2,7 @@ package eu.xlime.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import net.expertsystem.zapi.ZattooChannelIdMapper;
 
@@ -111,8 +112,10 @@ public class ResourceTypeResolver {
 		return false; //TODO: implement
 	}
 	
+	private final Pattern asrPattern = Pattern.compile("http://zattoo.com/program/[-]?\\d+/audio/asr/\\d+/\\d+");
+	
 	public boolean isASRAnnotation(String uri) {
-		return uri.matches("http://zattoo.com/program/[-]?\\d+/audio/asr/\\d+/\\d+"); 
+		return asrPattern.matcher(uri).matches();//uri.matches(""); 
 	}
 
 	public boolean isEntityAnnotation(String uri) {
@@ -162,6 +165,14 @@ public class ResourceTypeResolver {
 	public Optional<String> audioTrackUrlAsTVProgUrl(String uri) {
 		if (!isAudioTrack(uri)) throw new IllegalArgumentException("Uri is not a audio track url " + uri);
 		return Optional.of(uri.replaceAll("/audio", ""));
+	}
+	
+	public Optional<String> asrAnnUrlAsTVProgUrl(String uri) {
+		if (!isASRAnnotation(uri)) throw new IllegalArgumentException("Uri is not an ASR Annotation url " + uri);
+		// uri has form "http://zattoo.com/program/[-]?\\d+/audio/asr/\\d+/\\d+"
+		int index = uri.indexOf("/audio");
+		if (index < 0) return Optional.absent();
+		return Optional.of(uri.substring(0, index));
 	}
 	
 	public boolean isVideoTrack(String uri) {

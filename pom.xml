@@ -3,7 +3,7 @@
   <groupId>eu.xlime</groupId>
   <artifactId>frontend-services</artifactId>
   <packaging>war</packaging>
-  <version>0.1.0</version>
+  <version>0.1.1-SNAPSHOT</version>
   <name>xLiMe Public Front-end Services webapp</name>
   <url>http://xlime-eu.github.io/</url>
   <prerequisites>

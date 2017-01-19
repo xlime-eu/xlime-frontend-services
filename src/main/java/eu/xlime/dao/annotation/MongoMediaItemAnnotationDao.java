@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import org.mongojack.DBCursor;
 import org.mongojack.DBQuery;
@@ -185,9 +186,26 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 
 	@Override
 	public ScoredSet<String> findMediaItemUrlsByKBEntity(String entityUrl) {
-		DBCursor<EntityAnnotation> cursor = mongoStorer.getDBCollection(EntityAnnotation.class).find().in("entity._id", ImmutableList.of(entityUrl)).sort(DBSort.desc("confidence"));
-		log.debug(String.format("Found %s EntAnns for entity %s", cursor.count(), entityUrl));
-		return toMediaItemUrlScoredSet(cursor);
+		DBCursor<EntityAnnotation> socCursor = mongoStorer.getDBCollection(EntityAnnotation.class).find()
+				.in("entity._id", ImmutableList.of(entityUrl))
+				.regex("resourceUrl", Pattern.compile("^http...vico"))
+				.sort(DBSort.desc("confidence"));
+		DBCursor<EntityAnnotation> newsCursor = mongoStorer.getDBCollection(EntityAnnotation.class).find()
+				.in("entity._id", ImmutableList.of(entityUrl))
+				.regex("resourceUrl", Pattern.compile("^http...ijs"))
+				.sort(DBSort.desc("confidence"));
+		DBCursor<EntityAnnotation> tvCursor = mongoStorer.getDBCollection(EntityAnnotation.class).find()
+				.in("entity._id", ImmutableList.of(entityUrl))
+				.regex("resourceUrl", Pattern.compile("^http...zattoo"))
+				//.sort(DBSort.desc("confidence"))// for some reason, this takes an order of magnitude longer than the others when sorting??
+				;
+		log.debug(String.format("Found %s micropost, %s news and %s tv EntAnns for entity %s", 
+				socCursor.count(), newsCursor.count(), tvCursor.count(), entityUrl));
+		return ScoredSetImpl.<String>builder()
+			.addAll(toMediaItemUrlScoredSet(tvCursor, 5))
+			.addAll(toMediaItemUrlScoredSet(socCursor, 5))
+			.addAll(toMediaItemUrlScoredSet(newsCursor, 5))
+			.build();
 	}
 	
 	@Override
@@ -223,15 +241,28 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	}
 
 	private ScoredSet<String> toMediaItemUrlScoredSet(
-			DBCursor<EntityAnnotation> cursor) {
+			DBCursor<EntityAnnotation> cursor, int limit) {
+		if (limit < 1) return ScoredSetImpl.empty();
+		final long start = System.currentTimeMillis();
 		ScoredSet.Builder<String> builder = ScoredSetImpl.builder();
-		for (EntityAnnotation ea: cursor.toArray(defaultMax)) {
+		List<EntityAnnotation> eas = cursor.limit(limit).toArray();
+		log.debug("Retrieved EntAnns from cursor");
+		for (EntityAnnotation ea: eas) {
 			Optional<String> miUrl = mapAnnotatedResourceUrlToMediaItemUrl(ea.getResourceUrl());
 			if (miUrl.isPresent()) {
 				builder.add(miUrl.get(), toScore(ea));
 			}
 		}
-		return builder.build();
+		log.debug("Mapped EntAnns to mediaItemUrls");
+		final ScoredSet<String> result = builder.build();
+		final long ms = System.currentTimeMillis() - start;
+		log.debug(String.format("Converted entAnn cursor to %s scoredUrls in %s ms", result.size(), ms));
+		return result;
+	}
+	
+	private ScoredSet<String> toMediaItemUrlScoredSet(
+			DBCursor<EntityAnnotation> cursor) {
+		return toMediaItemUrlScoredSet(cursor, defaultMax);
 	}
 
 	protected final Optional<String> mapAnnotatedResourceUrlToMediaItemUrl(
@@ -244,6 +275,8 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 				return typeResolver.audioTrackUrlAsTVProgUrl(resourceUrl);
 			} else if (typeResolver.isVideoTrack(resourceUrl)) {
 				return typeResolver.videoTrackUrlAsTVProgUrl(resourceUrl);
+			} else if (typeResolver.isASRAnnotation(resourceUrl)) {
+				return typeResolver.asrAnnUrlAsTVProgUrl(resourceUrl);
 			}
 		} catch (Exception e) {
 			log.error(String.format("Error mapping annotated resource %s to a mediaItem url", resourceUrl));
