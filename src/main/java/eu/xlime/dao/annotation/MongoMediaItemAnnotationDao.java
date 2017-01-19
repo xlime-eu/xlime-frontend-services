@@ -2,7 +2,9 @@ package eu.xlime.dao.annotation;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -211,8 +214,35 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 	@Override
 	public ScoredSet<ASRAnnotation> findASRAnnotationsForKBEntity(
 			String entityUrl) {
-		//EntityAnnotation.resourceUrl only refer to the tv program track (audio indicates some ASRAnnotation was entity linked, but we don't know which one...
-		return ScoredSetImpl.empty();
+		DBCursor<EntityAnnotation> tvCursor = mongoStorer.getDBCollection(EntityAnnotation.class).find()
+				.in("entity._id", ImmutableList.of(entityUrl))
+				.regex("resourceUrl", Pattern.compile("^http...zattoo"))
+//				.sort(DBSort.desc("confidence")) // takes very long?
+				;
+		return mapToASRAnnot(toASRAnnotUrlScoredSet(tvCursor, 5));
+	}
+
+	private ScoredSet<ASRAnnotation> mapToASRAnnot(
+			ScoredSet<String> asrAnnotUrlScoredSet) {
+		String[] urls = asrAnnotUrlScoredSet.asList().toArray(new String[asrAnnotUrlScoredSet.size()]);
+		DBCursor<ASRAnnotation> cursor = mongoStorer.getDBCollection(ASRAnnotation.class).find().in("_id", urls);
+		ScoredSet.Builder<ASRAnnotation> builder = ScoredSetImpl.builder();
+		Map<String, ASRAnnotation> asrs = toUrlMap(cursor.toArray());
+		for (String url: urls) {
+			ASRAnnotation asr = asrs.get(url);
+			if (asr != null) {
+				builder.add(asr, asrAnnotUrlScoredSet.getScore(url));
+			}
+		}
+		return builder.build();
+	}
+
+	private Map<String, ASRAnnotation> toUrlMap(List<ASRAnnotation> asrs) {
+		Map<String, ASRAnnotation> result = new HashMap<String, ASRAnnotation>();
+		for (ASRAnnotation asr: asrs) {
+			result.put(asr.getUrl(), asr);
+		}
+		return ImmutableMap.copyOf(result);
 	}
 
 	@Override
@@ -240,6 +270,25 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		return builder.build();
 	}
 
+	private ScoredSet<String> toASRAnnotUrlScoredSet(DBCursor<EntityAnnotation> cursor, int limit) {
+		if (limit < 1) return ScoredSetImpl.empty();
+		final long start = System.currentTimeMillis();
+		ScoredSet.Builder<String> builder = ScoredSetImpl.builder();
+		List<EntityAnnotation> eas = cursor.limit(limit).toArray();
+		log.debug("Retrieved EntAnns from cursor");
+		for (EntityAnnotation ea: eas) {
+			Optional<String> miUrl = mapAnnotatedResourceUrlToASRAnnUrl(ea.getResourceUrl());
+			if (miUrl.isPresent()) {
+				builder.add(miUrl.get(), toScore(ea));
+			}
+		}
+		log.debug("Mapped EntAnns to annotUrls");
+		final ScoredSet<String> result = builder.build();
+		final long ms = System.currentTimeMillis() - start;
+		log.debug(String.format("Converted entAnn cursor to %s scoredUrls in %s ms", result.size(), ms));
+		return result;
+	}
+	
 	private ScoredSet<String> toMediaItemUrlScoredSet(
 			DBCursor<EntityAnnotation> cursor, int limit) {
 		if (limit < 1) return ScoredSetImpl.empty();
@@ -281,6 +330,13 @@ public class MongoMediaItemAnnotationDao extends AbstractMediaItemAnnotationDao 
 		} catch (Exception e) {
 			log.error(String.format("Error mapping annotated resource %s to a mediaItem url", resourceUrl));
 		}
+		return Optional.absent();
+	}
+	
+	protected final Optional<String> mapAnnotatedResourceUrlToASRAnnUrl(String entityAnnResourceUrl) {
+		if (typeResolver.isASRAnnotation(entityAnnResourceUrl)) {
+			return Optional.of(entityAnnResourceUrl);
+		} 
 		return Optional.absent();
 	}
 	
